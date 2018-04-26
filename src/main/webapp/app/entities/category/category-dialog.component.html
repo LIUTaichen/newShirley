@@ -1,0 +1,77 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCategoryLabel">Create or edit a Category</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!category.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="category.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_category">Category</label>
+            <input type="text" class="form-control" name="category" id="field_category"
+                [(ngModel)]="category.category" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="category.description" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_type">Type</label>
+            <input type="text" class="form-control" name="type" id="field_type"
+                [(ngModel)]="category.type" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_trackUsage">Track Usage</label>
+            <input type="checkbox" class="form-control" name="trackUsage" id="field_trackUsage"
+                [(ngModel)]="category.trackUsage" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_dailyRate">Daily Rate</label>
+            <input type="number" class="form-control" name="dailyRate" id="field_dailyRate"
+                [(ngModel)]="category.dailyRate" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_loadCapacity">Load Capacity</label>
+            <input type="number" class="form-control" name="loadCapacity" id="field_loadCapacity"
+                [(ngModel)]="category.loadCapacity" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_hourlyRate">Hourly Rate</label>
+            <input type="number" class="form-control" name="hourlyRate" id="field_hourlyRate"
+                [(ngModel)]="category.hourlyRate" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_isEarchMovingPlant">Is Earch Moving Plant</label>
+            <input type="checkbox" class="form-control" name="isEarchMovingPlant" id="field_isEarchMovingPlant"
+                [(ngModel)]="category.isEarchMovingPlant" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_isTrackedForInternalBilling">Is Tracked For Internal Billing</label>
+            <input type="checkbox" class="form-control" name="isTrackedForInternalBilling" id="field_isTrackedForInternalBilling"
+                [(ngModel)]="category.isTrackedForInternalBilling" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_competency">Competency</label>
+            <select class="form-control" id="field_competency" name="competency" [(ngModel)]="category.competency" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="competencyOption.id === category.competency?.id ? category.competency : competencyOption" *ngFor="let competencyOption of competencies; trackBy: trackCompetencyById">{{competencyOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,143 @@
+entity Plant {
+	fleetId String,
+    name String,
+    notes String,
+    purchaseDate Instant,
+    isActive Boolean,
+    description String,
+    vin String,
+    rego String,
+    dateOfManufacture Instant,
+    image Blob,
+    tankSize Integer,
+    maintenanceDueAt Integer,
+    meterUnit MeterUnit,
+    certificateDueDate Instant,
+    rucDueAtKm Integer,
+    hubboReading Integer,
+    loadCapacity Integer,
+    hourlyRate Double,
+    registrationDueDate Instant,
+    hireStatus HireStatus,
+    gpsDeviceSerial String,
+    location String,
+    lastLocationUpdateTime Instant
+}
+
+enum HireStatus{
+	ONHIRE,
+    OFFHIRE
+}
+
+entity OffHireRequest {
+	
+}
+
+entity Category{
+	category String,
+    description String,
+    type String,
+    trackUsage Boolean,
+    dailyRate Double,
+    loadCapacity Integer,
+    hourlyRate Double,
+    isEarchMovingPlant Boolean,
+    isTrackedForInternalBilling Boolean
+}
+
+entity Company{
+	company String,
+    phone String,
+    address String,
+    location String,
+    webPage String,
+    notes String,
+    isActive Boolean,
+    abbreviation String
+}
+
+enum MeterUnit{
+	KM,
+    HOUR
+}
+
+entity MaintenanceContractor{
+	name String
+}
+
+entity Project{
+	name String,
+    location String,
+    notes String,
+    startDate Instant,
+    endDate Instant,
+    isActive Boolean,
+    isOnHold Boolean,
+    details String
+}
+
+entity Competency{
+	competency String,
+    grouping String,
+    sortOrder Integer
+}
+
+entity People{
+    email String,
+    phone String,
+    name String
+    
+}
+
+entity Niggle{
+    description String,
+    status Status,
+    note String,
+    priority Priority,
+    quattraReference String,
+    quattraComments String,
+    dateOpened Instant,
+    dateUpdated Instant,
+    dateClosed Instant
+}
+
+enum Priority{
+    LEVEL1,
+    LEVEL2,
+    LEVEL3,
+    LEVEL4,
+    LEVEL5
+}
+
+enum Status{
+	SUBMITTED,
+    OPEN,
+    ASSIGNED,
+    COMPLETED,
+    CLOSED
+}
+
+entity PlantLog{
+    meterReading Integer,
+    hubboReading Integer,
+    serviceDueAt Integer,
+    rucDueAt Integer,
+    wofDueDate Instant,
+    cofDueDate Instant,
+    serviceDueDate Instant
+}
+
+relationship ManyToOne {
+	Plant{category} to Category,
+    Plant{owner} to Company,
+    Plant{assignedContractor} to MaintenanceContractor,
+    Plant{project} to Project,
+    PlantLog{plant} to Plant,
+    Niggle{ plant} to Plant,
+    Niggle{ assignedContractor } to MaintenanceContractor,
+    Category{competency} to Competency,
+    PlantLog{operator} to People,
+    PlantLog{site} to Project
+    
+}
+

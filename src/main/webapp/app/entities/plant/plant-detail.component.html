@@ -1,0 +1,141 @@
+
+<div *ngIf="plant">
+    <h2><span>Plant</span> {{plant.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Fleet Id</span></dt>
+        <dd>
+            <span>{{plant.fleetId}}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{plant.name}}</span>
+        </dd>
+        <dt><span>Notes</span></dt>
+        <dd>
+            <span>{{plant.notes}}</span>
+        </dd>
+        <dt><span>Purchase Date</span></dt>
+        <dd>
+            <span>{{plant.purchaseDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+            <span>{{plant.isActive}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{plant.description}}</span>
+        </dd>
+        <dt><span>Vin</span></dt>
+        <dd>
+            <span>{{plant.vin}}</span>
+        </dd>
+        <dt><span>Rego</span></dt>
+        <dd>
+            <span>{{plant.rego}}</span>
+        </dd>
+        <dt><span>Date Of Manufacture</span></dt>
+        <dd>
+            <span>{{plant.dateOfManufacture | date:'medium'}}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+            <div *ngIf="plant.image">
+                <a (click)="openFile(plant.imageContentType, plant.image)">open</a>
+                {{plant.imageContentType}}, {{byteSize(plant.image)}}
+            </div>
+        </dd>
+        <dt><span>Tank Size</span></dt>
+        <dd>
+            <span>{{plant.tankSize}}</span>
+        </dd>
+        <dt><span>Maintenance Due At</span></dt>
+        <dd>
+            <span>{{plant.maintenanceDueAt}}</span>
+        </dd>
+        <dt><span>Meter Unit</span></dt>
+        <dd>
+            <span>{{plant.meterUnit}}</span>
+        </dd>
+        <dt><span>Certificate Due Date</span></dt>
+        <dd>
+            <span>{{plant.certificateDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Ruc Due At Km</span></dt>
+        <dd>
+            <span>{{plant.rucDueAtKm}}</span>
+        </dd>
+        <dt><span>Hubbo Reading</span></dt>
+        <dd>
+            <span>{{plant.hubboReading}}</span>
+        </dd>
+        <dt><span>Load Capacity</span></dt>
+        <dd>
+            <span>{{plant.loadCapacity}}</span>
+        </dd>
+        <dt><span>Hourly Rate</span></dt>
+        <dd>
+            <span>{{plant.hourlyRate}}</span>
+        </dd>
+        <dt><span>Registration Due Date</span></dt>
+        <dd>
+            <span>{{plant.registrationDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Hire Status</span></dt>
+        <dd>
+            <span>{{plant.hireStatus}}</span>
+        </dd>
+        <dt><span>Gps Device Serial</span></dt>
+        <dd>
+            <span>{{plant.gpsDeviceSerial}}</span>
+        </dd>
+        <dt><span>Location</span></dt>
+        <dd>
+            <span>{{plant.location}}</span>
+        </dd>
+        <dt><span>Last Location Update Time</span></dt>
+        <dd>
+            <span>{{plant.lastLocationUpdateTime | date:'medium'}}</span>
+        </dd>
+        <dt><span>Category</span></dt>
+        <dd>
+            <div *ngIf="plant.category">
+                <a [routerLink]="['/category', plant.category?.id]">{{plant.category?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Owner</span></dt>
+        <dd>
+            <div *ngIf="plant.owner">
+                <a [routerLink]="['/company', plant.owner?.id]">{{plant.owner?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Assigned Contractor</span></dt>
+        <dd>
+            <div *ngIf="plant.assignedContractor">
+                <a [routerLink]="['/maintenance-contractor', plant.assignedContractor?.id]">{{plant.assignedContractor?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Project</span></dt>
+        <dd>
+            <div *ngIf="plant.project">
+                <a [routerLink]="['/project', plant.project?.id]">{{plant.project?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'plant/'+ plant.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,68 @@
+
+<div *ngIf="plantLog">
+    <h2><span>Plant Log</span> {{plantLog.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Meter Reading</span></dt>
+        <dd>
+            <span>{{plantLog.meterReading}}</span>
+        </dd>
+        <dt><span>Hubbo Reading</span></dt>
+        <dd>
+            <span>{{plantLog.hubboReading}}</span>
+        </dd>
+        <dt><span>Service Due At</span></dt>
+        <dd>
+            <span>{{plantLog.serviceDueAt}}</span>
+        </dd>
+        <dt><span>Ruc Due At</span></dt>
+        <dd>
+            <span>{{plantLog.rucDueAt}}</span>
+        </dd>
+        <dt><span>Wof Due Date</span></dt>
+        <dd>
+            <span>{{plantLog.wofDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Cof Due Date</span></dt>
+        <dd>
+            <span>{{plantLog.cofDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Service Due Date</span></dt>
+        <dd>
+            <span>{{plantLog.serviceDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Plant</span></dt>
+        <dd>
+            <div *ngIf="plantLog.plant">
+                <a [routerLink]="['/plant', plantLog.plant?.id]">{{plantLog.plant?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Operator</span></dt>
+        <dd>
+            <div *ngIf="plantLog.operator">
+                <a [routerLink]="['/people', plantLog.operator?.id]">{{plantLog.operator?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Site</span></dt>
+        <dd>
+            <div *ngIf="plantLog.site">
+                <a [routerLink]="['/project', plantLog.site?.id]">{{plantLog.site?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'plant-log/'+ plantLog.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

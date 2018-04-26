@@ -1,0 +1,86 @@
+<div>
+    <h2>
+        <span>Niggles</span>
+        <button class="btn btn-primary float-right jh-create-entity create-niggle" [routerLink]="['/', { outlets: { popup: ['niggle-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Niggle
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="niggles">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Description</span></th>
+            <th><span>Status</span></th>
+            <th><span>Note</span></th>
+            <th><span>Priority</span></th>
+            <th><span>Quattra Reference</span></th>
+            <th><span>Quattra Comments</span></th>
+            <th><span>Date Opened</span></th>
+            <th><span>Date Updated</span></th>
+            <th><span>Date Closed</span></th>
+            <th><span>Plant</span></th>
+            <th><span>Assigned Contractor</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let niggle of niggles ;trackBy: trackId">
+                <td><a [routerLink]="['../niggle', niggle.id ]">{{niggle.id}}</a></td>
+                <td>{{niggle.description}}</td>
+                <td>{{niggle.status}}</td>
+                <td>{{niggle.note}}</td>
+                <td>{{niggle.priority}}</td>
+                <td>{{niggle.quattraReference}}</td>
+                <td>{{niggle.quattraComments}}</td>
+                <td>{{niggle.dateOpened | date:'medium'}}</td>
+                <td>{{niggle.dateUpdated | date:'medium'}}</td>
+                <td>{{niggle.dateClosed | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="niggle.plant">
+                        <a [routerLink]="['../plant', niggle.plant?.id ]" >{{niggle.plant?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="niggle.assignedContractor">
+                        <a [routerLink]="['../maintenance-contractor', niggle.assignedContractor?.id ]" >{{niggle.assignedContractor?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../niggle', niggle.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'niggle/'+ niggle.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'niggle/'+ niggle.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div>
+    <h2>
+        <span>Maintenance Contractors</span>
+        <button class="btn btn-primary float-right jh-create-entity create-maintenance-contractor" [routerLink]="['/', { outlets: { popup: ['maintenance-contractor-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Maintenance Contractor
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="maintenanceContractors">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let maintenanceContractor of maintenanceContractors ;trackBy: trackId">
+                <td><a [routerLink]="['../maintenance-contractor', maintenanceContractor.id ]">{{maintenanceContractor.id}}</a></td>
+                <td>{{maintenanceContractor.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../maintenance-contractor', maintenanceContractor.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'maintenance-contractor/'+ maintenanceContractor.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'maintenance-contractor/'+ maintenanceContractor.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+
+<div *ngIf="company">
+    <h2><span>Company</span> {{company.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Company</span></dt>
+        <dd>
+            <span>{{company.company}}</span>
+        </dd>
+        <dt><span>Phone</span></dt>
+        <dd>
+            <span>{{company.phone}}</span>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+            <span>{{company.address}}</span>
+        </dd>
+        <dt><span>Location</span></dt>
+        <dd>
+            <span>{{company.location}}</span>
+        </dd>
+        <dt><span>Web Page</span></dt>
+        <dd>
+            <span>{{company.webPage}}</span>
+        </dd>
+        <dt><span>Notes</span></dt>
+        <dd>
+            <span>{{company.notes}}</span>
+        </dd>
+        <dt><span>Is Active</span></dt>
+        <dd>
+            <span>{{company.isActive}}</span>
+        </dd>
+        <dt><span>Abbreviation</span></dt>
+        <dd>
+            <span>{{company.abbreviation}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'company/'+ company.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

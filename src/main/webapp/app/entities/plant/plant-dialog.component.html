@@ -1,0 +1,195 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPlantLabel">Create or edit a Plant</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!plant.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="plant.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_fleetId">Fleet Id</label>
+            <input type="text" class="form-control" name="fleetId" id="field_fleetId"
+                [(ngModel)]="plant.fleetId" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="plant.name" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_notes">Notes</label>
+            <input type="text" class="form-control" name="notes" id="field_notes"
+                [(ngModel)]="plant.notes" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_purchaseDate">Purchase Date</label>
+            <div class="d-flex">
+                <input id="field_purchaseDate" type="datetime-local" class="form-control" name="purchaseDate" [(ngModel)]="plant.purchaseDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_isActive">Is Active</label>
+            <input type="checkbox" class="form-control" name="isActive" id="field_isActive"
+                [(ngModel)]="plant.isActive" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="plant.description" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_vin">Vin</label>
+            <input type="text" class="form-control" name="vin" id="field_vin"
+                [(ngModel)]="plant.vin" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_rego">Rego</label>
+            <input type="text" class="form-control" name="rego" id="field_rego"
+                [(ngModel)]="plant.rego" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_dateOfManufacture">Date Of Manufacture</label>
+            <div class="d-flex">
+                <input id="field_dateOfManufacture" type="datetime-local" class="form-control" name="dateOfManufacture" [(ngModel)]="plant.dateOfManufacture"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_image">Image</label>
+            <div>
+                <div *ngIf="plant.image" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(plant.imageContentType, plant.image)">open</a><br>
+                    <span class="pull-left">{{plant.imageContentType}}, {{byteSize(plant.image)}}</span>
+                    <button type="button" (click)="plant.image=null;plant.imageContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_image" (change)="setFileData($event, plant, 'image', false)"/>
+            </div>
+            <input type="hidden" class="form-control" name="image" id="field_image"
+                [(ngModel)]="plant.image" />
+            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                [(ngModel)]="plant.imageContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_tankSize">Tank Size</label>
+            <input type="number" class="form-control" name="tankSize" id="field_tankSize"
+                [(ngModel)]="plant.tankSize" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_maintenanceDueAt">Maintenance Due At</label>
+            <input type="number" class="form-control" name="maintenanceDueAt" id="field_maintenanceDueAt"
+                [(ngModel)]="plant.maintenanceDueAt" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_meterUnit">Meter Unit</label>
+            <select class="form-control" name="meterUnit" [(ngModel)]="plant.meterUnit" id="field_meterUnit" >
+                <option value="KM">KM</option>
+                <option value="HOUR">HOUR</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_certificateDueDate">Certificate Due Date</label>
+            <div class="d-flex">
+                <input id="field_certificateDueDate" type="datetime-local" class="form-control" name="certificateDueDate" [(ngModel)]="plant.certificateDueDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_rucDueAtKm">Ruc Due At Km</label>
+            <input type="number" class="form-control" name="rucDueAtKm" id="field_rucDueAtKm"
+                [(ngModel)]="plant.rucDueAtKm" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_hubboReading">Hubbo Reading</label>
+            <input type="number" class="form-control" name="hubboReading" id="field_hubboReading"
+                [(ngModel)]="plant.hubboReading" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_loadCapacity">Load Capacity</label>
+            <input type="number" class="form-control" name="loadCapacity" id="field_loadCapacity"
+                [(ngModel)]="plant.loadCapacity" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_hourlyRate">Hourly Rate</label>
+            <input type="number" class="form-control" name="hourlyRate" id="field_hourlyRate"
+                [(ngModel)]="plant.hourlyRate" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_registrationDueDate">Registration Due Date</label>
+            <div class="d-flex">
+                <input id="field_registrationDueDate" type="datetime-local" class="form-control" name="registrationDueDate" [(ngModel)]="plant.registrationDueDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_hireStatus">Hire Status</label>
+            <select class="form-control" name="hireStatus" [(ngModel)]="plant.hireStatus" id="field_hireStatus" >
+                <option value="ONHIRE">ONHIRE</option>
+                <option value="OFFHIRE">OFFHIRE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_gpsDeviceSerial">Gps Device Serial</label>
+            <input type="text" class="form-control" name="gpsDeviceSerial" id="field_gpsDeviceSerial"
+                [(ngModel)]="plant.gpsDeviceSerial" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_location">Location</label>
+            <input type="text" class="form-control" name="location" id="field_location"
+                [(ngModel)]="plant.location" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_lastLocationUpdateTime">Last Location Update Time</label>
+            <div class="d-flex">
+                <input id="field_lastLocationUpdateTime" type="datetime-local" class="form-control" name="lastLocationUpdateTime" [(ngModel)]="plant.lastLocationUpdateTime"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_category">Category</label>
+            <select class="form-control" id="field_category" name="category" [(ngModel)]="plant.category" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="categoryOption.id === plant.category?.id ? plant.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_owner">Owner</label>
+            <select class="form-control" id="field_owner" name="owner" [(ngModel)]="plant.owner" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="companyOption.id === plant.owner?.id ? plant.owner : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_assignedContractor">Assigned Contractor</label>
+            <select class="form-control" id="field_assignedContractor" name="assignedContractor" [(ngModel)]="plant.assignedContractor" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="maintenanceContractorOption.id === plant.assignedContractor?.id ? plant.assignedContractor : maintenanceContractorOption" *ngFor="let maintenanceContractorOption of maintenancecontractors; trackBy: trackMaintenanceContractorById">{{maintenanceContractorOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_project">Project</label>
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="plant.project" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="projectOption.id === plant.project?.id ? plant.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

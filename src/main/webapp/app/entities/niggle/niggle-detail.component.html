@@ -1,0 +1,70 @@
+
+<div *ngIf="niggle">
+    <h2><span>Niggle</span> {{niggle.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{niggle.description}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{niggle.status}}</span>
+        </dd>
+        <dt><span>Note</span></dt>
+        <dd>
+            <span>{{niggle.note}}</span>
+        </dd>
+        <dt><span>Priority</span></dt>
+        <dd>
+            <span>{{niggle.priority}}</span>
+        </dd>
+        <dt><span>Quattra Reference</span></dt>
+        <dd>
+            <span>{{niggle.quattraReference}}</span>
+        </dd>
+        <dt><span>Quattra Comments</span></dt>
+        <dd>
+            <span>{{niggle.quattraComments}}</span>
+        </dd>
+        <dt><span>Date Opened</span></dt>
+        <dd>
+            <span>{{niggle.dateOpened | date:'medium'}}</span>
+        </dd>
+        <dt><span>Date Updated</span></dt>
+        <dd>
+            <span>{{niggle.dateUpdated | date:'medium'}}</span>
+        </dd>
+        <dt><span>Date Closed</span></dt>
+        <dd>
+            <span>{{niggle.dateClosed | date:'medium'}}</span>
+        </dd>
+        <dt><span>Plant</span></dt>
+        <dd>
+            <div *ngIf="niggle.plant">
+                <a [routerLink]="['/plant', niggle.plant?.id]">{{niggle.plant?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Assigned Contractor</span></dt>
+        <dd>
+            <div *ngIf="niggle.assignedContractor">
+                <a [routerLink]="['/maintenance-contractor', niggle.assignedContractor?.id]">{{niggle.assignedContractor?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'niggle/'+ niggle.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

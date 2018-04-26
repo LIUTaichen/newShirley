@@ -1,0 +1,129 @@
+<div>
+    <h2>
+        <span>Plants</span>
+        <button class="btn btn-primary float-right jh-create-entity create-plant" [routerLink]="['/', { outlets: { popup: ['plant-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Plant
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="plants">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Fleet Id</span></th>
+            <th><span>Name</span></th>
+            <th><span>Notes</span></th>
+            <th><span>Purchase Date</span></th>
+            <th><span>Is Active</span></th>
+            <th><span>Description</span></th>
+            <th><span>Vin</span></th>
+            <th><span>Rego</span></th>
+            <th><span>Date Of Manufacture</span></th>
+            <th><span>Image</span></th>
+            <th><span>Tank Size</span></th>
+            <th><span>Maintenance Due At</span></th>
+            <th><span>Meter Unit</span></th>
+            <th><span>Certificate Due Date</span></th>
+            <th><span>Ruc Due At Km</span></th>
+            <th><span>Hubbo Reading</span></th>
+            <th><span>Load Capacity</span></th>
+            <th><span>Hourly Rate</span></th>
+            <th><span>Registration Due Date</span></th>
+            <th><span>Hire Status</span></th>
+            <th><span>Gps Device Serial</span></th>
+            <th><span>Location</span></th>
+            <th><span>Last Location Update Time</span></th>
+            <th><span>Category</span></th>
+            <th><span>Owner</span></th>
+            <th><span>Assigned Contractor</span></th>
+            <th><span>Project</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let plant of plants ;trackBy: trackId">
+                <td><a [routerLink]="['../plant', plant.id ]">{{plant.id}}</a></td>
+                <td>{{plant.fleetId}}</td>
+                <td>{{plant.name}}</td>
+                <td>{{plant.notes}}</td>
+                <td>{{plant.purchaseDate | date:'medium'}}</td>
+                <td>{{plant.isActive}}</td>
+                <td>{{plant.description}}</td>
+                <td>{{plant.vin}}</td>
+                <td>{{plant.rego}}</td>
+                <td>{{plant.dateOfManufacture | date:'medium'}}</td>
+                <td>
+                    <a *ngIf="plant.image" (click)="openFile(plant.imageContentType, plant.image)">open</a>
+                    <span *ngIf="plant.image">{{plant.imageContentType}}, {{byteSize(plant.image)}}</span>
+                </td>
+                <td>{{plant.tankSize}}</td>
+                <td>{{plant.maintenanceDueAt}}</td>
+                <td>{{plant.meterUnit}}</td>
+                <td>{{plant.certificateDueDate | date:'medium'}}</td>
+                <td>{{plant.rucDueAtKm}}</td>
+                <td>{{plant.hubboReading}}</td>
+                <td>{{plant.loadCapacity}}</td>
+                <td>{{plant.hourlyRate}}</td>
+                <td>{{plant.registrationDueDate | date:'medium'}}</td>
+                <td>{{plant.hireStatus}}</td>
+                <td>{{plant.gpsDeviceSerial}}</td>
+                <td>{{plant.location}}</td>
+                <td>{{plant.lastLocationUpdateTime | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="plant.category">
+                        <a [routerLink]="['../category', plant.category?.id ]" >{{plant.category?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plant.owner">
+                        <a [routerLink]="['../company', plant.owner?.id ]" >{{plant.owner?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plant.assignedContractor">
+                        <a [routerLink]="['../maintenance-contractor', plant.assignedContractor?.id ]" >{{plant.assignedContractor?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plant.project">
+                        <a [routerLink]="['../project', plant.project?.id ]" >{{plant.project?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../plant', plant.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'plant/'+ plant.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'plant/'+ plant.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

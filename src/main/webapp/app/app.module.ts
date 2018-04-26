@@ -2,6 +2,7 @@ import './vendor.ts';
 
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MaterialModule } from './material.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
@@ -30,6 +31,7 @@ import {
 @NgModule({
     imports: [
         BrowserModule,
+        MaterialModule,
         FleetManagementAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         FleetManagementSharedModule,

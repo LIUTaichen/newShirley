@@ -1,0 +1,64 @@
+
+<div *ngIf="category">
+    <h2><span>Category</span> {{category.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Category</span></dt>
+        <dd>
+            <span>{{category.category}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{category.description}}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <span>{{category.type}}</span>
+        </dd>
+        <dt><span>Track Usage</span></dt>
+        <dd>
+            <span>{{category.trackUsage}}</span>
+        </dd>
+        <dt><span>Daily Rate</span></dt>
+        <dd>
+            <span>{{category.dailyRate}}</span>
+        </dd>
+        <dt><span>Load Capacity</span></dt>
+        <dd>
+            <span>{{category.loadCapacity}}</span>
+        </dd>
+        <dt><span>Hourly Rate</span></dt>
+        <dd>
+            <span>{{category.hourlyRate}}</span>
+        </dd>
+        <dt><span>Is Earch Moving Plant</span></dt>
+        <dd>
+            <span>{{category.isEarchMovingPlant}}</span>
+        </dd>
+        <dt><span>Is Tracked For Internal Billing</span></dt>
+        <dd>
+            <span>{{category.isTrackedForInternalBilling}}</span>
+        </dd>
+        <dt><span>Competency</span></dt>
+        <dd>
+            <div *ngIf="category.competency">
+                <a [routerLink]="['/competency', category.competency?.id]">{{category.competency?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>
