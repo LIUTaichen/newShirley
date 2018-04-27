@@ -5,6 +5,7 @@ import { NiggleComponent } from './niggle.component';
 import { NiggleDetailComponent } from './niggle-detail.component';
 import { NigglePopupComponent } from './niggle-dialog.component';
 import { NiggleDeletePopupComponent } from './niggle-delete-dialog.component';
+import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
 
 export const niggleRoute: Routes = [
     {
@@ -23,7 +24,16 @@ export const niggleRoute: Routes = [
             pageTitle: 'Niggles'
         },
         canActivate: [UserRouteAccessService]
+    }, {
+        path: 'niggle-dw',
+        component: NiggleListDwComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Dempsey Wood Niggles List'
+        },
+        canActivate: [UserRouteAccessService]
     }
+
 ];
 
 export const nigglePopupRoute: Routes = [
