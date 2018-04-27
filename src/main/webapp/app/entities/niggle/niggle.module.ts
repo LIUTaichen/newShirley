@@ -14,6 +14,7 @@ import {
     niggleRoute,
     nigglePopupRoute,
 } from './';
+import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
 
 const ENTITY_STATES = [
     ...niggleRoute,
@@ -32,6 +33,7 @@ const ENTITY_STATES = [
         NiggleDeleteDialogComponent,
         NigglePopupComponent,
         NiggleDeletePopupComponent,
+        NiggleListDwComponent,
     ],
     entryComponents: [
         NiggleComponent,
