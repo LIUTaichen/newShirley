@@ -66,6 +66,7 @@ entity MaintenanceContractor{
 }
 
 entity Project{
+	jobNo String,
 	name String,
     location String,
     notes String,

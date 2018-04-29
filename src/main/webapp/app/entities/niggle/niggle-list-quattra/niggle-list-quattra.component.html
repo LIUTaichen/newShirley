@@ -29,10 +29,6 @@
                 <mat-header-cell *matHeaderCellDef> Plant Description </mat-header-cell>
                 <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.description : ""}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="job">
-                <mat-header-cell *matHeaderCellDef> Job No - Job Title </mat-header-cell>
-                <mat-cell *matCellDef="let niggle"> {{niggle.plant ? (niggle.plant.project ? niggle.plant.project.jobNo - niggle.plant.project.name : "") : ""}} </mat-cell>
-            </ng-container>
             <ng-container matColumnDef="location">
                 <mat-header-cell *matHeaderCellDef> Plant Location </mat-header-cell>
                 <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.location : ""}} </mat-cell>
