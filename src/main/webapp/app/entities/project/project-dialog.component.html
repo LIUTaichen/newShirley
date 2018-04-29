@@ -56,6 +56,17 @@
             <input type="text" class="form-control" name="details" id="field_details"
                 [(ngModel)]="project.details" />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_jobNumber">Job Number</label>
+            <input type="text" class="form-control" name="jobNumber" id="field_jobNumber"
+                [(ngModel)]="project.jobNumber" required/>
+            <div [hidden]="!(editForm.controls.jobNumber?.dirty && editForm.controls.jobNumber?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.jobNumber?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
 
     </div>
     <div class="modal-footer">

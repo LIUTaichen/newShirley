@@ -11,6 +11,7 @@ export class Project implements BaseEntity {
         public isActive?: boolean,
         public isOnHold?: boolean,
         public details?: string,
+        public jobNumber?: string,
     ) {
         this.isActive = false;
         this.isOnHold = false;

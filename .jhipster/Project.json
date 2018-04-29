@@ -33,12 +33,19 @@
         {
             "fieldName": "details",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "jobNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180422232212",
-    "entityTableName": "project",
     "dto": "no",
-    "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "entityTableName": "project",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
 }

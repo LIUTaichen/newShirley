@@ -2,6 +2,7 @@ package com.dempseywood.domain;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -44,6 +45,10 @@ public class Project implements Serializable {
 
     @Column(name = "details")
     private String details;
+
+    @NotNull
+    @Column(name = "job_number", nullable = false)
+    private String jobNumber;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -157,6 +162,19 @@ public class Project implements Serializable {
     public void setDetails(String details) {
         this.details = details;
     }
+
+    public String getJobNumber() {
+        return jobNumber;
+    }
+
+    public Project jobNumber(String jobNumber) {
+        this.jobNumber = jobNumber;
+        return this;
+    }
+
+    public void setJobNumber(String jobNumber) {
+        this.jobNumber = jobNumber;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -191,6 +209,7 @@ public class Project implements Serializable {
             ", isActive='" + isIsActive() + "'" +
             ", isOnHold='" + isIsOnHold() + "'" +
             ", details='" + getDetails() + "'" +
+            ", jobNumber='" + getJobNumber() + "'" +
             "}";
     }
 }
