@@ -30,6 +30,12 @@ export class Niggle implements BaseEntity {
         public dateClosed?: any,
         public plant?: BaseEntity,
         public assignedContractor?: BaseEntity,
+        public createdBy?: string,
+        public createdDate?: any,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: any,
+
+
     ) {
     }
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "plant_log")
-public class PlantLog implements Serializable {
+public class PlantLog extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

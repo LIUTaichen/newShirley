@@ -7,5 +7,6 @@
     "dto": "no",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "jpaMetamodelFiltering": false,
+    "enableEntityAudit": true
 }

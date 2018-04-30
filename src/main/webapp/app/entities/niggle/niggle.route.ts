@@ -6,6 +6,8 @@ import { NiggleDetailComponent } from './niggle-detail.component';
 import { NigglePopupComponent } from './niggle-dialog.component';
 import { NiggleDeletePopupComponent } from './niggle-delete-dialog.component';
 import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
+import { NiggleEditFormDwComponent } from './niggle-list-dw/niggle-edit-form-dw/niggle-edit-form-dw.component';
+import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-quattra.component';
 
 export const niggleRoute: Routes = [
     {
@@ -34,7 +36,7 @@ export const niggleRoute: Routes = [
         canActivate: [UserRouteAccessService]
     }, {
         path: 'niggle-quattra',
-        component: NiggleListDwComponent,
+        component: NiggleListQuattraComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Quattra Niggles List'

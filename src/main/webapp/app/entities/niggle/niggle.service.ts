@@ -68,7 +68,13 @@ export class NiggleService {
         copy.dateUpdated = this.dateUtils
             .convertDateTimeFromServer(niggle.dateUpdated);
         copy.dateClosed = this.dateUtils
-            .convertDateTimeFromServer(niggle.dateClosed);
+            .convertDateTimeFromServer(niggle.dateClosed);  
+        // copy.createdDate = this.dateUtils
+        //     .convertDateTimeFromServer(niggle.createdDate);
+        // copy.lastModifiedDate = this.dateUtils
+        //     .convertDateTimeFromServer(niggle.lastModifiedDate);
+                  
+            
         return copy;
     }
 
@@ -76,6 +82,8 @@ export class NiggleService {
      * Convert a Niggle to a JSON which can be sent to the server.
      */
     private convert(niggle: Niggle): Niggle {
+
+        console.log("before conversion     " ,niggle);
         const copy: Niggle = Object.assign({}, niggle);
 
         copy.dateOpened = this.dateUtils.toDate(niggle.dateOpened);
@@ -83,6 +91,10 @@ export class NiggleService {
         copy.dateUpdated = this.dateUtils.toDate(niggle.dateUpdated);
 
         copy.dateClosed = this.dateUtils.toDate(niggle.dateClosed);
+        console.log("converted", copy);
+
+
+
         return copy;
     }
 }

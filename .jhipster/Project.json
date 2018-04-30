@@ -47,5 +47,6 @@
     "service": "no",
     "entityTableName": "project",
     "jpaMetamodelFiltering": false,
-    "pagination": "no"
+    "pagination": "no",
+    "enableEntityAudit": true
 }

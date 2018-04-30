@@ -16,7 +16,7 @@ import com.dempseywood.domain.enumeration.HireStatus;
  */
 @Entity
 @Table(name = "plant")
-public class Plant implements Serializable {
+public class Plant extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -16,7 +16,7 @@ import com.dempseywood.domain.enumeration.Priority;
  */
 @Entity
 @Table(name = "niggle")
-public class Niggle implements Serializable {
+public class Niggle extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
