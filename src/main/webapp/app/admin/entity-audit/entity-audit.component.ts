@@ -62,7 +62,6 @@ export class EntityAuditComponent implements OnInit {
                 'There is no previous version available for this entry.\n' +
                 'This is the first audit entry captured for this object.'
             );
-            
         } else {
             const modalRef = this.modalService.open(EntityAuditModalComponent);
             modalRef.componentInstance.openChange(audit);

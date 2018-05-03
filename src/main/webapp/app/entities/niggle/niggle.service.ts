@@ -13,7 +13,7 @@ export type EntityResponseType = HttpResponse<Niggle>;
 @Injectable()
 export class NiggleService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/niggles';
+    private resourceUrl = SERVER_API_URL + 'api/niggles';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
 
@@ -30,7 +30,7 @@ export class NiggleService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Niggle>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<Niggle>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -41,12 +41,12 @@ export class NiggleService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Niggle = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Niggle[]>): HttpResponse<Niggle[]> {
@@ -55,7 +55,7 @@ export class NiggleService {
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -68,13 +68,8 @@ export class NiggleService {
         copy.dateUpdated = this.dateUtils
             .convertDateTimeFromServer(niggle.dateUpdated);
         copy.dateClosed = this.dateUtils
-            .convertDateTimeFromServer(niggle.dateClosed);  
-        // copy.createdDate = this.dateUtils
-        //     .convertDateTimeFromServer(niggle.createdDate);
-        // copy.lastModifiedDate = this.dateUtils
-        //     .convertDateTimeFromServer(niggle.lastModifiedDate);
-                  
-            
+            .convertDateTimeFromServer(niggle.dateClosed);
+
         return copy;
     }
 
@@ -83,7 +78,6 @@ export class NiggleService {
      */
     private convert(niggle: Niggle): Niggle {
 
-        console.log("before conversion     " ,niggle);
         const copy: Niggle = Object.assign({}, niggle);
 
         copy.dateOpened = this.dateUtils.toDate(niggle.dateOpened);
@@ -91,9 +85,6 @@ export class NiggleService {
         copy.dateUpdated = this.dateUtils.toDate(niggle.dateUpdated);
 
         copy.dateClosed = this.dateUtils.toDate(niggle.dateClosed);
-        console.log("converted", copy);
-
-
 
         return copy;
     }

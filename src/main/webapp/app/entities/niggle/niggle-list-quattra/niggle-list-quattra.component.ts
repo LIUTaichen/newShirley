@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,17 +12,16 @@ import { Principal } from '../../../shared';
   templateUrl: './niggle-list-quattra.component.html',
   styleUrls: ['./niggle-list-quattra.component.css']
 })
-export class NiggleListQuattraComponent implements OnInit {
+export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
-  displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationDate' ,
+  displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationDate',
     'repairNeeded',
     'state',
     'comments',
     'dateOpened',
     'daysOpended'];
   dataSource = new MatTableDataSource(this.niggles);
-
 
   currentAccount: any;
   eventSubscriber: Subscription;
@@ -73,10 +72,9 @@ export class NiggleListQuattraComponent implements OnInit {
   }
 
   getDaysOpened(niggle: Niggle) {
-    if(niggle.dateOpened){
-    return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    }
-    else{
+    if (niggle.dateOpened) {
+      return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+    } else {
       return null;
     }
   }

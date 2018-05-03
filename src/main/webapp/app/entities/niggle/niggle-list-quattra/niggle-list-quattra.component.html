@@ -1,5 +1,12 @@
 <div class="mat-typography">
-    <h2 class="mat-h2">Niggles</h2>
+    <div>
+        <h2 class="mat-h2">
+            <span>Niggles</span>
+            <button mat-raised-button color="primary" class="btn btn-primary float-right jh-create-entity create-niggle" 
+            [routerLink]="['/', { outlets: { popup: ['niggle-new'] } }]">Create New Niggle</button>
+        </h2>
+    </div>
+
     <div class="example-container mat-elevation-z8">
 
         <div class="example-header">

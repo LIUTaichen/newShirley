@@ -1,27 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Niggle } from '../niggle.model';
 import { NiggleService } from '../niggle.service';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
+import { NiggleCreateDialogComponent } from './niggle-create-dialog/niggle-create-dialog.component';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
   templateUrl: './niggle-list-dw.component.html',
   styleUrls: ['./niggle-list-dw.component.css']
 })
-export class NiggleListDwComponent implements OnInit {
+export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   displayedColumns = [
-    'priority', 
-    'plantNumber', 
-    'quattraReference', 
-    'plantDescription', 
-    'job', 
-    'location', 
+    'priority',
+    'plantNumber',
+    'quattraReference',
+    'plantDescription',
+    'job',
+    'location',
     'locationDate',
     'repairNeeded',
     'state',
@@ -34,7 +35,7 @@ export class NiggleListDwComponent implements OnInit {
     'createdBy',
     'dateEdited',
     'editedBy'
-    ];
+  ];
   dataSource = new MatTableDataSource(this.niggles);
   @ViewChild(MatSort) sort: MatSort;
 
@@ -45,7 +46,8 @@ export class NiggleListDwComponent implements OnInit {
     private niggleService: NiggleService,
     private jhiAlertService: JhiAlertService,
     private eventManager: JhiEventManager,
-    private principal: Principal
+    private principal: Principal,
+    public dialog: MatDialog
   ) {
   }
 
@@ -89,13 +91,23 @@ export class NiggleListDwComponent implements OnInit {
   }
 
   getDaysOpened(niggle: Niggle) {
-    if(niggle.dateOpened){
-    return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    }
-    else{
+    if (niggle.dateOpened) {
+      return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+    } else {
       return null;
     }
   }
 
-}
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NiggleCreateDialogComponent, {
+      width: '250px',
+      data: { name: 'this.name', animal: 'this.animal' }
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+}

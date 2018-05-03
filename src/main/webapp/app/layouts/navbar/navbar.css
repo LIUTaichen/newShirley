@@ -7,7 +7,6 @@ Navbar
 }
 
 .jh-navbar {
-    background-color: #353d47;
     padding: .2em 1em;
 }
 
@@ -70,18 +69,27 @@ Logo styles
 ========================================================================== */
 .navbar-brand.logo {
     padding: 5px 15px;
+    font-weight:normal
 }
 
 .logo .logo-img {
-    height: 45px;
-    display: inline-block;
+    /* height: 45px; */
+    /* display: inline-block; */
+    display: none;
     vertical-align: middle;
-    width: 70px;
+    /* width: 70px; */
+    width: 278px;
+    height: 65px;
 }
 
 .logo-img {
     height: 100%;
-    background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+    /* background: url("../../../content/images/logo-jhipster.png") no-repeat center center; */
+    background: url("../../../content/images/dw-logo-full.svg") no-repeat center center;
     background-size: contain;
     width: 100%;
+    margin-left: 40px;
+    margin-right:40px;
+  
 }
+

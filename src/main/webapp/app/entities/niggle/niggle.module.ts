@@ -18,6 +18,8 @@ import {
 import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
 import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-quattra.component';
 import { NiggleEditFormDwComponent } from './niggle-list-dw/niggle-edit-form-dw/niggle-edit-form-dw.component';
+import { NiggleCreateFormQuattraComponent } from './niggle-list-quattra/niggle-create-form-quattra/niggle-create-form-quattra.component';
+import { NiggleCreateDialogComponent } from './niggle-list-dw/niggle-create-dialog/niggle-create-dialog.component';
 
 const ENTITY_STATES = [
     ...niggleRoute,
@@ -40,6 +42,8 @@ const ENTITY_STATES = [
         NiggleListDwComponent,
         NiggleListQuattraComponent,
         NiggleEditFormDwComponent,
+        NiggleCreateFormQuattraComponent,
+        NiggleCreateDialogComponent,
     ],
     entryComponents: [
         NiggleComponent,

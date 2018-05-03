@@ -33,9 +33,7 @@ export class Niggle implements BaseEntity {
         public createdBy?: string,
         public createdDate?: any,
         public lastModifiedBy?: string,
-        public lastModifiedDate?: any,
-
-
+        public lastModifiedDate?: any
     ) {
     }
 }
