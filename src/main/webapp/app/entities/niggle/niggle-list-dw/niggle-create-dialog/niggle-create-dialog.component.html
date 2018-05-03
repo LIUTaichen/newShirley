@@ -1,3 +1,16 @@
 <p>
   niggle-create-dialog works!
 </p>
+<form class="example-form" [formGroup]="niggleForm">
+    <mat-form-field>
+        <mat-select placeholder="Plant Number" formControlName="plant">
+          <mat-option *ngFor="let plant of plants" [value]="plant">
+            {{ plant.fleetId }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <mat-form-field>
+        <textarea matInput placeholder="Textarea" formControlName="description"></textarea>
+    </mat-form-field>
+</form>
+
