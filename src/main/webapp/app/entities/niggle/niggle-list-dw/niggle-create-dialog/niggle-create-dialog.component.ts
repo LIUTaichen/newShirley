@@ -31,7 +31,8 @@ export class NiggleCreateDialogComponent implements OnInit {
     private niggleService: NiggleService,
     private plantService: PlantService,
     private maintenanceContractorService: MaintenanceContractorService,
-    public dialogRef: MatDialogRef<NiggleCreateDialogComponent>
+    public dialogRef: MatDialogRef<NiggleCreateDialogComponent>,
+    private eventManager: JhiEventManager
   ) {
     this.createForm();
   }
@@ -96,6 +97,7 @@ export class NiggleCreateDialogComponent implements OnInit {
 
   private onSaveSuccess(result: Niggle) {
     this.isSaving = false;
+    this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK'});
     this.onCancel();
   }
 

@@ -18,23 +18,23 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   niggles: Niggle[];
   displayedColumns = [
     'priority',
-    'plantNumber',
+    'plant.fleetId',
     'quattraReference',
-    'plantDescription',
-    'job',
-    'location',
-    'locationDate',
-    'repairNeeded',
-    'state',
-    'comments',
-    'contractor',
-    'hiredFrom',
+    'plant.description',
+    'plant.project.jobNumber',
+    'plant.location',
+    'plant.lastLocationUpdateTime',
+    'description',
+    'status',
+    'quattraComments',
+    'assignedContractor.name',
+    'owner',
     'daysOpened',
     'dateOpened',
-    'dateCreated',
+    'createdDate',
     'createdBy',
-    'dateEdited',
-    'editedBy'
+    'lastModifiedDate',
+    'lastModifiedBy'
   ];
   dataSource = new MatTableDataSource(this.niggles);
   @ViewChild(MatSort) sort: MatSort;
