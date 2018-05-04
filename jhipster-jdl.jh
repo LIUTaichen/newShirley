@@ -30,7 +30,7 @@ enum HireStatus{
 }
 
 entity OffHireRequest {
-	
+
 }
 
 entity Category{
@@ -87,7 +87,7 @@ entity People{
     email String,
     phone String,
     name String
-    
+
 }
 
 entity Niggle{
@@ -103,11 +103,9 @@ entity Niggle{
 }
 
 enum Priority{
-    LEVEL1,
-    LEVEL2,
-    LEVEL3,
-    LEVEL4,
-    LEVEL5
+   LOW,
+   MEDIUM,
+   HIGH
 }
 
 enum Status{
@@ -139,6 +137,6 @@ relationship ManyToOne {
     Category{competency} to Competency,
     PlantLog{operator} to People,
     PlantLog{site} to Project
-    
+
 }
 

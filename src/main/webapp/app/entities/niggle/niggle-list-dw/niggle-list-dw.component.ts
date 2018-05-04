@@ -100,7 +100,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NiggleCreateDialogComponent, {
-      // width: '250px',
+      width: '400px',
+      panelClass: 'niggle-panel',
       data: { name: 'this.name', animal: 'this.animal' }
     });
 
