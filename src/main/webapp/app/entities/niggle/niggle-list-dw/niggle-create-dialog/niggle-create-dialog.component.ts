@@ -53,7 +53,7 @@ export class NiggleCreateDialogComponent implements OnInit {
       .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     this.maintenanceContractorService.query()
       .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
-      this.maintenancecontractors = res.body;
+        this.maintenancecontractors = res.body;
         this.niggleForm.patchValue({
           contractor: this.maintenancecontractors[0]
         });
@@ -97,7 +97,7 @@ export class NiggleCreateDialogComponent implements OnInit {
 
   private onSaveSuccess(result: Niggle) {
     this.isSaving = false;
-    this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK'});
+    this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK' });
     this.onCancel();
   }
 

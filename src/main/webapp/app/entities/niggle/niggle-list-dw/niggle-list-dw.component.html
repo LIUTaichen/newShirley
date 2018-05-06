@@ -1,6 +1,7 @@
 <div class="mat-typography niggles-container">
     <h2 class="mat-h2">
         <span>Niggles</span>
+        <span>{{idOfFocusedRow}}</span>
         <button mat-raised-button color="primary" class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
     </h2>
     <div class="example-container mat-elevation-z8">
@@ -16,12 +17,12 @@
 
                 <ng-container matColumnDef="priority">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} {{niggle.id}}</mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="plant.fleetId">
+                <ng-container matColumnDef="plantNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Number </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.fleetId : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="quattraReference">
@@ -29,22 +30,21 @@
                     <mat-cell *matCellDef="let niggle"> {{niggle.quattraReference}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="plant.description">
+                <ng-container matColumnDef="plantDescription">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Description </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.description : ""}}</mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.plantDescription}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="plant.project.jobNumber">
+                <ng-container matColumnDef="site">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Site </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.project ? niggle.plant.project.jobNumber +' - '+ niggle.plant.project.name
-                        : "" : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.site}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="plant.location">
+                <ng-container matColumnDef="location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Location </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.plant ? niggle.plant.location : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.location}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="plant.lastLocationUpdateTime">
+                <ng-container matColumnDef="locationUpdateTime">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Location Update Time </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.plant ? (niggle.plant.lastLocationUpdateTime | date:'medium') : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.locationUpdateTime | date}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="description">
@@ -52,24 +52,24 @@
                     <mat-cell *matCellDef="let niggle"> {{niggle.description}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.status}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="quattraComments">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Comments </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.quattraComments}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="assignedContractor.name">
+                <ng-container matColumnDef="contractor">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned Contractor </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.assignedContractor ? niggle.assignedContractor.name : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.contractor}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Hired From </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{(niggle.plant && niggle.plant.owner) ? niggle.plant.owner.company : ""}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{(niggle.owner)}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="daysOpened">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Days Opened </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{getDaysOpened(niggle)}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.daysOpened}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="dateOpened">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Date Opened </mat-header-cell>
@@ -91,10 +91,18 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Edited By </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.lastModifiedBy}} </mat-cell>
                 </ng-container>
+                <ng-container matColumnDef="delete">
+                        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+                        <mat-cell *matCellDef="let niggle" (click)="$event.stopPropagation()"> 
+                            <button mat-button (click)="openDeleteDialog(niggle.id)"><i class="material-icons delete-icon">delete</i></button> 
+                        </mat-cell>
+                    </ng-container>
 
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)"
+                [class.selected-row]="idOfFocusedRow === row.id"
+                ></mat-row>
             </mat-table>
         </div>
     </div>

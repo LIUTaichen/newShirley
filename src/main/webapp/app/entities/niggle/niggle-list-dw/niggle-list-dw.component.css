@@ -22,9 +22,9 @@
     overflow: auto;
   }
   
-  .mat-column-daysOpened,  .mat-column-state,  .mat-column-createdBy,  .mat-column-editedBy{
+  /* .mat-column-daysOpened,  .mat-column-state,  .mat-column-createdBy,  .mat-column-editedBy{
     flex: 0 0 50px;
-  }
+  } */
 
   .mat-cell {
     font-size: 12px;
@@ -53,3 +53,16 @@
   display : flex;
   flex-direction:column;
 }
+
+.selected-row{
+  background-color: primary;
+}
+
+.mat-row:hover {
+  background-color: #EEEEEE;
+}
+
+.delete-icon {
+  opacity: 0.5;
+}
+

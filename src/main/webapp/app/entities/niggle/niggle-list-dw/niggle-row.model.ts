@@ -1,20 +1,6 @@
-import { BaseEntity } from './../../shared';
+import { Niggle, Status, Priority } from '../niggle.model';
 
-export const enum Status {
-    'SUBMITTED',
-    'OPEN',
-    'ASSIGNED',
-    'COMPLETED',
-    'CLOSED'
-}
-
-export const enum Priority {
-    'LOW',
-    'MEDIUM',
-    'HIGH'
-}
-
-export class Niggle implements BaseEntity {
+export class NiggleRow {
     constructor(
         public id?: number,
         public description?: string,
@@ -26,8 +12,14 @@ export class Niggle implements BaseEntity {
         public dateOpened?: any,
         public dateUpdated?: any,
         public dateClosed?: any,
-        public plant?: BaseEntity,
-        public assignedContractor?: BaseEntity,
+        public plantNumber?: string,
+        public plantDescription?: string,
+        public site?: string,
+        public location?: string,
+        public locationUpdateTime?: any,
+        public owner?: string,
+        public contractor?: string,
+        public daysOpened?: number,
         public createdBy?: string,
         public createdDate?: any,
         public lastModifiedBy?: string,
