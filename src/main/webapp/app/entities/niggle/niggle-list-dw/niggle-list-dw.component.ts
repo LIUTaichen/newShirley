@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
@@ -53,7 +53,6 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     private eventManager: JhiEventManager,
     private principal: Principal,
     public dialog: MatDialog,
-    private zone: NgZone,
   ) {
   }
 
@@ -114,15 +113,28 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
+      this.idOfFocusedRow = '';
       // this.animal = result;
     });
   }
 
   openDeleteDialog(id: number): void {
-    this.zone.run(() => {
-      this.idOfFocusedRow = id;
-    });
+    this.idOfFocusedRow = id;
     const dialogRef = this.dialog.open(NiggleDeleteDialogDwComponent, {
+      width: '500px',
+      panelClass: 'niggle-panel',
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.idOfFocusedRow = '';
+    });
+  }
+
+  openEditDialog(id: number): void {
+    this.idOfFocusedRow = id;
+    const dialogRef = this.dialog.open(NiggleEditDialogComponent, {
       width: '500px',
       panelClass: 'niggle-panel',
       data: { id }
@@ -132,23 +144,6 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       console.log('The dialog was closed');
       // this.animal = result;
     });
-  }
-
-  openEditDialog(id: number): void {
-    this.zone.run(() => {
-      this.idOfFocusedRow = id;
-    });
-    console.log(id);
-    // const dialogRef = this.dialog.open(NiggleEditDialogComponent, {
-    //   width: '500px',
-    //   panelClass: 'niggle-panel',
-    //   data: { id }
-    // });
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   // this.animal = result;
-    // });
   }
 
   convertEntityToRow(niggle: Niggle): NiggleRow {

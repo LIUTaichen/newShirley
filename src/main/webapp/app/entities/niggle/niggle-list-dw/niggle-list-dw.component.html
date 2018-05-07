@@ -1,23 +1,24 @@
 <div class="mat-typography niggles-container">
-    <h2 class="mat-h2">
+    <h2 class="mat-h2 header">
         <span>Niggles</span>
-        <span>{{idOfFocusedRow}}</span>
+
         <button mat-raised-button color="primary" class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
     </h2>
     <div class="example-container mat-elevation-z8">
-
-        <div class="example-header">
+        <div class="example-header float-right">
             <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
             </mat-form-field>
         </div>
+
         <div class="table-container">
+
 
             <mat-table #table [dataSource]="dataSource" matSort>
 
                 <ng-container matColumnDef="priority">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} {{niggle.id}}</mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="plantNumber">
@@ -92,17 +93,18 @@
                     <mat-cell *matCellDef="let niggle"> {{niggle.lastModifiedBy}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="delete">
-                        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
-                        <mat-cell *matCellDef="let niggle" (click)="$event.stopPropagation()"> 
-                            <button mat-button (click)="openDeleteDialog(niggle.id)"><i class="material-icons delete-icon">delete</i></button> 
-                        </mat-cell>
-                    </ng-container>
+                    <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+                    <mat-cell *matCellDef="let niggle" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
+                        <button mat-button (click)="openDeleteDialog(niggle.id)" class="delete-button">
+                            <i class="material-icons delete-icon">delete</i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
 
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)"
-                [class.selected-row]="idOfFocusedRow === row.id"
-                ></mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"
+                    class="table-row" matRipple></mat-row>
             </mat-table>
         </div>
     </div>
