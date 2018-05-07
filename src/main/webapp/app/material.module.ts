@@ -15,7 +15,8 @@ import {
   MatDialogModule,
   MatSelectModule,
   MatAutocompleteModule,
-  MatRippleModule
+  MatRippleModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -34,7 +35,8 @@ import {
     MatDialogModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -51,7 +53,8 @@ import {
     MatDialogModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule {}

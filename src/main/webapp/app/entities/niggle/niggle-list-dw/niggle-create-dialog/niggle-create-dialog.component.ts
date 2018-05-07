@@ -11,7 +11,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'jhi-niggle-create-dialog',
@@ -26,6 +26,7 @@ export class NiggleCreateDialogComponent implements OnInit {
   isSaving: boolean;
 
   constructor(
+    public snackBar: MatSnackBar,
     private fb: FormBuilder,
     private jhiAlertService: JhiAlertService,
     private niggleService: NiggleService,
@@ -98,6 +99,9 @@ export class NiggleCreateDialogComponent implements OnInit {
   private onSaveSuccess(result: Niggle) {
     this.isSaving = false;
     this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK' });
+    const snackBarRef = this.snackBar.open('Niggle created',  'Dismiss', {
+      duration: 3000
+    });
     this.onCancel();
   }
 

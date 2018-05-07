@@ -8,7 +8,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'jhi-niggle-delete-dialog-dw',
@@ -18,7 +18,9 @@ import { MatDialogRef } from '@angular/material';
 export class NiggleDeleteDialogDwComponent implements OnInit {
 
   id: any;
-  constructor(private niggleService: NiggleService,
+  constructor(
+    public snackBar: MatSnackBar,
+    private niggleService: NiggleService,
     private eventManager: JhiEventManager,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.id = data.id;
@@ -32,6 +34,9 @@ export class NiggleDeleteDialogDwComponent implements OnInit {
       this.eventManager.broadcast({
         name: 'niggleListModification',
         content: 'Deleted an niggle'
+      });
+      const snackBarRef = this.snackBar.open('Niggle deleted', 'Dismiss', {
+        duration: 3000
       });
     });
   }

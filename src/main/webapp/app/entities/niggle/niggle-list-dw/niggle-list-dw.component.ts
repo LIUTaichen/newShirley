@@ -22,19 +22,19 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   niggles: Niggle[];
   idOfFocusedRow;
   displayedColumns = [
-    'description',
-    'status',
-    'priority',
-    'quattraReference',
-    'dateOpened',
     'plantNumber',
+    'quattraReference',
     'plantDescription',
     'site',
-    'location',
     'locationUpdateTime',
-    'owner',
+    'description',
+    'status',
     'contractor',
+    'quattraComments',
+    'owner',
+    'dateOpened',
     'daysOpened',
+    'priority',
     'createdBy',
     'createdDate',
     'lastModifiedBy',
@@ -133,10 +133,11 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   openEditDialog(id: number): void {
     this.idOfFocusedRow = id;
+    const niggle: Niggle = this.niggles.find((niggleElement) => niggleElement.id === id);
     const dialogRef = this.dialog.open(NiggleEditDialogComponent, {
       width: '500px',
       panelClass: 'niggle-panel',
-      data: { id }
+      data: { niggle }
     });
 
     dialogRef.afterClosed().subscribe((result) => {

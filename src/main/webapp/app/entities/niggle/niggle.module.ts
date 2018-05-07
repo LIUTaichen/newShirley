@@ -18,7 +18,6 @@ import {
 } from './';
 import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
 import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-quattra.component';
-import { NiggleEditFormDwComponent } from './niggle-list-dw/niggle-edit-form-dw/niggle-edit-form-dw.component';
 import { NiggleCreateFormQuattraComponent } from './niggle-list-quattra/niggle-create-form-quattra/niggle-create-form-quattra.component';
 import { NiggleCreateDialogComponent } from './niggle-list-dw/niggle-create-dialog/niggle-create-dialog.component';
 import { NiggleEditDialogComponent } from './niggle-list-dw/niggle-edit-dialog/niggle-edit-dialog.component';
@@ -45,7 +44,6 @@ const ENTITY_STATES = [
         NiggleDeletePopupComponent,
         NiggleListDwComponent,
         NiggleListQuattraComponent,
-        NiggleEditFormDwComponent,
         NiggleCreateFormQuattraComponent,
         NiggleCreateDialogComponent,
         NiggleEditDialogComponent,

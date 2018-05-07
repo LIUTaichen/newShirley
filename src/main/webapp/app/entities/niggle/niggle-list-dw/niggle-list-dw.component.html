@@ -16,11 +16,6 @@
 
             <mat-table #table [dataSource]="dataSource" matSort>
 
-                <ng-container matColumnDef="priority">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} </mat-cell>
-                </ng-container>
-
                 <ng-container matColumnDef="plantNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Number </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
@@ -30,6 +25,12 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Reference </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.quattraReference}} </mat-cell>
                 </ng-container>
+
+
+
+
+
+
 
                 <ng-container matColumnDef="plantDescription">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Description </mat-header-cell>
@@ -56,25 +57,32 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.status}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="quattraComments">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Comments </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.quattraComments}} </mat-cell>
-                </ng-container>
+
                 <ng-container matColumnDef="contractor">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned Contractor </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.contractor}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="quattraComments">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Comments </mat-header-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.quattraComments}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Hired From </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{(niggle.owner)}} </mat-cell>
                 </ng-container>
+
+                <ng-container matColumnDef="dateOpened">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date Opened </mat-header-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.dateOpened | date}} </mat-cell>
+                </ng-container>
                 <ng-container matColumnDef="daysOpened">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Days Opened </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.daysOpened}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="dateOpened">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date Opened </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.dateOpened | date}} </mat-cell>
+
+                <ng-container matColumnDef="priority">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.priority}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="createdDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </mat-header-cell>

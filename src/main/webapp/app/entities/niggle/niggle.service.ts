@@ -24,8 +24,8 @@ export class NiggleService {
     }
 
     update(niggle: Niggle): Observable<EntityResponseType> {
-        const copy = this.convert(niggle);
-        return this.http.put<Niggle>(this.resourceUrl, copy, { observe: 'response' })
+        // const copy = this.convert(niggle);
+        return this.http.put<Niggle>(this.resourceUrl, niggle, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
