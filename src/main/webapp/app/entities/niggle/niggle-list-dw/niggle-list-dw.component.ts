@@ -121,8 +121,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   openDeleteDialog(id: number): void {
     this.idOfFocusedRow = id;
     const dialogRef = this.dialog.open(NiggleDeleteDialogDwComponent, {
-      width: '500px',
-      panelClass: 'niggle-panel',
+      panelClass: 'niggle-delete-panel',
       data: { id }
     });
 
