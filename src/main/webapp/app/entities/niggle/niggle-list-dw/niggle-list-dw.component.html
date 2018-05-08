@@ -14,7 +14,7 @@
         <div class="table-container">
 
 
-            <mat-table #table [dataSource]="dataSource" matSort>
+            <mat-table #table [dataSource]="dataSource" matSort matSortActive="lastModifiedDate" matSortDirection="desc">
 
                 <ng-container matColumnDef="plantNumber">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Number </mat-header-cell>
