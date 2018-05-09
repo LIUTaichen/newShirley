@@ -5,6 +5,8 @@ import locale from '@angular/common/locales/en';
 
 import {
     FleetManagementSharedLibsModule,
+    JhiLanguageHelper,
+    FindLanguageFromKeyPipe,
     JhiAlertComponent,
     JhiAlertErrorComponent
 } from './';
@@ -14,10 +16,12 @@ import {
         FleetManagementSharedLibsModule
     ],
     declarations: [
+        FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent
     ],
     providers: [
+        JhiLanguageHelper,
         Title,
         {
             provide: LOCALE_ID,
@@ -26,6 +30,7 @@ import {
     ],
     exports: [
         FleetManagementSharedLibsModule,
+        FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent
     ]
