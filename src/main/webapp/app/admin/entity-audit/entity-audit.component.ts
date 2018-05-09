@@ -42,11 +42,10 @@ export class EntityAuditComponent implements OnInit {
     loadChanges() {
         this.loading = true;
         this.service.findByEntity(this.selectedEntity, this.selectedLimit)
-        .subscribe((res) => {
-            const data = res.body;
-            this.audits = data.map((it: EntityAuditEvent) => {
+            .subscribe((audits) => {
+                this.audits = audits.map((it) => {
                     it.entityValue = JSON.parse(it.entityValue);
-                    return it;
+                    return it
                 });
                 this.loading = false;
             }, (err) => this.loading = false);
@@ -58,10 +57,8 @@ export class EntityAuditComponent implements OnInit {
 
     openChange(audit: EntityAuditEvent) {
         if (audit.commitVersion < 2) {
-            this.alertService.warning(
-                'There is no previous version available for this entry.\n' +
-                'This is the first audit entry captured for this object.'
-            );
+            this.alertService.warning('entityAudit.result.firstAuditEntry');
+
         } else {
             const modalRef = this.modalService.open(EntityAuditModalComponent);
             modalRef.componentInstance.openChange(audit);

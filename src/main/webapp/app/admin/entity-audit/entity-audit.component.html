@@ -57,7 +57,7 @@
                     </label>
                     <input type="text" class="form-control" id="searchFieldEntityId"
                             name="searchFieldEntityId"
-                            placeholder="entity id filter"
+                            placeholder="{{ 'entityAudit.result.entityIdFilter' | translate }}"
                             [(ngModel)]="filterEntityId" />
                 </div>
             </form>
@@ -101,7 +101,7 @@
                         <td>{{ audit.modifiedBy }}</td>
                         <td>
                             <button type="button" class="btn btn-info btn-xs"
-                                    ngbTooltip="View Audit Change Details"
+                                    ngbTooltip="{{ 'entityAudit.result.tableBody.viewDetails' | translate }}"
                                     (click)=openChange(audit)>
                                 <i class="fa fa-eye"></i>
                             </button>
