@@ -27,7 +27,11 @@
     "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
-    "enableTranslation": true
+    "enableTranslation": true,
+    "enableHibernateCache": false,
+    "languages": [
+      "en"
+    ]
   },
   "generator-jhipster-entity-audit": {
     "auditFramework": "custom"

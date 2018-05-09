@@ -8,6 +8,7 @@
         "outDir": "target/www/app",
         "assets": [
             "content",
+            "i18n",
             "favicon.ico"
         ],
         "index": "index.html",
@@ -39,7 +40,7 @@
         "styleExt": "css",
         "prefixInterfaces": false,
         "component" : {
-            "inlineStyle" : false,
+            "inlineStyle" : true,
             "inlineTemplate": false,
             "spec": false
         },
