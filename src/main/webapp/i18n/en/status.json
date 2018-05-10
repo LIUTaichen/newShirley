@@ -1,0 +1,12 @@
+{
+    "fleetManagementApp": {
+        "Status" : {
+            "null": "",
+            "SUBMITTED": "SUBMITTED",
+            "OPEN": "OPEN",
+            "ASSIGNED": "ASSIGNED",
+            "COMPLETED": "COMPLETED",
+            "CLOSED": "CLOSED"
+        }
+    }
+}

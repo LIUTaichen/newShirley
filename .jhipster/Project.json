@@ -3,6 +3,10 @@
     "relationships": [],
     "fields": [
         {
+            "fieldName": "jobNo",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "name",
             "fieldType": "String"
         },
@@ -33,20 +37,12 @@
         {
             "fieldName": "details",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "jobNumber",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "changelogDate": "20180422232212",
-    "dto": "no",
-    "service": "no",
     "entityTableName": "project",
-    "jpaMetamodelFiltering": false,
+    "dto": "no",
     "pagination": "no",
-    "enableEntityAudit": true
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

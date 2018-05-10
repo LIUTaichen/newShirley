@@ -31,7 +31,7 @@
         {
             "fieldName": "priority",
             "fieldType": "Priority",
-            "fieldValues": "LEVEL1,LEVEL2,LEVEL3,LEVEL4,LEVEL5"
+            "fieldValues": "LOW,MEDIUM,HIGH"
         },
         {
             "fieldName": "quattraReference",
@@ -59,6 +59,5 @@
     "dto": "no",
     "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false,
-    "enableEntityAudit": true
+    "jpaMetamodelFiltering": false
 }
