@@ -74,19 +74,6 @@
         
     </changeSet>
     
-    <!-- Added the entity audit columns -->
-    <changeSet id="20180510005029-audit-1" author="jhipster-entity-audit">
-        <addColumn tableName="niggle">
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_date" type="timestamp" defaultValueDate="${now}">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
-        </addColumn>
-    </changeSet>
     
     <!-- Added the entity audit columns -->
     <changeSet id="20180510011427-audit-1" author="jhipster-entity-audit">
