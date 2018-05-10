@@ -1,7 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../../material.module';
 
 import { FleetManagementSharedModule } from '../../shared';
 import {
@@ -16,12 +14,6 @@ import {
     niggleRoute,
     nigglePopupRoute,
 } from './';
-import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
-import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-quattra.component';
-import { NiggleCreateFormQuattraComponent } from './niggle-list-quattra/niggle-create-form-quattra/niggle-create-form-quattra.component';
-import { NiggleCreateDialogComponent } from './niggle-list-dw/niggle-create-dialog/niggle-create-dialog.component';
-import { NiggleEditDialogComponent } from './niggle-list-dw/niggle-edit-dialog/niggle-edit-dialog.component';
-import { NiggleDeleteDialogDwComponent } from './niggle-list-dw/niggle-delete-dialog-dw/niggle-delete-dialog-dw.component';
 
 const ENTITY_STATES = [
     ...niggleRoute,
@@ -30,8 +22,6 @@ const ENTITY_STATES = [
 
 @NgModule({
     imports: [
-        MaterialModule,
-        ReactiveFormsModule,
         FleetManagementSharedModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
@@ -42,12 +32,6 @@ const ENTITY_STATES = [
         NiggleDeleteDialogComponent,
         NigglePopupComponent,
         NiggleDeletePopupComponent,
-        NiggleListDwComponent,
-        NiggleListQuattraComponent,
-        NiggleCreateFormQuattraComponent,
-        NiggleCreateDialogComponent,
-        NiggleEditDialogComponent,
-        NiggleDeleteDialogDwComponent
     ],
     entryComponents: [
         NiggleComponent,
@@ -55,8 +39,6 @@ const ENTITY_STATES = [
         NigglePopupComponent,
         NiggleDeleteDialogComponent,
         NiggleDeletePopupComponent,
-        NiggleEditDialogComponent,
-        NiggleDeleteDialogDwComponent
     ],
     providers: [
         NiggleService,

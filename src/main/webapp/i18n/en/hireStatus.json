@@ -1,0 +1,9 @@
+{
+    "fleetManagementApp": {
+        "HireStatus" : {
+            "null": "",
+            "ONHIRE": "ONHIRE",
+            "OFFHIRE": "OFFHIRE"
+        }
+    }
+}

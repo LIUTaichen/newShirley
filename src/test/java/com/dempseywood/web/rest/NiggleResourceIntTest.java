@@ -52,7 +52,7 @@ public class NiggleResourceIntTest {
     private static final String UPDATED_NOTE = "BBBBBBBBBB";
 
     private static final Priority DEFAULT_PRIORITY = Priority.LOW;
-    private static final Priority UPDATED_PRIORITY = Priority.HIGH;
+    private static final Priority UPDATED_PRIORITY = Priority.MEDIUM;
 
     private static final String DEFAULT_QUATTRA_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_QUATTRA_REFERENCE = "BBBBBBBBBB";

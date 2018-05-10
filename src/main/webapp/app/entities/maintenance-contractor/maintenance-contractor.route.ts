@@ -12,7 +12,7 @@ export const maintenanceContractorRoute: Routes = [
         component: MaintenanceContractorComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'MaintenanceContractors'
+            pageTitle: 'fleetManagementApp.maintenanceContractor.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const maintenanceContractorRoute: Routes = [
         component: MaintenanceContractorDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'MaintenanceContractors'
+            pageTitle: 'fleetManagementApp.maintenanceContractor.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const maintenanceContractorPopupRoute: Routes = [
         component: MaintenanceContractorPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'MaintenanceContractors'
+            pageTitle: 'fleetManagementApp.maintenanceContractor.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const maintenanceContractorPopupRoute: Routes = [
         component: MaintenanceContractorPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'MaintenanceContractors'
+            pageTitle: 'fleetManagementApp.maintenanceContractor.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const maintenanceContractorPopupRoute: Routes = [
         component: MaintenanceContractorDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'MaintenanceContractors'
+            pageTitle: 'fleetManagementApp.maintenanceContractor.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

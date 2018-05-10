@@ -12,7 +12,7 @@ export const companyRoute: Routes = [
         component: CompanyComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Companies'
+            pageTitle: 'fleetManagementApp.company.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const companyRoute: Routes = [
         component: CompanyDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Companies'
+            pageTitle: 'fleetManagementApp.company.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const companyPopupRoute: Routes = [
         component: CompanyPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Companies'
+            pageTitle: 'fleetManagementApp.company.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const companyPopupRoute: Routes = [
         component: CompanyPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Companies'
+            pageTitle: 'fleetManagementApp.company.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const companyPopupRoute: Routes = [
         component: CompanyDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Companies'
+            pageTitle: 'fleetManagementApp.company.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

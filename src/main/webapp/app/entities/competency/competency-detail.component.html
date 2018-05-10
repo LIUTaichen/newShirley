@@ -1,18 +1,18 @@
 
 <div *ngIf="competency">
-    <h2><span>Competency</span> {{competency.id}}</h2>
+    <h2><span jhiTranslate="fleetManagementApp.competency.detail.title">Competency</span> {{competency.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span>Competency</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.competency.competency">Competency</span></dt>
         <dd>
             <span>{{competency.competency}}</span>
         </dd>
-        <dt><span>Grouping</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.competency.grouping">Grouping</span></dt>
         <dd>
             <span>{{competency.grouping}}</span>
         </dd>
-        <dt><span>Sort Order</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.competency.sortOrder">Sort Order</span></dt>
         <dd>
             <span>{{competency.sortOrder}}</span>
         </dd>
@@ -21,7 +21,7 @@
     <button type="submit"
             (click)="previousState()"
             class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
     <button type="button"
@@ -29,6 +29,6 @@
             replaceUrl="true"
             queryParamsHandling="merge"
             class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

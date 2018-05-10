@@ -12,7 +12,7 @@ export const plantRoute: Routes = [
         component: PlantComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Plants'
+            pageTitle: 'fleetManagementApp.plant.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const plantRoute: Routes = [
         component: PlantDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Plants'
+            pageTitle: 'fleetManagementApp.plant.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const plantPopupRoute: Routes = [
         component: PlantPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Plants'
+            pageTitle: 'fleetManagementApp.plant.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const plantPopupRoute: Routes = [
         component: PlantPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Plants'
+            pageTitle: 'fleetManagementApp.plant.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const plantPopupRoute: Routes = [
         component: PlantDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Plants'
+            pageTitle: 'fleetManagementApp.plant.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

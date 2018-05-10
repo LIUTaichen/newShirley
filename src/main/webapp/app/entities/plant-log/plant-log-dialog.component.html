@@ -1,53 +1,53 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myPlantLogLabel">Create or edit a Plant Log</h4>
+        <h4 class="modal-title" id="myPlantLogLabel" jhiTranslate="fleetManagementApp.plantLog.home.createOrEditLabel">Create or edit a Plant Log</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!plantLog.id">
-            <label for="id">ID</label>
+            <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="plantLog.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_meterReading">Meter Reading</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.meterReading" for="field_meterReading">Meter Reading</label>
             <input type="number" class="form-control" name="meterReading" id="field_meterReading"
                 [(ngModel)]="plantLog.meterReading" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_hubboReading">Hubbo Reading</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.hubboReading" for="field_hubboReading">Hubbo Reading</label>
             <input type="number" class="form-control" name="hubboReading" id="field_hubboReading"
                 [(ngModel)]="plantLog.hubboReading" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_serviceDueAt">Service Due At</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.serviceDueAt" for="field_serviceDueAt">Service Due At</label>
             <input type="number" class="form-control" name="serviceDueAt" id="field_serviceDueAt"
                 [(ngModel)]="plantLog.serviceDueAt" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_rucDueAt">Ruc Due At</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.rucDueAt" for="field_rucDueAt">Ruc Due At</label>
             <input type="number" class="form-control" name="rucDueAt" id="field_rucDueAt"
                 [(ngModel)]="plantLog.rucDueAt" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_wofDueDate">Wof Due Date</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.wofDueDate" for="field_wofDueDate">Wof Due Date</label>
             <div class="d-flex">
                 <input id="field_wofDueDate" type="datetime-local" class="form-control" name="wofDueDate" [(ngModel)]="plantLog.wofDueDate"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_cofDueDate">Cof Due Date</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.cofDueDate" for="field_cofDueDate">Cof Due Date</label>
             <div class="d-flex">
                 <input id="field_cofDueDate" type="datetime-local" class="form-control" name="cofDueDate" [(ngModel)]="plantLog.cofDueDate"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_serviceDueDate">Service Due Date</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.serviceDueDate" for="field_serviceDueDate">Service Due Date</label>
             <div class="d-flex">
                 <input id="field_serviceDueDate" type="datetime-local" class="form-control" name="serviceDueDate" [(ngModel)]="plantLog.serviceDueDate"
                 />
@@ -55,21 +55,21 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" for="field_plant">Plant</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.plant" for="field_plant">Plant</label>
             <select class="form-control" id="field_plant" name="plant" [(ngModel)]="plantLog.plant" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="plantOption.id === plantLog.plant?.id ? plantLog.plant : plantOption" *ngFor="let plantOption of plants; trackBy: trackPlantById">{{plantOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_operator">Operator</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.operator" for="field_operator">Operator</label>
             <select class="form-control" id="field_operator" name="operator" [(ngModel)]="plantLog.operator" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="peopleOption.id === plantLog.operator?.id ? plantLog.operator : peopleOption" *ngFor="let peopleOption of people; trackBy: trackPeopleById">{{peopleOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_site">Site</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.plantLog.site" for="field_site">Site</label>
             <select class="form-control" id="field_site" name="site" [(ngModel)]="plantLog.site" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="projectOption.id === plantLog.site?.id ? plantLog.site : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.id}}</option>
@@ -78,10 +78,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

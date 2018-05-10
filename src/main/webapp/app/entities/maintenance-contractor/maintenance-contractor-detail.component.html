@@ -1,10 +1,10 @@
 
 <div *ngIf="maintenanceContractor">
-    <h2><span>Maintenance Contractor</span> {{maintenanceContractor.id}}</h2>
+    <h2><span jhiTranslate="fleetManagementApp.maintenanceContractor.detail.title">Maintenance Contractor</span> {{maintenanceContractor.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span>Name</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.maintenanceContractor.name">Name</span></dt>
         <dd>
             <span>{{maintenanceContractor.name}}</span>
         </dd>
@@ -13,7 +13,7 @@
     <button type="submit"
             (click)="previousState()"
             class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
     <button type="button"
@@ -21,6 +21,6 @@
             replaceUrl="true"
             queryParamsHandling="merge"
             class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

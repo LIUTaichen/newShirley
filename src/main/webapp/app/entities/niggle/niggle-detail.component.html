@@ -1,52 +1,52 @@
 
 <div *ngIf="niggle">
-    <h2><span>Niggle</span> {{niggle.id}}</h2>
+    <h2><span jhiTranslate="fleetManagementApp.niggle.detail.title">Niggle</span> {{niggle.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span>Description</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.description">Description</span></dt>
         <dd>
             <span>{{niggle.description}}</span>
         </dd>
-        <dt><span>Status</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.status">Status</span></dt>
         <dd>
-            <span>{{niggle.status}}</span>
+            <span jhiTranslate="{{'fleetManagementApp.Status.' + niggle.status}}">{{niggle.status}}</span>
         </dd>
-        <dt><span>Note</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.note">Note</span></dt>
         <dd>
             <span>{{niggle.note}}</span>
         </dd>
-        <dt><span>Priority</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.priority">Priority</span></dt>
         <dd>
-            <span>{{niggle.priority}}</span>
+            <span jhiTranslate="{{'fleetManagementApp.Priority.' + niggle.priority}}">{{niggle.priority}}</span>
         </dd>
-        <dt><span>Quattra Reference</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.quattraReference">Quattra Reference</span></dt>
         <dd>
             <span>{{niggle.quattraReference}}</span>
         </dd>
-        <dt><span>Quattra Comments</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.quattraComments">Quattra Comments</span></dt>
         <dd>
             <span>{{niggle.quattraComments}}</span>
         </dd>
-        <dt><span>Date Opened</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.dateOpened">Date Opened</span></dt>
         <dd>
             <span>{{niggle.dateOpened | date:'medium'}}</span>
         </dd>
-        <dt><span>Date Updated</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.dateUpdated">Date Updated</span></dt>
         <dd>
             <span>{{niggle.dateUpdated | date:'medium'}}</span>
         </dd>
-        <dt><span>Date Closed</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.dateClosed">Date Closed</span></dt>
         <dd>
             <span>{{niggle.dateClosed | date:'medium'}}</span>
         </dd>
-        <dt><span>Plant</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.plant">Plant</span></dt>
         <dd>
             <div *ngIf="niggle.plant">
                 <a [routerLink]="['/plant', niggle.plant?.id]">{{niggle.plant?.id}}</a>
             </div>
         </dd>
-        <dt><span>Assigned Contractor</span></dt>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.assignedContractor">Assigned Contractor</span></dt>
         <dd>
             <div *ngIf="niggle.assignedContractor">
                 <a [routerLink]="['/maintenance-contractor', niggle.assignedContractor?.id]">{{niggle.assignedContractor?.id}}</a>
@@ -57,7 +57,7 @@
     <button type="submit"
             (click)="previousState()"
             class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
     <button type="button"
@@ -65,6 +65,6 @@
             replaceUrl="true"
             queryParamsHandling="merge"
             class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

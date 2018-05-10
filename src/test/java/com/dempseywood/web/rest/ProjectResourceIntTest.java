@@ -40,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = FleetManagementApp.class)
 public class ProjectResourceIntTest {
 
+    private static final String DEFAULT_JOB_NO = "AAAAAAAAAA";
+    private static final String UPDATED_JOB_NO = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -63,9 +66,6 @@ public class ProjectResourceIntTest {
 
     private static final String DEFAULT_DETAILS = "AAAAAAAAAA";
     private static final String UPDATED_DETAILS = "BBBBBBBBBB";
-
-    private static final String DEFAULT_JOB_NUMBER = "AAAAAAAAAA";
-    private static final String UPDATED_JOB_NUMBER = "BBBBBBBBBB";
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -105,6 +105,7 @@ public class ProjectResourceIntTest {
      */
     public static Project createEntity(EntityManager em) {
         Project project = new Project()
+            .jobNo(DEFAULT_JOB_NO)
             .name(DEFAULT_NAME)
             .location(DEFAULT_LOCATION)
             .notes(DEFAULT_NOTES)
@@ -112,8 +113,7 @@ public class ProjectResourceIntTest {
             .endDate(DEFAULT_END_DATE)
             .isActive(DEFAULT_IS_ACTIVE)
             .isOnHold(DEFAULT_IS_ON_HOLD)
-            .details(DEFAULT_DETAILS)
-            .jobNumber(DEFAULT_JOB_NUMBER);
+            .details(DEFAULT_DETAILS);
         return project;
     }
 
@@ -137,6 +137,7 @@ public class ProjectResourceIntTest {
         List<Project> projectList = projectRepository.findAll();
         assertThat(projectList).hasSize(databaseSizeBeforeCreate + 1);
         Project testProject = projectList.get(projectList.size() - 1);
+        assertThat(testProject.getJobNo()).isEqualTo(DEFAULT_JOB_NO);
         assertThat(testProject.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProject.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testProject.getNotes()).isEqualTo(DEFAULT_NOTES);
@@ -145,7 +146,6 @@ public class ProjectResourceIntTest {
         assertThat(testProject.isIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
         assertThat(testProject.isIsOnHold()).isEqualTo(DEFAULT_IS_ON_HOLD);
         assertThat(testProject.getDetails()).isEqualTo(DEFAULT_DETAILS);
-        assertThat(testProject.getJobNumber()).isEqualTo(DEFAULT_JOB_NUMBER);
     }
 
     @Test
@@ -169,24 +169,6 @@ public class ProjectResourceIntTest {
 
     @Test
     @Transactional
-    public void checkJobNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = projectRepository.findAll().size();
-        // set the field null
-        project.setJobNumber(null);
-
-        // Create the Project, which fails.
-
-        restProjectMockMvc.perform(post("/api/projects")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(project)))
-            .andExpect(status().isBadRequest());
-
-        List<Project> projectList = projectRepository.findAll();
-        assertThat(projectList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllProjects() throws Exception {
         // Initialize the database
         projectRepository.saveAndFlush(project);
@@ -196,6 +178,7 @@ public class ProjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(project.getId().intValue())))
+            .andExpect(jsonPath("$.[*].jobNo").value(hasItem(DEFAULT_JOB_NO.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
@@ -203,8 +186,7 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].isOnHold").value(hasItem(DEFAULT_IS_ON_HOLD.booleanValue())))
-            .andExpect(jsonPath("$.[*].details").value(hasItem(DEFAULT_DETAILS.toString())))
-            .andExpect(jsonPath("$.[*].jobNumber").value(hasItem(DEFAULT_JOB_NUMBER.toString())));
+            .andExpect(jsonPath("$.[*].details").value(hasItem(DEFAULT_DETAILS.toString())));
     }
 
     @Test
@@ -218,6 +200,7 @@ public class ProjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(project.getId().intValue()))
+            .andExpect(jsonPath("$.jobNo").value(DEFAULT_JOB_NO.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION.toString()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()))
@@ -225,8 +208,7 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.isOnHold").value(DEFAULT_IS_ON_HOLD.booleanValue()))
-            .andExpect(jsonPath("$.details").value(DEFAULT_DETAILS.toString()))
-            .andExpect(jsonPath("$.jobNumber").value(DEFAULT_JOB_NUMBER.toString()));
+            .andExpect(jsonPath("$.details").value(DEFAULT_DETAILS.toString()));
     }
 
     @Test
@@ -249,6 +231,7 @@ public class ProjectResourceIntTest {
         // Disconnect from session so that the updates on updatedProject are not directly saved in db
         em.detach(updatedProject);
         updatedProject
+            .jobNo(UPDATED_JOB_NO)
             .name(UPDATED_NAME)
             .location(UPDATED_LOCATION)
             .notes(UPDATED_NOTES)
@@ -256,8 +239,7 @@ public class ProjectResourceIntTest {
             .endDate(UPDATED_END_DATE)
             .isActive(UPDATED_IS_ACTIVE)
             .isOnHold(UPDATED_IS_ON_HOLD)
-            .details(UPDATED_DETAILS)
-            .jobNumber(UPDATED_JOB_NUMBER);
+            .details(UPDATED_DETAILS);
 
         restProjectMockMvc.perform(put("/api/projects")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -268,6 +250,7 @@ public class ProjectResourceIntTest {
         List<Project> projectList = projectRepository.findAll();
         assertThat(projectList).hasSize(databaseSizeBeforeUpdate);
         Project testProject = projectList.get(projectList.size() - 1);
+        assertThat(testProject.getJobNo()).isEqualTo(UPDATED_JOB_NO);
         assertThat(testProject.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProject.getLocation()).isEqualTo(UPDATED_LOCATION);
         assertThat(testProject.getNotes()).isEqualTo(UPDATED_NOTES);
@@ -276,7 +259,6 @@ public class ProjectResourceIntTest {
         assertThat(testProject.isIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
         assertThat(testProject.isIsOnHold()).isEqualTo(UPDATED_IS_ON_HOLD);
         assertThat(testProject.getDetails()).isEqualTo(UPDATED_DETAILS);
-        assertThat(testProject.getJobNumber()).isEqualTo(UPDATED_JOB_NUMBER);
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.dempseywood.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,9 +17,11 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "job_no")
+    private String jobNo;
 
     @Column(name = "name")
     private String name;
@@ -46,10 +47,6 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     @Column(name = "details")
     private String details;
 
-    @NotNull
-    @Column(name = "job_number", nullable = false)
-    private String jobNumber;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -57,6 +54,19 @@ public class Project extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getJobNo() {
+        return jobNo;
+    }
+
+    public Project jobNo(String jobNo) {
+        this.jobNo = jobNo;
+        return this;
+    }
+
+    public void setJobNo(String jobNo) {
+        this.jobNo = jobNo;
     }
 
     public String getName() {
@@ -162,19 +172,6 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     public void setDetails(String details) {
         this.details = details;
     }
-
-    public String getJobNumber() {
-        return jobNumber;
-    }
-
-    public Project jobNumber(String jobNumber) {
-        this.jobNumber = jobNumber;
-        return this;
-    }
-
-    public void setJobNumber(String jobNumber) {
-        this.jobNumber = jobNumber;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -201,6 +198,7 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Project{" +
             "id=" + getId() +
+            ", jobNo='" + getJobNo() + "'" +
             ", name='" + getName() + "'" +
             ", location='" + getLocation() + "'" +
             ", notes='" + getNotes() + "'" +
@@ -209,7 +207,6 @@ public class Project extends AbstractAuditingEntity implements Serializable {
             ", isActive='" + isIsActive() + "'" +
             ", isOnHold='" + isIsOnHold() + "'" +
             ", details='" + getDetails() + "'" +
-            ", jobNumber='" + getJobNumber() + "'" +
             "}";
     }
 }

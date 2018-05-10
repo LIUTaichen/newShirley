@@ -8,7 +8,8 @@
 
     <property name="now" value="now()" dbms="h2"/>
 
-    <property name="now" value="GETDATE()" dbms="mssql"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
@@ -21,6 +22,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="job_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -53,10 +58,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="job_number" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="project" columnName="start_date" columnDataType="datetime"/>
@@ -65,7 +66,7 @@
     </changeSet>
     
     <!-- Added the entity audit columns -->
-    <changeSet id="20180429235713-audit-1" author="jhipster-entity-audit">
+    <changeSet id="20180510005029-audit-1" author="jhipster-entity-audit">
         <addColumn tableName="project">
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>

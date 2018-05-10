@@ -1,9 +1,9 @@
 <div>
     <h2>
-        <span>Categories</span>
+        <span jhiTranslate="fleetManagementApp.category.home.title">Categories</span>
         <button class="btn btn-primary float-right jh-create-entity create-category" [routerLink]="['/', { outlets: { popup: ['category-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span >
+            <span  jhiTranslate="fleetManagementApp.category.home.createLabel">
             Create new Category
             </span>
         </button>
@@ -16,17 +16,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
-            <th><span>Category</span></th>
-            <th><span>Description</span></th>
-            <th><span>Type</span></th>
-            <th><span>Track Usage</span></th>
-            <th><span>Daily Rate</span></th>
-            <th><span>Load Capacity</span></th>
-            <th><span>Hourly Rate</span></th>
-            <th><span>Is Earch Moving Plant</span></th>
-            <th><span>Is Tracked For Internal Billing</span></th>
-            <th><span>Competency</span></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.category">Category</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.description">Description</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.type">Type</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.trackUsage">Track Usage</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.dailyRate">Daily Rate</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.loadCapacity">Load Capacity</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.hourlyRate">Hourly Rate</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.isEarchMovingPlant">Is Earch Moving Plant</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.isTrackedForInternalBilling">Is Tracked For Internal Billing</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.competency">Competency</span></th>
             <th></th>
             </tr>
             </thead>
@@ -53,7 +53,7 @@
                                 [routerLink]="['../category', category.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
@@ -61,7 +61,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/delete'} }]"
@@ -69,7 +69,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>

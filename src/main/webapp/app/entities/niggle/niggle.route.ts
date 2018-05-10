@@ -5,9 +5,6 @@ import { NiggleComponent } from './niggle.component';
 import { NiggleDetailComponent } from './niggle-detail.component';
 import { NigglePopupComponent } from './niggle-dialog.component';
 import { NiggleDeletePopupComponent } from './niggle-delete-dialog.component';
-import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component';
-import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-quattra.component';
-import { NiggleCreateDialogComponent } from './niggle-list-dw/niggle-create-dialog/niggle-create-dialog.component';
 
 export const niggleRoute: Routes = [
     {
@@ -15,7 +12,7 @@ export const niggleRoute: Routes = [
         component: NiggleComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -23,27 +20,10 @@ export const niggleRoute: Routes = [
         component: NiggleDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'niggle-dw',
-        component: NiggleListDwComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Dempsey Wood Niggles List'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'niggle-quattra',
-        component: NiggleListQuattraComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Quattra Niggles List'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
-
 ];
 
 export const nigglePopupRoute: Routes = [
@@ -52,17 +32,7 @@ export const nigglePopupRoute: Routes = [
         component: NigglePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'niggle-new-dw',
-        component: NiggleCreateDialogComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -72,7 +42,7 @@ export const nigglePopupRoute: Routes = [
         component: NigglePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -82,7 +52,7 @@ export const nigglePopupRoute: Routes = [
         component: NiggleDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

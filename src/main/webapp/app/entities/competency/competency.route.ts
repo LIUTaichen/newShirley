@@ -12,7 +12,7 @@ export const competencyRoute: Routes = [
         component: CompetencyComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Competencies'
+            pageTitle: 'fleetManagementApp.competency.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const competencyRoute: Routes = [
         component: CompetencyDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Competencies'
+            pageTitle: 'fleetManagementApp.competency.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const competencyPopupRoute: Routes = [
         component: CompetencyPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Competencies'
+            pageTitle: 'fleetManagementApp.competency.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const competencyPopupRoute: Routes = [
         component: CompetencyPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Competencies'
+            pageTitle: 'fleetManagementApp.competency.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const competencyPopupRoute: Routes = [
         component: CompetencyDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Competencies'
+            pageTitle: 'fleetManagementApp.competency.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

@@ -7,6 +7,16 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
+                "plant": "Plant",
+                "offHireRequest": "Off Hire Request",
+                "category": "Category",
+                "company": "Company",
+                "maintenanceContractor": "Maintenance Contractor",
+                "project": "Project",
+                "competency": "Competency",
+                "people": "People",
+                "niggle": "Niggle",
+                "plantLog": "Plant Log",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

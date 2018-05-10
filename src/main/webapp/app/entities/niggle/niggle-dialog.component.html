@@ -1,73 +1,71 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myNiggleLabel">Create or edit a Niggle</h4>
+        <h4 class="modal-title" id="myNiggleLabel" jhiTranslate="fleetManagementApp.niggle.home.createOrEditLabel">Create or edit a Niggle</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!niggle.id">
-            <label for="id">ID</label>
+            <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="niggle.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_description">Description</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.description" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
                 [(ngModel)]="niggle.description" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_status">Status</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.status" for="field_status">Status</label>
             <select class="form-control" name="status" [(ngModel)]="niggle.status" id="field_status" >
-                <option value="SUBMITTED">SUBMITTED</option>
-                <option value="OPEN">OPEN</option>
-                <option value="ASSIGNED">ASSIGNED</option>
-                <option value="COMPLETED">COMPLETED</option>
-                <option value="CLOSED">CLOSED</option>
+                <option value="SUBMITTED">{{'fleetManagementApp.Status.SUBMITTED' | translate}}</option>
+                <option value="OPEN">{{'fleetManagementApp.Status.OPEN' | translate}}</option>
+                <option value="ASSIGNED">{{'fleetManagementApp.Status.ASSIGNED' | translate}}</option>
+                <option value="COMPLETED">{{'fleetManagementApp.Status.COMPLETED' | translate}}</option>
+                <option value="CLOSED">{{'fleetManagementApp.Status.CLOSED' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_note">Note</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                 [(ngModel)]="niggle.note" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_priority">Priority</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.priority" for="field_priority">Priority</label>
             <select class="form-control" name="priority" [(ngModel)]="niggle.priority" id="field_priority" >
-                <option value="LEVEL1">LEVEL1</option>
-                <option value="LEVEL2">LEVEL2</option>
-                <option value="LEVEL3">LEVEL3</option>
-                <option value="LEVEL4">LEVEL4</option>
-                <option value="LEVEL5">LEVEL5</option>
+                <option value="LOW">{{'fleetManagementApp.Priority.LOW' | translate}}</option>
+                <option value="MEDIUM">{{'fleetManagementApp.Priority.MEDIUM' | translate}}</option>
+                <option value="HIGH">{{'fleetManagementApp.Priority.HIGH' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_quattraReference">Quattra Reference</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.quattraReference" for="field_quattraReference">Quattra Reference</label>
             <input type="text" class="form-control" name="quattraReference" id="field_quattraReference"
                 [(ngModel)]="niggle.quattraReference" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_quattraComments">Quattra Comments</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.quattraComments" for="field_quattraComments">Quattra Comments</label>
             <input type="text" class="form-control" name="quattraComments" id="field_quattraComments"
                 [(ngModel)]="niggle.quattraComments" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_dateOpened">Date Opened</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.dateOpened" for="field_dateOpened">Date Opened</label>
             <div class="d-flex">
                 <input id="field_dateOpened" type="datetime-local" class="form-control" name="dateOpened" [(ngModel)]="niggle.dateOpened"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_dateUpdated">Date Updated</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.dateUpdated" for="field_dateUpdated">Date Updated</label>
             <div class="d-flex">
                 <input id="field_dateUpdated" type="datetime-local" class="form-control" name="dateUpdated" [(ngModel)]="niggle.dateUpdated"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_dateClosed">Date Closed</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.dateClosed" for="field_dateClosed">Date Closed</label>
             <div class="d-flex">
                 <input id="field_dateClosed" type="datetime-local" class="form-control" name="dateClosed" [(ngModel)]="niggle.dateClosed"
                 />
@@ -75,14 +73,14 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" for="field_plant">Plant</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.plant" for="field_plant">Plant</label>
             <select class="form-control" id="field_plant" name="plant" [(ngModel)]="niggle.plant" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="plantOption.id === niggle.plant?.id ? niggle.plant : plantOption" *ngFor="let plantOption of plants; trackBy: trackPlantById">{{plantOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_assignedContractor">Assigned Contractor</label>
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.niggle.assignedContractor" for="field_assignedContractor">Assigned Contractor</label>
             <select class="form-control" id="field_assignedContractor" name="assignedContractor" [(ngModel)]="niggle.assignedContractor" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="maintenanceContractorOption.id === niggle.assignedContractor?.id ? niggle.assignedContractor : maintenanceContractorOption" *ngFor="let maintenanceContractorOption of maintenancecontractors; trackBy: trackMaintenanceContractorById">{{maintenanceContractorOption.id}}</option>
@@ -91,10 +89,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

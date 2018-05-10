@@ -1,9 +1,9 @@
 <div>
     <h2>
-        <span>Niggles</span>
+        <span jhiTranslate="fleetManagementApp.niggle.home.title">Niggles</span>
         <button class="btn btn-primary float-right jh-create-entity create-niggle" [routerLink]="['/', { outlets: { popup: ['niggle-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span >
+            <span  jhiTranslate="fleetManagementApp.niggle.home.createLabel">
             Create new Niggle
             </span>
         </button>
@@ -16,18 +16,18 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
-            <th><span>Description</span></th>
-            <th><span>Status</span></th>
-            <th><span>Note</span></th>
-            <th><span>Priority</span></th>
-            <th><span>Quattra Reference</span></th>
-            <th><span>Quattra Comments</span></th>
-            <th><span>Date Opened</span></th>
-            <th><span>Date Updated</span></th>
-            <th><span>Date Closed</span></th>
-            <th><span>Plant</span></th>
-            <th><span>Assigned Contractor</span></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.description">Description</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.status">Status</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.note">Note</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.priority">Priority</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.quattraReference">Quattra Reference</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.quattraComments">Quattra Comments</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.dateOpened">Date Opened</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.dateUpdated">Date Updated</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.dateClosed">Date Closed</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.plant">Plant</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.assignedContractor">Assigned Contractor</span></th>
             <th></th>
             </tr>
             </thead>
@@ -35,9 +35,9 @@
             <tr *ngFor="let niggle of niggles ;trackBy: trackId">
                 <td><a [routerLink]="['../niggle', niggle.id ]">{{niggle.id}}</a></td>
                 <td>{{niggle.description}}</td>
-                <td>{{niggle.status}}</td>
+                <td jhiTranslate="{{'fleetManagementApp.Status.' + niggle.status}}">{{niggle.status}}</td>
                 <td>{{niggle.note}}</td>
-                <td>{{niggle.priority}}</td>
+                <td jhiTranslate="{{'fleetManagementApp.Priority.' + niggle.priority}}">{{niggle.priority}}</td>
                 <td>{{niggle.quattraReference}}</td>
                 <td>{{niggle.quattraComments}}</td>
                 <td>{{niggle.dateOpened | date:'medium'}}</td>
@@ -59,7 +59,7 @@
                                 [routerLink]="['../niggle', niggle.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'niggle/'+ niggle.id + '/edit'} }]"
@@ -67,7 +67,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'niggle/'+ niggle.id + '/delete'} }]"
@@ -75,7 +75,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>

@@ -12,7 +12,7 @@ export const projectRoute: Routes = [
         component: ProjectComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Projects'
+            pageTitle: 'fleetManagementApp.project.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const projectRoute: Routes = [
         component: ProjectDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Projects'
+            pageTitle: 'fleetManagementApp.project.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const projectPopupRoute: Routes = [
         component: ProjectPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Projects'
+            pageTitle: 'fleetManagementApp.project.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const projectPopupRoute: Routes = [
         component: ProjectPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Projects'
+            pageTitle: 'fleetManagementApp.project.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const projectPopupRoute: Routes = [
         component: ProjectDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Projects'
+            pageTitle: 'fleetManagementApp.project.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

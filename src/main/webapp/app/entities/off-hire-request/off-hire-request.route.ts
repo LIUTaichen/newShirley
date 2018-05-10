@@ -12,7 +12,7 @@ export const offHireRequestRoute: Routes = [
         component: OffHireRequestComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'OffHireRequests'
+            pageTitle: 'fleetManagementApp.offHireRequest.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const offHireRequestRoute: Routes = [
         component: OffHireRequestDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'OffHireRequests'
+            pageTitle: 'fleetManagementApp.offHireRequest.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const offHireRequestPopupRoute: Routes = [
         component: OffHireRequestPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'OffHireRequests'
+            pageTitle: 'fleetManagementApp.offHireRequest.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const offHireRequestPopupRoute: Routes = [
         component: OffHireRequestPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'OffHireRequests'
+            pageTitle: 'fleetManagementApp.offHireRequest.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const offHireRequestPopupRoute: Routes = [
         component: OffHireRequestDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'OffHireRequests'
+            pageTitle: 'fleetManagementApp.offHireRequest.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

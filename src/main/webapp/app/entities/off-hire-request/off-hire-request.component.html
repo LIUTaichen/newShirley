@@ -1,9 +1,9 @@
 <div>
     <h2>
-        <span>Off Hire Requests</span>
+        <span jhiTranslate="fleetManagementApp.offHireRequest.home.title">Off Hire Requests</span>
         <button class="btn btn-primary float-right jh-create-entity create-off-hire-request" [routerLink]="['/', { outlets: { popup: ['off-hire-request-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span >
+            <span  jhiTranslate="fleetManagementApp.offHireRequest.home.createLabel">
             Create new Off Hire Request
             </span>
         </button>
@@ -16,7 +16,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th></th>
             </tr>
             </thead>
@@ -29,7 +29,7 @@
                                 [routerLink]="['../off-hire-request', offHireRequest.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'off-hire-request/'+ offHireRequest.id + '/edit'} }]"
@@ -37,7 +37,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'off-hire-request/'+ offHireRequest.id + '/delete'} }]"
@@ -45,7 +45,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>
