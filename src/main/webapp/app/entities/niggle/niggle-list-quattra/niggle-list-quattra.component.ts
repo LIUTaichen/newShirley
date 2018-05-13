@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Niggle } from '../niggle.model';
 import { NiggleService } from '../niggle.service';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
+import { Plant } from '../../Plant/plant.model';
+import { NiggleRow } from '../niggle-list-dw/niggle-row.model';
 
 @Component({
   selector: 'jhi-niggle-list-quattra',
@@ -15,13 +17,14 @@ import { Principal } from '../../../shared';
 export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
-  displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationDate',
-    'repairNeeded',
-    'state',
-    'comments',
+  displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
+    'description',
+    'status',
+    'quattraComments',
     'dateOpened',
-    'daysOpended'];
-  dataSource = new MatTableDataSource(this.niggles);
+    'daysOpened'];
+    dataSource: MatTableDataSource<NiggleRow>;
+    @ViewChild(MatSort) sort: MatSort;
 
   currentAccount: any;
   eventSubscriber: Subscription;
@@ -37,7 +40,9 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     this.niggleService.query().subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
-        this.dataSource = new MatTableDataSource(this.niggles);
+        const rows = this.niggles.map(this.convertEntityToRow, this);
+        this.dataSource = new MatTableDataSource(rows);
+        this.dataSource.sort = this.sort;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -77,6 +82,46 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     } else {
       return null;
     }
+  }
+
+  convertEntityToRow(niggle: Niggle): NiggleRow {
+    const niggleDaysOpened = this.getDaysOpened(niggle);
+    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor;
+    if (niggle.plant) {
+      const plant: Plant = niggle.plant;
+      fleetId = plant.fleetId;
+      plantDesctiption = plant.description;
+      siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
+      location = plant.location;
+      locationUpdateTime = plant.lastLocationUpdateTime;
+      owner = plant.owner ? plant.owner['company'] : '';
+    }
+    contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
+    const niggleRow: NiggleRow = {
+      id: niggle.id,
+      description: niggle.description,
+      status: niggle.status,
+      note: niggle.note,
+      priority: niggle.priority,
+      quattraReference: niggle.quattraReference,
+      quattraComments: niggle.quattraComments,
+      dateOpened: niggle.dateOpened,
+      dateUpdated: niggle.dateUpdated,
+      dateClosed: niggle.dateClosed,
+      plantNumber: fleetId,
+      plantDescription: plantDesctiption,
+      site: siteAndName,
+      location,
+      locationUpdateTime,
+      owner,
+      contractor,
+      daysOpened: niggleDaysOpened,
+      createdBy: niggle.createdBy,
+      createdDate: niggle.createdDate,
+      lastModifiedBy: niggle.lastModifiedBy,
+      lastModifiedDate: niggle.lastModifiedDate
+    };
+    return niggleRow;
   }
 
 }

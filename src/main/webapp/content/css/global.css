@@ -278,7 +278,7 @@ html {
     margin-top: 0px;
 }
 
-jhi-niggle-list-dw {
+jhi-niggle-list-dw , jhi-niggle-list-quattra {
     display:flex;
     flex-direction :column;
     flex-grow:1;
