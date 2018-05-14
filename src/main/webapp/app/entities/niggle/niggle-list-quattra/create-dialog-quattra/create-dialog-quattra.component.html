@@ -2,11 +2,14 @@
 <form [formGroup]="niggleForm" (ngSubmit)="onSubmit()">
     <div class="form-container">
         <mat-form-field>
-            <mat-select placeholder="Plant Number" formControlName="plant">
+            <mat-select placeholder="Plant Number" formControlName="plant" id='plantNumber'>
                 <mat-option *ngFor="let plant of plants" [value]="plant">
                     {{ plant.fleetId }}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="niggleForm.get('plant').hasError('required')">
+              Plant number is required.
+            </mat-error>
         </mat-form-field>
         <mat-form-field>
             <textarea matInput placeholder="Repairs Needed" formControlName="description"></textarea>

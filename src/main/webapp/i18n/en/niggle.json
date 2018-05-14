@@ -24,6 +24,7 @@
             "quattraComments": "Quattra Comments",
             "dateOpened": "Date Opened",
             "dateClosed": "Date Closed",
+            "invoiceNo": "Invoice No",
             "plant": "Plant",
             "assignedContractor": "Assigned Contractor"
         }

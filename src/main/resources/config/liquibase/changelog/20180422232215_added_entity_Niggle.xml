@@ -50,11 +50,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="date_updated" type="timestamp">
+            <column name="date_closed" type="timestamp">
                 <constraints nullable="true" />
             </column>
 
-            <column name="date_closed" type="timestamp">
+            <column name="invoice_no" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -69,11 +69,9 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="niggle" columnName="date_opened" columnDataType="datetime"/>
-        <dropDefaultValue tableName="niggle" columnName="date_updated" columnDataType="datetime"/>
         <dropDefaultValue tableName="niggle" columnName="date_closed" columnDataType="datetime"/>
         
     </changeSet>
-    
     
     <!-- Added the entity audit columns -->
     <changeSet id="20180510011427-audit-1" author="jhipster-entity-audit">
@@ -92,6 +90,12 @@
     <!-- remove date updated column -->
     <changeSet id="20180514011427-remove-updated-date-1" author="jason.liu">
         <dropColumn tableName="niggle" columnName="date_updated">
+        </dropColumn>
+    </changeSet>
+    <changeSet id="20180514011427-add-invoice-no" author="jason.liu">
+        <addColumn tableName="niggle" >
+            <column name="invoice_no" type="varchar(50)">
+            </column>
         </dropColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

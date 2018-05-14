@@ -36,6 +36,10 @@
         <dd>
             <span>{{niggle.dateClosed | date:'medium'}}</span>
         </dd>
+        <dt><span jhiTranslate="fleetManagementApp.niggle.invoiceNo">Invoice No</span></dt>
+        <dd>
+            <span>{{niggle.invoiceNo}}</span>
+        </dd>
         <dt><span jhiTranslate="fleetManagementApp.niggle.plant">Plant</span></dt>
         <dd>
             <div *ngIf="niggle.plant">

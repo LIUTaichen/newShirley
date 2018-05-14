@@ -28,6 +28,7 @@ export class Niggle implements BaseEntity {
         public quattraComments?: string,
         public dateOpened?: any,
         public dateClosed?: any,
+        public invoiceNo?: string,
         public plant?: BaseEntity,
         public assignedContractor?: BaseEntity,
         public createdBy?: string,

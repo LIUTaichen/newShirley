@@ -48,13 +48,17 @@
         {
             "fieldName": "dateClosed",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "invoiceNo",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20180422232215",
-    "entityTableName": "niggle",
     "dto": "no",
-    "pagination": "no",
     "service": "no",
+    "entityTableName": "niggle",
     "jpaMetamodelFiltering": false,
+    "pagination": "no",
     "enableEntityAudit": true
 }
