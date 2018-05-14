@@ -88,5 +88,11 @@
             <column name="last_modified_date" type="timestamp"/>
         </addColumn>
     </changeSet>
+
+    <!-- remove date updated column -->
+    <changeSet id="20180514011427-remove-updated-date-1" author="jason.liu">
+        <dropColumn tableName="niggle" columnName="date_updated">
+        </dropColumn>
+    </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

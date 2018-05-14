@@ -7,7 +7,8 @@ export const enum Status {
     'IN_PROGRESS',
     'ON_HOLD',
     'COMPLETED',
-    'CLOSED'
+    'CLOSED',
+    'TBR'
 }
 
 export const enum Priority {

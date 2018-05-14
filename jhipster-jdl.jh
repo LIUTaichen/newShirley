@@ -114,7 +114,8 @@ enum Status{
     IN_PROGRESS,
     ON_HOLD,
     COMPLETED,
-    CLOSED
+    CLOSED,
+    TBR
 }
 
 entity PlantLog{
