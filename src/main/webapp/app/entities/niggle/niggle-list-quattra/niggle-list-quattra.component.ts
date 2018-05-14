@@ -8,6 +8,9 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
 import { Plant } from '../../Plant/plant.model';
 import { NiggleRow } from '../niggle-list-dw/niggle-row.model';
+import { CreateDialogQuattraComponent } from './create-dialog-quattra/create-dialog-quattra.component';
+import { EditDialogQuattraComponent } from './edit-dialog-quattra/edit-dialog-quattra.component';
+import { DeleteDialogQuattraComponent } from './delete-dialog-quattra/delete-dialog-quattra.component';
 
 @Component({
   selector: 'jhi-niggle-list-quattra',
@@ -17,12 +20,14 @@ import { NiggleRow } from '../niggle-list-dw/niggle-row.model';
 export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
+  idOfFocusedRow;
   displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
     'description',
     'status',
     'quattraComments',
     'dateOpened',
-    'daysOpened'];
+    'daysOpened',
+    'delete'];
     dataSource: MatTableDataSource<NiggleRow>;
     @ViewChild(MatSort) sort: MatSort;
 
@@ -33,7 +38,8 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     private niggleService: NiggleService,
     private jhiAlertService: JhiAlertService,
     private eventManager: JhiEventManager,
-    private principal: Principal
+    private principal: Principal,
+    public dialog: MatDialog,
   ) { }
 
   loadAll() {
@@ -122,6 +128,48 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       lastModifiedDate: niggle.lastModifiedDate
     };
     return niggleRow;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateDialogQuattraComponent, {
+      width: '500px',
+      panelClass: 'niggle-panel',
+      data: { name: 'this.name', animal: 'this.animal' }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.idOfFocusedRow = '';
+      // this.animal = result;
+    });
+  }
+
+  openDeleteDialog(id: number): void {
+    this.idOfFocusedRow = id;
+    const dialogRef = this.dialog.open(DeleteDialogQuattraComponent, {
+      panelClass: 'niggle-delete-panel',
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.idOfFocusedRow = '';
+    });
+  }
+
+  openEditDialog(id: number): void {
+    this.idOfFocusedRow = id;
+    const niggle: Niggle = this.niggles.find((niggleElement) => niggleElement.id === id);
+    const dialogRef = this.dialog.open(EditDialogQuattraComponent, {
+      width: '500px',
+      panelClass: 'niggle-panel',
+      data: { niggle }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
 
 }
