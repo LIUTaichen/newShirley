@@ -87,16 +87,6 @@
         </addColumn>
     </changeSet>
 
-    <!-- remove date updated column -->
-    <changeSet id="20180514011427-remove-updated-date-1" author="jason.liu">
-        <dropColumn tableName="niggle" columnName="date_updated">
-        </dropColumn>
-    </changeSet>
-    <changeSet id="20180514011427-add-invoice-no" author="jason.liu">
-        <addColumn tableName="niggle" >
-            <column name="invoice_no" type="varchar(50)">
-            </column>
-        </dropColumn>
-    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

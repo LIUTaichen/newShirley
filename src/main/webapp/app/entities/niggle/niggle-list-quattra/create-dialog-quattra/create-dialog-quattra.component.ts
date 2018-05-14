@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Niggle } from '../../niggle.model';
+import { Niggle, Priority } from '../../niggle.model';
 import { NiggleService } from '../../niggle.service';
 import { Plant, PlantService } from '../../../plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../maintenance-contractor';
@@ -24,6 +24,7 @@ export class CreateDialogQuattraComponent implements OnInit {
   plants: Plant[];
   maintenancecontractors: MaintenanceContractor[];
   isSaving: boolean;
+  contractor: MaintenanceContractor;
 
   constructor(
     public snackBar: MatSnackBar,
@@ -44,7 +45,8 @@ export class CreateDialogQuattraComponent implements OnInit {
       status: 'OPEN',
       plant: ['', Validators.required],
       reference: '',
-      comments: ''
+      comments: '',
+      invoiceNo: ''
     });
   }
 
@@ -54,6 +56,9 @@ export class CreateDialogQuattraComponent implements OnInit {
     this.maintenanceContractorService.query()
       .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
         this.maintenancecontractors = res.body;
+        this.contractor = this.maintenancecontractors.find((element) => {
+          return element.name === 'Quattra';
+        });
         this.niggleForm.patchValue({
           contractor: this.maintenancecontractors[0]
         });
@@ -97,10 +102,12 @@ export class CreateDialogQuattraComponent implements OnInit {
     const saveNiggle: Niggle = {
       description: formModel.description,
       plant: formModel.plant,
-      assignedContractor: formModel.contractor,
-      note: formModel.note,
-      priority: formModel.priority,
-      status: formModel.status
+      assignedContractor: this.contractor,
+      quattraComments: formModel.comments,
+      priority: Priority.LOW,
+      quattraReference: formModel.reference,
+      status: formModel.status,
+      invoiceNo: formModel.invoiceNo
     };
     return saveNiggle;
   }
