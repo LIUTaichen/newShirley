@@ -22,6 +22,9 @@ import { NiggleCreateFormQuattraComponent } from './niggle-list-quattra/niggle-c
 import { NiggleCreateDialogComponent } from './niggle-list-dw/niggle-create-dialog/niggle-create-dialog.component';
 import { NiggleEditDialogComponent } from './niggle-list-dw/niggle-edit-dialog/niggle-edit-dialog.component';
 import { NiggleDeleteDialogDwComponent } from './niggle-list-dw/niggle-delete-dialog-dw/niggle-delete-dialog-dw.component';
+import { CreateDialogQuattraComponent } from './niggle-list-quattra/create-dialog-quattra/create-dialog-quattra.component';
+import { EditDialogQuattraComponent } from './niggle-list-quattra/edit-dialog-quattra/edit-dialog-quattra.component';
+import { DeleteDialogQuattraComponent } from './niggle-list-quattra/delete-dialog-quattra/delete-dialog-quattra.component';
 
 const ENTITY_STATES = [
     ...niggleRoute,
@@ -47,7 +50,10 @@ const ENTITY_STATES = [
         NiggleCreateFormQuattraComponent,
         NiggleCreateDialogComponent,
         NiggleEditDialogComponent,
-        NiggleDeleteDialogDwComponent
+        NiggleDeleteDialogDwComponent,
+        CreateDialogQuattraComponent,
+        EditDialogQuattraComponent,
+        DeleteDialogQuattraComponent
     ],
     entryComponents: [
         NiggleComponent,
