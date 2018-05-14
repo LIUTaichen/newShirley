@@ -98,7 +98,6 @@ entity Niggle{
     quattraReference String,
     quattraComments String,
     dateOpened Instant,
-    dateUpdated Instant,
     dateClosed Instant
 }
 
@@ -112,6 +111,8 @@ enum Status{
 	SUBMITTED,
     OPEN,
     ASSIGNED,
+    IN_PROGRESS,
+    ON_HOLD,
     COMPLETED,
     CLOSED
 }
