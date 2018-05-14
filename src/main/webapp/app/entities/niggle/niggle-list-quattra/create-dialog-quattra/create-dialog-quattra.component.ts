@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Niggle } from '../../niggle.model';
 import { NiggleService } from '../../niggle.service';
 import { Plant, PlantService } from '../../../plant';
@@ -43,6 +43,7 @@ export class CreateDialogQuattraComponent implements OnInit {
       description: ['', Validators.required],
       status: 'OPEN',
       plant: ['', Validators.required],
+      reference: '',
       comments: ''
     });
   }
@@ -57,6 +58,21 @@ export class CreateDialogQuattraComponent implements OnInit {
           contractor: this.maintenancecontractors[0]
         });
       }, (res: HttpErrorResponse) => this.onError(res.message));
+
+    this.onChanges();
+  }
+
+  onChanges() {
+    this.niggleForm.get('status').valueChanges.subscribe((val) => {
+      const referenceControl = this.niggleForm.get('reference');
+      console.log(val);
+      if (val === 'COMPLETED') {
+        referenceControl.setValidators([Validators.required]);
+      }else {
+        referenceControl.clearValidators();
+      }
+      referenceControl.updateValueAndValidity();
+    });
   }
 
   private onError(error: any) {
