@@ -63,9 +63,6 @@ public class NiggleResourceIntTest {
     private static final Instant DEFAULT_DATE_OPENED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_OPENED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_DATE_UPDATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DATE_UPDATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     private static final Instant DEFAULT_DATE_CLOSED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_CLOSED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -114,7 +111,6 @@ public class NiggleResourceIntTest {
             .quattraReference(DEFAULT_QUATTRA_REFERENCE)
             .quattraComments(DEFAULT_QUATTRA_COMMENTS)
             .dateOpened(DEFAULT_DATE_OPENED)
-            .dateUpdated(DEFAULT_DATE_UPDATED)
             .dateClosed(DEFAULT_DATE_CLOSED);
         return niggle;
     }
@@ -146,7 +142,6 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getQuattraReference()).isEqualTo(DEFAULT_QUATTRA_REFERENCE);
         assertThat(testNiggle.getQuattraComments()).isEqualTo(DEFAULT_QUATTRA_COMMENTS);
         assertThat(testNiggle.getDateOpened()).isEqualTo(DEFAULT_DATE_OPENED);
-        assertThat(testNiggle.getDateUpdated()).isEqualTo(DEFAULT_DATE_UPDATED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(DEFAULT_DATE_CLOSED);
     }
 
@@ -187,7 +182,6 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].quattraReference").value(hasItem(DEFAULT_QUATTRA_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].quattraComments").value(hasItem(DEFAULT_QUATTRA_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
-            .andExpect(jsonPath("$.[*].dateUpdated").value(hasItem(DEFAULT_DATE_UPDATED.toString())))
             .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())));
     }
 
@@ -209,7 +203,6 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.quattraReference").value(DEFAULT_QUATTRA_REFERENCE.toString()))
             .andExpect(jsonPath("$.quattraComments").value(DEFAULT_QUATTRA_COMMENTS.toString()))
             .andExpect(jsonPath("$.dateOpened").value(DEFAULT_DATE_OPENED.toString()))
-            .andExpect(jsonPath("$.dateUpdated").value(DEFAULT_DATE_UPDATED.toString()))
             .andExpect(jsonPath("$.dateClosed").value(DEFAULT_DATE_CLOSED.toString()));
     }
 
@@ -240,7 +233,6 @@ public class NiggleResourceIntTest {
             .quattraReference(UPDATED_QUATTRA_REFERENCE)
             .quattraComments(UPDATED_QUATTRA_COMMENTS)
             .dateOpened(UPDATED_DATE_OPENED)
-            .dateUpdated(UPDATED_DATE_UPDATED)
             .dateClosed(UPDATED_DATE_CLOSED);
 
         restNiggleMockMvc.perform(put("/api/niggles")
@@ -259,7 +251,6 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getQuattraReference()).isEqualTo(UPDATED_QUATTRA_REFERENCE);
         assertThat(testNiggle.getQuattraComments()).isEqualTo(UPDATED_QUATTRA_COMMENTS);
         assertThat(testNiggle.getDateOpened()).isEqualTo(UPDATED_DATE_OPENED);
-        assertThat(testNiggle.getDateUpdated()).isEqualTo(UPDATED_DATE_UPDATED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(UPDATED_DATE_CLOSED);
     }
 

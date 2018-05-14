@@ -22,7 +22,7 @@
         {
             "fieldName": "status",
             "fieldType": "Status",
-            "fieldValues": "SUBMITTED,OPEN,ASSIGNED,COMPLETED,CLOSED"
+            "fieldValues": "SUBMITTED,OPEN,ASSIGNED,IN_PROGRESS,ON_HOLD,COMPLETED,CLOSED"
         },
         {
             "fieldName": "note",
@@ -43,10 +43,6 @@
         },
         {
             "fieldName": "dateOpened",
-            "fieldType": "Instant"
-        },
-        {
-            "fieldName": "dateUpdated",
             "fieldType": "Instant"
         },
         {

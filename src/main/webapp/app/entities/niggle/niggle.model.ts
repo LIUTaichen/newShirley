@@ -4,6 +4,8 @@ export const enum Status {
     'SUBMITTED',
     'OPEN',
     'ASSIGNED',
+    'IN_PROGRESS',
+    'ON_HOLD',
     'COMPLETED',
     'CLOSED'
 }
@@ -24,7 +26,6 @@ export class Niggle implements BaseEntity {
         public quattraReference?: string,
         public quattraComments?: string,
         public dateOpened?: any,
-        public dateUpdated?: any,
         public dateClosed?: any,
         public plant?: BaseEntity,
         public assignedContractor?: BaseEntity,

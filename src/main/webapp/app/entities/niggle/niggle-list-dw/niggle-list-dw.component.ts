@@ -168,7 +168,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       quattraReference: niggle.quattraReference,
       quattraComments: niggle.quattraComments,
       dateOpened: niggle.dateOpened,
-      dateUpdated: niggle.dateUpdated,
+      dateUpdated: niggle.lastModifiedDate,
       dateClosed: niggle.dateClosed,
       plantNumber: fleetId,
       plantDescription: plantDesctiption,
