@@ -34,7 +34,10 @@
 
 .mat-cell {
     font-size: 12px;
-    padding: 10px
+    padding: 10px;
+    overflow-wrap: break-word;
+    overflow: visible;
+    word-break: break-word
 }
 
 .mat-header-cell {
