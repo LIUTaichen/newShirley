@@ -21,20 +21,19 @@
         <mat-form-field>
             <mat-select placeholder="State" formControlName="status">
                 <mat-option value="OPEN">OPEN</mat-option>
-                <mat-option value="ASSIGNED">ASSIGNED</mat-option>
+                <mat-option value="IN_PROGRESS">IN PROGRESS</mat-option>
+                <mat-option value="ON_HOLD">ON HOLD</mat-option>
                 <mat-option value="COMPLETED">COMPLETED</mat-option>
-                <mat-option vallue="CLOSED">CLOSED</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-select placeholder="Assigned To" formControlName="contractor" [compareWith]="compareObjects">
-                <mat-option *ngFor="let con of maintenancecontractors" [value]="con">
-                    {{ con.name }}
-                </mat-option>
-            </mat-select>
+            <input matInput placeholder="Reference" formControlName="reference">
         </mat-form-field>
         <mat-form-field>
-            <textarea matInput placeholder="Additional Note" formControlName="note"></textarea>
+            <input matInput placeholder="Invoice Number" formControlName="invoiceNo">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Comments" formControlName="comments"></textarea>
         </mat-form-field>
         <mat-dialog-actions class="action">
             <button mat-button type="button" (click)="onCancel()">Cancel</button>

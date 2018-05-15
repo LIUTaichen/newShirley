@@ -44,12 +44,13 @@ export class EditDialogQuattraComponent implements OnInit {
   createForm() {
 
     this.niggleForm = this.fb.group({
-      description: [this.niggle.description, Validators.required],
-      status: this.niggle.status,
-      priority: this.niggle.priority,
-      plant: [this.niggle.plant, Validators.required],
-      contractor: this.niggle.assignedContractor,
-      note: this.niggle.note
+      description: ['', Validators.required],
+      status: 'OPEN',
+      plant: ['', Validators.required],
+      reference: '',
+      comments: '',
+      invoiceNo: '',
+      priority: {value: '', disabled: true}
     });
   }
 
@@ -88,11 +89,10 @@ export class EditDialogQuattraComponent implements OnInit {
     const formModel = this.niggleForm.value;
 
     this.niggle.description = formModel.description;
-    this.niggle.plant = formModel.plant;
-    this.niggle.assignedContractor = formModel.contractor;
-    this.niggle.note = formModel.note;
-    this.niggle.priority = formModel.priority;
     this.niggle.status = formModel.status;
+    this.niggle.quattraReference = formModel.reference;
+    this.niggle.invoiceNo = formModel.invoiceNo;
+    this.niggle.quattraComments = formModel.comments;
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Niggle>>) {
@@ -120,10 +120,11 @@ export class EditDialogQuattraComponent implements OnInit {
     this.niggleForm.setValue({
       description: this.niggle.description,
       plant: this.niggle.plant,
-      contractor: this.niggle.assignedContractor,
-      note: this.niggle.note,
+      status: this.niggle.status,
       priority: this.niggle.priority,
-      status: this.niggle.status
+      reference: this.niggle.quattraReference,
+      comments: this.niggle.quattraComments,
+      invoiceNo: this.niggle.invoiceNo
     });
   }
 

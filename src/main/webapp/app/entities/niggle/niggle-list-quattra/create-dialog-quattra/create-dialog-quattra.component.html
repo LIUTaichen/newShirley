@@ -8,7 +8,7 @@
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="niggleForm.get('plant').hasError('required')">
-              Plant number is required.
+                Plant number is required.
             </mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -23,12 +23,12 @@
                 <mat-option value="COMPLETED">COMPLETED</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field >
-          <input matInput placeholder="Reference" formControlName="reference">
-      </mat-form-field>
-      <mat-form-field >
-        <input matInput placeholder="Invoice Number" formControlName="invoiceNo">
-    </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Reference" formControlName="reference">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Invoice Number" formControlName="invoiceNo">
+        </mat-form-field>
         <mat-form-field>
             <textarea matInput placeholder="Comments" formControlName="comments"></textarea>
         </mat-form-field>

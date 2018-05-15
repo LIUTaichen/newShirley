@@ -46,7 +46,13 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     this.niggleService.query().subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
-        const rows = this.niggles.map(this.convertEntityToRow, this);
+        const rows = this.niggles.filter((niggle) => {
+          if ( niggle.assignedContractor['name'] === 'Quattra') {
+            return true;
+          }else {
+            return false;
+          }
+        }).map(this.convertEntityToRow, this);
         this.dataSource = new MatTableDataSource(rows);
         this.dataSource.sort = this.sort;
       },
