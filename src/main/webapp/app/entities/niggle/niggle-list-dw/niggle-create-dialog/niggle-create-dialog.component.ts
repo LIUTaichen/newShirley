@@ -5,11 +5,9 @@ import { NiggleService } from '../../niggle.service';
 import { Plant, PlantService } from '../../../plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../maintenance-contractor';
 
-import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 
@@ -99,7 +97,7 @@ export class NiggleCreateDialogComponent implements OnInit {
   private onSaveSuccess(result: Niggle) {
     this.isSaving = false;
     this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK' });
-    const snackBarRef = this.snackBar.open('Niggle created',  'Dismiss', {
+    this.snackBar.open('Niggle created',  'Dismiss', {
       duration: 3000
     });
     this.onCancel();

@@ -1,4 +1,4 @@
-import { Niggle, Status, Priority } from '../niggle.model';
+import { Status, Priority } from '../niggle.model';
 
 export class NiggleRow {
     constructor(

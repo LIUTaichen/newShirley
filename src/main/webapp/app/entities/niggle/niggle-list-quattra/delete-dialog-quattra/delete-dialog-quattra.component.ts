@@ -1,14 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Niggle } from '../../niggle.model';
 import { NiggleService } from '../../niggle.service';
 
-import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
-import { Observable } from 'rxjs/Observable';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { JhiEventManager } from 'ng-jhipster';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'jhi-delete-dialog-quattra',
@@ -35,7 +30,7 @@ export class DeleteDialogQuattraComponent implements OnInit {
         name: 'niggleListModification',
         content: 'Deleted an niggle'
       });
-      const snackBarRef = this.snackBar.open('Niggle deleted', 'Dismiss', {
+      this.snackBar.open('Niggle deleted', 'Dismiss', {
         duration: 3000
       });
     });
