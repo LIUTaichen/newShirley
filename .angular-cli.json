@@ -28,6 +28,9 @@
         },
         {
             "project": "../../../tsconfig-aot.json"
+        },
+        {
+            "exclude": "**/node_modules/**/*"
         }
     ],
     "test": {
@@ -39,7 +42,7 @@
         "styleExt": "css",
         "prefixInterfaces": false,
         "component" : {
-            "inlineStyle" : true,
+            "inlineStyle" : false,
             "inlineTemplate": false,
             "spec": false
         },
