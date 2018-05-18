@@ -29,6 +29,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import { CustomizationModule } from './customization/customization.module';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {
         FleetManagementAdminModule,
         FleetManagementAccountModule,
         FleetManagementEntityModule,
+        CustomizationModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
