@@ -14,7 +14,6 @@
 }
 
 .mat-form-field {
-  font-size: 14px;
   width: 100%;
 }
 
@@ -33,7 +32,6 @@
 } */
 
 .mat-cell {
-  font-size: 12px;
   padding: 10px;
   overflow-wrap: break-word;
   overflow: visible;
@@ -83,4 +81,9 @@
 .delete-button {
   overflow: hidden;
   position: relative;
+}
+
+.option {
+ max-width: 200px;
+ font-size:16px
 }

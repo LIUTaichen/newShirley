@@ -1,8 +1,16 @@
 <div class="mat-typography niggles-container">
     <h2 class="mat-h2 header">
         <span>Niggles</span>
+        <button mat-raised-button color="primary" hidden class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
+        <mat-form-field class="option float-right">
+            <mat-select [(value)]="selectedOption">
+                <mat-option value="ALL">All niggles</mat-option>
+                <mat-option value="WHITE">White fleet</mat-option>
+                <mat-option value="YELLOW">Yellow fleet</mat-option>
+                <mat-option value="COMPLETED">Completed Niggles</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-        <button mat-raised-button color="primary" class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
     </h2>
 
     <div class="example-container mat-elevation-z8">
@@ -68,7 +76,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Days Opened </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.daysOpened}} </mat-cell>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="delete">
                     <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
                     <mat-cell *matCellDef="let niggle" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
@@ -80,7 +88,7 @@
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"
-                class="table-row" matRipple></mat-row>
+                    class="table-row" matRipple></mat-row>
             </mat-table>
         </div>
     </div>
