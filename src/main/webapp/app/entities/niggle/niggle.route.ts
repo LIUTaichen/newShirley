@@ -26,24 +26,7 @@ export const niggleRoute: Routes = [
             pageTitle: 'Niggles'
         },
         canActivate: [UserRouteAccessService]
-    }, {
-        path: 'niggle-dw',
-        component: NiggleListDwComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Dempsey Wood Niggles List'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'niggle-quattra',
-        component: NiggleListQuattraComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Quattra Niggles List'
-        },
-        canActivate: [UserRouteAccessService]
     }
-
 ];
 
 export const nigglePopupRoute: Routes = [

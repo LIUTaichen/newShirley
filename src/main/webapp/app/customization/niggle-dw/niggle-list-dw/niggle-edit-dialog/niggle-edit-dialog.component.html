@@ -1,0 +1,45 @@
+<mat-toolbar color="primary" class="header">Edit niggle</mat-toolbar>
+<form [formGroup]="niggleForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+        <mat-form-field>
+            <mat-select placeholder="Plant Number" formControlName="plant" [compareWith]="compareObjects">
+                <mat-option *ngFor="let plant of plants" [value]="plant">
+                    {{ plant.fleetId }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Repairs Needed" formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Priority" formControlName="priority">
+                <mat-option value="LOW">LOW</mat-option>
+                <mat-option value="MEDIUM">MEDIUM</mat-option>
+                <mat-option value="HIGH">HIGH</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="State" formControlName="status">
+                <mat-option value="OPEN">OPEN</mat-option>
+                <mat-option value="ASSIGNED">ASSIGNED</mat-option>
+                <mat-option value="COMPLETED">COMPLETED</mat-option>
+                <mat-option vallue="CLOSED">CLOSED</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Assigned To" formControlName="contractor" [compareWith]="compareObjects">
+                <mat-option *ngFor="let con of maintenancecontractors" [value]="con">
+                    {{ con.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Additional Note" formControlName="note"></textarea>
+        </mat-form-field>
+        <mat-dialog-actions class="action">
+            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button type="submit" color="primary" [disabled]="!niggleForm.valid || isSaving">SAVE</button>
+        </mat-dialog-actions>
+    </div>
+
+</form>
