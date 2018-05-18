@@ -28,6 +28,13 @@ const ENTITY_STATES = [
     NiggleCreateDialogComponent,
     NiggleEditDialogComponent,
     NiggleDeleteDialogDwComponent,
-  ]
+  ],
+  entryComponents: [
+    NiggleDeleteDialogDwComponent,
+    NiggleCreateDialogComponent,
+        NiggleEditDialogComponent,
+        NiggleDeleteDialogDwComponent,
+      ],
+      
 })
 export class NiggleDwModule { }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NiggleService } from '../../../../entities/niggle/niggle.service';
 import { Niggle, Priority } from '../../../../entities/niggle/niggle.model';
-import { Plant , PlantService} from '../../../../entities/Plant';
+import { Plant , PlantService} from '../../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../../entities/maintenance-contractor';
 
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';

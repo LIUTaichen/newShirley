@@ -28,6 +28,11 @@ const ENTITY_STATES = [
     CreateDialogQuattraComponent,
     EditDialogQuattraComponent,
     DeleteDialogQuattraComponent
-  ]
+  ],
+  entryComponents: [
+    CreateDialogQuattraComponent,
+    EditDialogQuattraComponent,
+    DeleteDialogQuattraComponent
+  ],
 })
 export class NiggleQuattraModule { }
