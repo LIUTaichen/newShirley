@@ -2,10 +2,11 @@ package com.dempseywood.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dempseywood.domain.Niggle;
-
-import com.dempseywood.repository.NiggleRepository;
+import com.dempseywood.service.NiggleService;
 import com.dempseywood.web.rest.errors.BadRequestAlertException;
 import com.dempseywood.web.rest.util.HeaderUtil;
+import com.dempseywood.service.dto.NiggleCriteria;
+import com.dempseywood.service.NiggleQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class NiggleResource {
 
     private static final String ENTITY_NAME = "niggle";
 
-    private final NiggleRepository niggleRepository;
+    private final NiggleService niggleService;
 
-    public NiggleResource(NiggleRepository niggleRepository) {
-        this.niggleRepository = niggleRepository;
+    private final NiggleQueryService niggleQueryService;
+
+    public NiggleResource(NiggleService niggleService, NiggleQueryService niggleQueryService) {
+        this.niggleService = niggleService;
+        this.niggleQueryService = niggleQueryService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class NiggleResource {
         if (niggle.getId() != null) {
             throw new BadRequestAlertException("A new niggle cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Niggle result = niggleRepository.save(niggle);
+        Niggle result = niggleService.save(niggle);
         return ResponseEntity.created(new URI("/api/niggles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +75,7 @@ public class NiggleResource {
         if (niggle.getId() == null) {
             return createNiggle(niggle);
         }
-        Niggle result = niggleRepository.save(niggle);
+        Niggle result = niggleService.save(niggle);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, niggle.getId().toString()))
             .body(result);
@@ -80,14 +84,16 @@ public class NiggleResource {
     /**
      * GET  /niggles : get all the niggles.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of niggles in body
      */
     @GetMapping("/niggles")
     @Timed
-    public List<Niggle> getAllNiggles() {
-        log.debug("REST request to get all Niggles");
-        return niggleRepository.findAll();
-        }
+    public ResponseEntity<List<Niggle>> getAllNiggles(NiggleCriteria criteria) {
+        log.debug("REST request to get Niggles by criteria: {}", criteria);
+        List<Niggle> entityList = niggleQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /niggles/:id : get the "id" niggle.
@@ -99,7 +105,7 @@ public class NiggleResource {
     @Timed
     public ResponseEntity<Niggle> getNiggle(@PathVariable Long id) {
         log.debug("REST request to get Niggle : {}", id);
-        Niggle niggle = niggleRepository.findOne(id);
+        Niggle niggle = niggleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(niggle));
     }
 
@@ -113,7 +119,7 @@ public class NiggleResource {
     @Timed
     public ResponseEntity<Void> deleteNiggle(@PathVariable Long id) {
         log.debug("REST request to delete Niggle : {}", id);
-        niggleRepository.delete(id);
+        niggleService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

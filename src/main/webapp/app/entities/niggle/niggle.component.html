@@ -23,9 +23,10 @@
             <th><span jhiTranslate="fleetManagementApp.niggle.priority">Priority</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.quattraReference">Quattra Reference</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.quattraComments">Quattra Comments</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.invoiceNo">Invoice No</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.auditNo">Audit No</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.dateOpened">Date Opened</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.dateClosed">Date Closed</span></th>
-            <th><span jhiTranslate="fleetManagementApp.niggle.invoiceNo">Invoice No</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.plant">Plant</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.assignedContractor">Assigned Contractor</span></th>
             <th></th>
@@ -40,9 +41,10 @@
                 <td jhiTranslate="{{'fleetManagementApp.Priority.' + niggle.priority}}">{{niggle.priority}}</td>
                 <td>{{niggle.quattraReference}}</td>
                 <td>{{niggle.quattraComments}}</td>
+                <td>{{niggle.invoiceNo}}</td>
+                <td>{{niggle.auditNo}}</td>
                 <td>{{niggle.dateOpened | date:'medium'}}</td>
                 <td>{{niggle.dateClosed | date:'medium'}}</td>
-                <td>{{niggle.invoiceNo}}</td>
                 <td>
                     <div *ngIf="niggle.plant">
                         <a [routerLink]="['../plant', niggle.plant?.id ]" >{{niggle.plant?.id}}</a>

@@ -44,14 +44,17 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "quattra_comments")
     private String quattraComments;
 
+    @Column(name = "invoice_no")
+    private String invoiceNo;
+
+    @Column(name = "audit_no")
+    private String auditNo;
+
     @Column(name = "date_opened")
     private Instant dateOpened;
 
     @Column(name = "date_closed")
     private Instant dateClosed;
-
-    @Column(name = "invoice_no")
-    private String invoiceNo;
 
     @ManyToOne
     private Plant plant;
@@ -146,6 +149,32 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
         this.quattraComments = quattraComments;
     }
 
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
+
+    public Niggle invoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
+        return this;
+    }
+
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
+    }
+
+    public String getAuditNo() {
+        return auditNo;
+    }
+
+    public Niggle auditNo(String auditNo) {
+        this.auditNo = auditNo;
+        return this;
+    }
+
+    public void setAuditNo(String auditNo) {
+        this.auditNo = auditNo;
+    }
+
     public Instant getDateOpened() {
         return dateOpened;
     }
@@ -170,19 +199,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
 
     public void setDateClosed(Instant dateClosed) {
         this.dateClosed = dateClosed;
-    }
-
-    public String getInvoiceNo() {
-        return invoiceNo;
-    }
-
-    public Niggle invoiceNo(String invoiceNo) {
-        this.invoiceNo = invoiceNo;
-        return this;
-    }
-
-    public void setInvoiceNo(String invoiceNo) {
-        this.invoiceNo = invoiceNo;
     }
 
     public Plant getPlant() {
@@ -242,9 +258,10 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
             ", priority='" + getPriority() + "'" +
             ", quattraReference='" + getQuattraReference() + "'" +
             ", quattraComments='" + getQuattraComments() + "'" +
+            ", invoiceNo='" + getInvoiceNo() + "'" +
+            ", auditNo='" + getAuditNo() + "'" +
             ", dateOpened='" + getDateOpened() + "'" +
             ", dateClosed='" + getDateClosed() + "'" +
-            ", invoiceNo='" + getInvoiceNo() + "'" +
             "}";
     }
 }

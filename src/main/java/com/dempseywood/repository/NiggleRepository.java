@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface NiggleRepository extends JpaRepository<Niggle, Long> {
+public interface NiggleRepository extends JpaRepository<Niggle, Long>, JpaSpecificationExecutor<Niggle> {
 
 }

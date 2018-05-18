@@ -97,6 +97,8 @@ entity Niggle{
     priority Priority,
     quattraReference String,
     quattraComments String,
+	invoiceNo String,
+	auditNo String,
     dateOpened Instant,
     dateClosed Instant
 }
@@ -141,4 +143,6 @@ relationship ManyToOne {
     PlantLog{site} to Project
 
 }
+
+filter Niggle
 

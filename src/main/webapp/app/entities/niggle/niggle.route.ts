@@ -12,7 +12,7 @@ export const niggleRoute: Routes = [
         component: NiggleComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const niggleRoute: Routes = [
         component: NiggleDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const nigglePopupRoute: Routes = [
         component: NigglePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const nigglePopupRoute: Routes = [
         component: NigglePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const nigglePopupRoute: Routes = [
         component: NiggleDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Niggles'
+            pageTitle: 'fleetManagementApp.niggle.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

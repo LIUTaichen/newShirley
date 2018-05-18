@@ -86,6 +86,12 @@
             <column name="last_modified_date" type="timestamp"/>
         </addColumn>
     </changeSet>
+	
+	<changeSet id="add-audit-no" author="jason">
+	<addColumn tableName="niggle">
+            <column name="audit_no" type="varchar(50)"/>
+	</addColumn>
+	</changeSet>
 
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
