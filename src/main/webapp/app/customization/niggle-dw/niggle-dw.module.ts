@@ -35,6 +35,5 @@ const ENTITY_STATES = [
         NiggleEditDialogComponent,
         NiggleDeleteDialogDwComponent,
       ],
-      
 })
 export class NiggleDwModule { }
