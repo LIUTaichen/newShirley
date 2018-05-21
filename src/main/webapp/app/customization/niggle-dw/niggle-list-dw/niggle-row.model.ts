@@ -10,6 +10,7 @@ export class NiggleRow {
         public priorityOrder?: number,
         public quattraReference?: string,
         public quattraComments?: string,
+        public auditNo?: string,
         public dateOpened?: any,
         public dateUpdated?: any,
         public dateClosed?: any,

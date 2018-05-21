@@ -23,6 +23,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   idOfFocusedRow;
   displayedColumns = [
     'plantNumber',
+    'auditNo',
     'quattraReference',
     'plantDescription',
     'site',
@@ -163,6 +164,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     const niggleRow: NiggleRow = {
       id: niggle.id,
       description: niggle.description,
+      auditNo: niggle.auditNo,
       status: niggle.status,
       note: niggle.note,
       priority: niggle.priority,

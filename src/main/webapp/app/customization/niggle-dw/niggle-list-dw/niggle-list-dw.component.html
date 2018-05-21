@@ -21,6 +21,11 @@
                     <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
                 </ng-container>
 
+                <ng-container matColumnDef="auditNo">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Audit Number </mat-header-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.auditNo}} </mat-cell>
+                </ng-container>
+
                 <ng-container matColumnDef="quattraReference">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Reference </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.quattraReference}} </mat-cell>
