@@ -42,9 +42,9 @@ export class EditDialogQuattraComponent implements OnInit {
   createForm() {
 
     this.niggleForm = this.fb.group({
-      description: ['', Validators.required],
-      status: 'OPEN',
-      plant: ['', Validators.required],
+      description: [{value: '',  disabled: true}, Validators.required],
+      status: '',
+      plant: [{value: '',  disabled: true}, Validators.required],
       reference: '',
       comments: '',
       invoiceNo: '',

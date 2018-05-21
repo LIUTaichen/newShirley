@@ -59,7 +59,6 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
         , this);
 
         this.niggleRows = authorisedNiggles.map(this.convertEntityToRow, this);
-        // TODO: add logic to split niggles into different fleet
         this.whiteRows = authorisedNiggles.filter ( (niggle ) => this.isWhite(niggle)).map(this.convertEntityToRow, this);
         this.yellowRows = authorisedNiggles.filter ( (niggle ) => this.isYellow(niggle)).map(this.convertEntityToRow, this);
         this.completedRows = authorisedNiggles.filter ( (niggle ) => this.isCompleted(niggle)).map(this.convertEntityToRow, this);
@@ -186,7 +185,6 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
 
@@ -215,8 +213,6 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   }
 
   isWhite(niggle: Niggle): Boolean {
-    // console.log(niggle);
-    console.log( niggle.plant['category'].maintenanceGroup.toString());
     if (this.isCompleted(niggle)) {
       return false;
     }else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'WHITE_FLEET') {
