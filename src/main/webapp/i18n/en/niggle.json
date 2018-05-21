@@ -23,9 +23,9 @@
             "quattraReference": "Quattra Reference",
             "quattraComments": "Quattra Comments",
             "invoiceNo": "Invoice No",
-            "auditNo": "Audit No",
             "dateOpened": "Date Opened",
             "dateClosed": "Date Closed",
+            "purchaseOrder": "Purchase Order",
             "plant": "Plant",
             "assignedContractor": "Assigned Contractor"
         }

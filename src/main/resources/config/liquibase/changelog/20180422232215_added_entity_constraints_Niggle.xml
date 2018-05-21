@@ -21,4 +21,12 @@
                                  referencedTableName="maintenance_contractor"/>
 
     </changeSet>
+
+    <changeSet  id="add-constraint-foreign-key-puchase-order-id" author="json">
+         <addForeignKeyConstraint baseColumnNames="purchase_order_id"
+                                 baseTableName="niggle"
+                                 constraintName="fk_niggle_purchase_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="purchase_order"/>
+    </changeSet>
 </databaseChangeLog>

@@ -93,6 +93,20 @@
 	</addColumn>
 	</changeSet>
 
+    <changeSet id="drop audit no and add purchase no" author="jason">
+        <addColumn tableName="niggle">
+            <column name="purchase_order_id" type="bigint">
+                    <constraints unique="true" nullable="true" />
+            </column>
+        </addColumn>
+        <dropColumn columnName="audit_no"  tableName="niggle">
+        </dropColumn>
+	</changeSet>
+
+
+
+
+
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

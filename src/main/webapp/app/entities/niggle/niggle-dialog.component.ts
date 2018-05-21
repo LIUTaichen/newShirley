@@ -9,6 +9,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Niggle } from './niggle.model';
 import { NigglePopupService } from './niggle-popup.service';
 import { NiggleService } from './niggle.service';
+import { PurchaseOrder, PurchaseOrderService } from '../purchase-order';
 import { Plant, PlantService } from '../plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../maintenance-contractor';
 
@@ -21,6 +22,8 @@ export class NiggleDialogComponent implements OnInit {
     niggle: Niggle;
     isSaving: boolean;
 
+    purchaseorders: PurchaseOrder[];
+
     plants: Plant[];
 
     maintenancecontractors: MaintenanceContractor[];
@@ -29,6 +32,7 @@ export class NiggleDialogComponent implements OnInit {
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private niggleService: NiggleService,
+        private purchaseOrderService: PurchaseOrderService,
         private plantService: PlantService,
         private maintenanceContractorService: MaintenanceContractorService,
         private eventManager: JhiEventManager
@@ -37,6 +41,19 @@ export class NiggleDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.purchaseOrderService
+            .query({filter: 'niggle-is-null'})
+            .subscribe((res: HttpResponse<PurchaseOrder[]>) => {
+                if (!this.niggle.purchaseOrder || !this.niggle.purchaseOrder.id) {
+                    this.purchaseorders = res.body;
+                } else {
+                    this.purchaseOrderService
+                        .find(this.niggle.purchaseOrder.id)
+                        .subscribe((subRes: HttpResponse<PurchaseOrder>) => {
+                            this.purchaseorders = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
         this.plantService.query()
             .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.maintenanceContractorService.query()
@@ -75,6 +92,10 @@ export class NiggleDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackPurchaseOrderById(index: number, item: PurchaseOrder) {
+        return item.id;
     }
 
     trackPlantById(index: number, item: Plant) {

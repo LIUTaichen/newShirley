@@ -3,6 +3,7 @@ package com.dempseywood.web.rest;
 import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.Niggle;
+import com.dempseywood.domain.PurchaseOrder;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.domain.MaintenanceContractor;
 import com.dempseywood.repository.NiggleRepository;
@@ -68,9 +69,6 @@ public class NiggleResourceIntTest {
     private static final String DEFAULT_INVOICE_NO = "AAAAAAAAAA";
     private static final String UPDATED_INVOICE_NO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_AUDIT_NO = "AAAAAAAAAA";
-    private static final String UPDATED_AUDIT_NO = "BBBBBBBBBB";
-
     private static final Instant DEFAULT_DATE_OPENED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_OPENED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -128,7 +126,6 @@ public class NiggleResourceIntTest {
             .quattraReference(DEFAULT_QUATTRA_REFERENCE)
             .quattraComments(DEFAULT_QUATTRA_COMMENTS)
             .invoiceNo(DEFAULT_INVOICE_NO)
-            .auditNo(DEFAULT_AUDIT_NO)
             .dateOpened(DEFAULT_DATE_OPENED)
             .dateClosed(DEFAULT_DATE_CLOSED);
         return niggle;
@@ -161,7 +158,6 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getQuattraReference()).isEqualTo(DEFAULT_QUATTRA_REFERENCE);
         assertThat(testNiggle.getQuattraComments()).isEqualTo(DEFAULT_QUATTRA_COMMENTS);
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(DEFAULT_INVOICE_NO);
-        assertThat(testNiggle.getAuditNo()).isEqualTo(DEFAULT_AUDIT_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(DEFAULT_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(DEFAULT_DATE_CLOSED);
     }
@@ -203,7 +199,6 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].quattraReference").value(hasItem(DEFAULT_QUATTRA_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].quattraComments").value(hasItem(DEFAULT_QUATTRA_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
-            .andExpect(jsonPath("$.[*].auditNo").value(hasItem(DEFAULT_AUDIT_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
             .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())));
     }
@@ -226,7 +221,6 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.quattraReference").value(DEFAULT_QUATTRA_REFERENCE.toString()))
             .andExpect(jsonPath("$.quattraComments").value(DEFAULT_QUATTRA_COMMENTS.toString()))
             .andExpect(jsonPath("$.invoiceNo").value(DEFAULT_INVOICE_NO.toString()))
-            .andExpect(jsonPath("$.auditNo").value(DEFAULT_AUDIT_NO.toString()))
             .andExpect(jsonPath("$.dateOpened").value(DEFAULT_DATE_OPENED.toString()))
             .andExpect(jsonPath("$.dateClosed").value(DEFAULT_DATE_CLOSED.toString()));
     }
@@ -506,45 +500,6 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllNigglesByAuditNoIsEqualToSomething() throws Exception {
-        // Initialize the database
-        niggleRepository.saveAndFlush(niggle);
-
-        // Get all the niggleList where auditNo equals to DEFAULT_AUDIT_NO
-        defaultNiggleShouldBeFound("auditNo.equals=" + DEFAULT_AUDIT_NO);
-
-        // Get all the niggleList where auditNo equals to UPDATED_AUDIT_NO
-        defaultNiggleShouldNotBeFound("auditNo.equals=" + UPDATED_AUDIT_NO);
-    }
-
-    @Test
-    @Transactional
-    public void getAllNigglesByAuditNoIsInShouldWork() throws Exception {
-        // Initialize the database
-        niggleRepository.saveAndFlush(niggle);
-
-        // Get all the niggleList where auditNo in DEFAULT_AUDIT_NO or UPDATED_AUDIT_NO
-        defaultNiggleShouldBeFound("auditNo.in=" + DEFAULT_AUDIT_NO + "," + UPDATED_AUDIT_NO);
-
-        // Get all the niggleList where auditNo equals to UPDATED_AUDIT_NO
-        defaultNiggleShouldNotBeFound("auditNo.in=" + UPDATED_AUDIT_NO);
-    }
-
-    @Test
-    @Transactional
-    public void getAllNigglesByAuditNoIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        niggleRepository.saveAndFlush(niggle);
-
-        // Get all the niggleList where auditNo is not null
-        defaultNiggleShouldBeFound("auditNo.specified=true");
-
-        // Get all the niggleList where auditNo is null
-        defaultNiggleShouldNotBeFound("auditNo.specified=false");
-    }
-
-    @Test
-    @Transactional
     public void getAllNigglesByDateOpenedIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -623,6 +578,25 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllNigglesByPurchaseOrderIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PurchaseOrder purchaseOrder = PurchaseOrderResourceIntTest.createEntity(em);
+        em.persist(purchaseOrder);
+        em.flush();
+        niggle.setPurchaseOrder(purchaseOrder);
+        niggleRepository.saveAndFlush(niggle);
+        Long purchaseOrderId = purchaseOrder.getId();
+
+        // Get all the niggleList where purchaseOrder equals to purchaseOrderId
+        defaultNiggleShouldBeFound("purchaseOrderId.equals=" + purchaseOrderId);
+
+        // Get all the niggleList where purchaseOrder equals to purchaseOrderId + 1
+        defaultNiggleShouldNotBeFound("purchaseOrderId.equals=" + (purchaseOrderId + 1));
+    }
+
+
+    @Test
+    @Transactional
     public void getAllNigglesByPlantIsEqualToSomething() throws Exception {
         // Initialize the database
         Plant plant = PlantResourceIntTest.createEntity(em);
@@ -673,7 +647,6 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].quattraReference").value(hasItem(DEFAULT_QUATTRA_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].quattraComments").value(hasItem(DEFAULT_QUATTRA_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
-            .andExpect(jsonPath("$.[*].auditNo").value(hasItem(DEFAULT_AUDIT_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
             .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())));
     }
@@ -718,7 +691,6 @@ public class NiggleResourceIntTest {
             .quattraReference(UPDATED_QUATTRA_REFERENCE)
             .quattraComments(UPDATED_QUATTRA_COMMENTS)
             .invoiceNo(UPDATED_INVOICE_NO)
-            .auditNo(UPDATED_AUDIT_NO)
             .dateOpened(UPDATED_DATE_OPENED)
             .dateClosed(UPDATED_DATE_CLOSED);
 
@@ -738,7 +710,6 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getQuattraReference()).isEqualTo(UPDATED_QUATTRA_REFERENCE);
         assertThat(testNiggle.getQuattraComments()).isEqualTo(UPDATED_QUATTRA_COMMENTS);
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(UPDATED_INVOICE_NO);
-        assertThat(testNiggle.getAuditNo()).isEqualTo(UPDATED_AUDIT_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(UPDATED_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(UPDATED_DATE_CLOSED);
     }

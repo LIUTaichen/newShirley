@@ -17,6 +17,7 @@
                 "people": "People",
                 "niggle": "Niggle",
                 "plantLog": "Plant Log",
+                "purchaseOrder": "Purchase Order",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

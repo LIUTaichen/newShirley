@@ -47,14 +47,15 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "invoice_no")
     private String invoiceNo;
 
-    @Column(name = "audit_no")
-    private String auditNo;
-
     @Column(name = "date_opened")
     private Instant dateOpened;
 
     @Column(name = "date_closed")
     private Instant dateClosed;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private PurchaseOrder purchaseOrder;
 
     @ManyToOne
     private Plant plant;
@@ -162,19 +163,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
         this.invoiceNo = invoiceNo;
     }
 
-    public String getAuditNo() {
-        return auditNo;
-    }
-
-    public Niggle auditNo(String auditNo) {
-        this.auditNo = auditNo;
-        return this;
-    }
-
-    public void setAuditNo(String auditNo) {
-        this.auditNo = auditNo;
-    }
-
     public Instant getDateOpened() {
         return dateOpened;
     }
@@ -199,6 +187,19 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
 
     public void setDateClosed(Instant dateClosed) {
         this.dateClosed = dateClosed;
+    }
+
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public Niggle purchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+        return this;
+    }
+
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 
     public Plant getPlant() {
@@ -259,7 +260,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
             ", quattraReference='" + getQuattraReference() + "'" +
             ", quattraComments='" + getQuattraComments() + "'" +
             ", invoiceNo='" + getInvoiceNo() + "'" +
-            ", auditNo='" + getAuditNo() + "'" +
             ", dateOpened='" + getDateOpened() + "'" +
             ", dateClosed='" + getDateClosed() + "'" +
             "}";
