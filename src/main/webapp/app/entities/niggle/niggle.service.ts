@@ -13,7 +13,7 @@ export type EntityResponseType = HttpResponse<Niggle>;
 @Injectable()
 export class NiggleService {
 
-    private resourceUrl = SERVER_API_URL + 'api/niggles';
+    private resourceUrl =  SERVER_API_URL + 'api/niggles';
 
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
 
@@ -24,13 +24,13 @@ export class NiggleService {
     }
 
     update(niggle: Niggle): Observable<EntityResponseType> {
-        // const copy = this.convert(niggle);
-        return this.http.put<Niggle>(this.resourceUrl, niggle, { observe: 'response' })
+        const copy = this.convert(niggle);
+        return this.http.put<Niggle>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Niggle>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<Niggle>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -41,12 +41,12 @@ export class NiggleService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Niggle = this.convertItemFromServer(res.body);
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<Niggle[]>): HttpResponse<Niggle[]> {
@@ -55,7 +55,7 @@ export class NiggleService {
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -67,7 +67,6 @@ export class NiggleService {
             .convertDateTimeFromServer(niggle.dateOpened);
         copy.dateClosed = this.dateUtils
             .convertDateTimeFromServer(niggle.dateClosed);
-
         return copy;
     }
 
@@ -75,13 +74,11 @@ export class NiggleService {
      * Convert a Niggle to a JSON which can be sent to the server.
      */
     private convert(niggle: Niggle): Niggle {
-
         const copy: Niggle = Object.assign({}, niggle);
 
         copy.dateOpened = this.dateUtils.toDate(niggle.dateOpened);
 
         copy.dateClosed = this.dateUtils.toDate(niggle.dateClosed);
-
         return copy;
     }
 }

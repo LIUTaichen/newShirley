@@ -2,6 +2,14 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "purchaseOrder",
+            "otherEntityName": "purchaseOrder",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "niggle"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "plant",
             "otherEntityName": "plant",
@@ -43,10 +51,6 @@
         },
         {
             "fieldName": "invoiceNo",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "auditNo",
             "fieldType": "String"
         },
         {

@@ -95,14 +95,14 @@ public class NiggleQueryService extends QueryService<Niggle> {
             if (criteria.getInvoiceNo() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getInvoiceNo(), Niggle_.invoiceNo));
             }
-            if (criteria.getAuditNo() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getAuditNo(), Niggle_.auditNo));
-            }
             if (criteria.getDateOpened() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateOpened(), Niggle_.dateOpened));
             }
             if (criteria.getDateClosed() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateClosed(), Niggle_.dateClosed));
+            }
+            if (criteria.getPurchaseOrderId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getPurchaseOrderId(), Niggle_.purchaseOrder, PurchaseOrder_.id));
             }
             if (criteria.getPlantId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getPlantId(), Niggle_.plant, Plant_.id));

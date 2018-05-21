@@ -56,11 +56,11 @@ public class NiggleCriteria implements Serializable {
 
     private StringFilter invoiceNo;
 
-    private StringFilter auditNo;
-
     private InstantFilter dateOpened;
 
     private InstantFilter dateClosed;
+
+    private LongFilter purchaseOrderId;
 
     private LongFilter plantId;
 
@@ -133,14 +133,6 @@ public class NiggleCriteria implements Serializable {
         this.invoiceNo = invoiceNo;
     }
 
-    public StringFilter getAuditNo() {
-        return auditNo;
-    }
-
-    public void setAuditNo(StringFilter auditNo) {
-        this.auditNo = auditNo;
-    }
-
     public InstantFilter getDateOpened() {
         return dateOpened;
     }
@@ -155,6 +147,14 @@ public class NiggleCriteria implements Serializable {
 
     public void setDateClosed(InstantFilter dateClosed) {
         this.dateClosed = dateClosed;
+    }
+
+    public LongFilter getPurchaseOrderId() {
+        return purchaseOrderId;
+    }
+
+    public void setPurchaseOrderId(LongFilter purchaseOrderId) {
+        this.purchaseOrderId = purchaseOrderId;
     }
 
     public LongFilter getPlantId() {
@@ -184,9 +184,9 @@ public class NiggleCriteria implements Serializable {
                 (quattraReference != null ? "quattraReference=" + quattraReference + ", " : "") +
                 (quattraComments != null ? "quattraComments=" + quattraComments + ", " : "") +
                 (invoiceNo != null ? "invoiceNo=" + invoiceNo + ", " : "") +
-                (auditNo != null ? "auditNo=" + auditNo + ", " : "") +
                 (dateOpened != null ? "dateOpened=" + dateOpened + ", " : "") +
                 (dateClosed != null ? "dateClosed=" + dateClosed + ", " : "") +
+                (purchaseOrderId != null ? "purchaseOrderId=" + purchaseOrderId + ", " : "") +
                 (plantId != null ? "plantId=" + plantId + ", " : "") +
                 (assignedContractorId != null ? "assignedContractorId=" + assignedContractorId + ", " : "") +
             "}";

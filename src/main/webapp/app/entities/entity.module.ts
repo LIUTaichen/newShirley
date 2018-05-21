@@ -10,6 +10,7 @@ import { FleetManagementCompetencyModule } from './competency/competency.module'
 import { FleetManagementPeopleModule } from './people/people.module';
 import { FleetManagementNiggleModule } from './niggle/niggle.module';
 import { FleetManagementPlantLogModule } from './plant-log/plant-log.module';
+import { FleetManagementPurchaseOrderModule } from './purchase-order/purchase-order.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -24,6 +25,7 @@ import { FleetManagementPlantLogModule } from './plant-log/plant-log.module';
         FleetManagementPeopleModule,
         FleetManagementNiggleModule,
         FleetManagementPlantLogModule,
+        FleetManagementPurchaseOrderModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
