@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { Niggle } from '../../../entities/niggle/niggle.model';
+import { Niggle, Status } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/Plant/plant.model';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
@@ -11,6 +11,7 @@ import { NiggleService } from '../../../entities/niggle/niggle.service';
 import { CreateDialogQuattraComponent } from './create-dialog-quattra/create-dialog-quattra.component';
 import { EditDialogQuattraComponent } from './edit-dialog-quattra/edit-dialog-quattra.component';
 import { DeleteDialogQuattraComponent } from './delete-dialog-quattra/delete-dialog-quattra.component';
+import { MaintenanceGroup } from '../../../entities/category';
 
 @Component({
   selector: 'jhi-niggle-list-quattra',
@@ -27,12 +28,20 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     'quattraComments',
     'dateOpened',
     'daysOpened',
-    'delete'];
-    dataSource: MatTableDataSource<NiggleRow>;
-    @ViewChild(MatSort) sort: MatSort;
+    // 'delete'
+  ];
+  dataSource: MatTableDataSource<NiggleRow>;
+  @ViewChild(MatSort) sort: MatSort;
 
   currentAccount: any;
   eventSubscriber: Subscription;
+  selectedOption = 'ALL';
+  niggleRows: NiggleRow[] = new Array<NiggleRow>();
+  whiteRows: NiggleRow[] = new Array<NiggleRow>();
+  yellowRows: NiggleRow[] = new Array<NiggleRow>();
+  completedRows: NiggleRow[] = new Array<NiggleRow>();
+  // allowedStatus: Status[] = [Status.OPEN, Status.ON_HOLD, Status.IN_PROGRESS, Status.COMPLETED];
+  allowedStatus: string[] = ['OPEN', 'ON_HOLD', 'IN_PROGRESS', 'COMPLETED'];
 
   constructor(
     private niggleService: NiggleService,
@@ -46,15 +55,15 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     this.niggleService.query().subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
-        const rows = this.niggles.filter((niggle) => {
-          if ( niggle.assignedContractor['name'] === 'Quattra') {
-            return true;
-          }else {
-            return false;
-          }
-        }).map(this.convertEntityToRow, this);
-        this.dataSource = new MatTableDataSource(rows);
-        this.dataSource.sort = this.sort;
+        const authorisedNiggles = this.niggles.filter((niggle) => this.isAuthorised(niggle)
+        , this);
+
+        this.niggleRows = authorisedNiggles.map(this.convertEntityToRow, this);
+        // TODO: add logic to split niggles into different fleet
+        this.whiteRows = authorisedNiggles.filter ( (niggle ) => this.isWhite(niggle)).map(this.convertEntityToRow, this);
+        this.yellowRows = authorisedNiggles.filter ( (niggle ) => this.isYellow(niggle)).map(this.convertEntityToRow, this);
+        this.completedRows = authorisedNiggles.filter ( (niggle ) => this.isCompleted(niggle)).map(this.convertEntityToRow, this);
+        this.updateDataSource();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -176,6 +185,65 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       console.log('The dialog was closed');
       // this.animal = result;
     });
+  }
+
+  updateDataSource() {
+    let rowsToShow: NiggleRow[];
+    switch (this.selectedOption) {
+      case 'ALL': {
+        rowsToShow = this.niggleRows;
+        break;
+      }
+      case 'WHITE': {
+        rowsToShow = this.whiteRows;
+        break;
+      }
+      case 'YELLOW': {
+        rowsToShow = this.yellowRows;
+        break;
+      }
+      case 'COMPLETED': {
+        rowsToShow = this.completedRows;
+        break;
+      }
+    }
+    this.dataSource = new MatTableDataSource(rowsToShow);
+    this.dataSource.sort = this.sort;
+  }
+
+  isWhite(niggle: Niggle): Boolean {
+    // console.log(niggle);
+    console.log( niggle.plant['category'].maintenanceGroup.toString());
+    if (this.isCompleted(niggle)) {
+      return false;
+    }else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'WHITE_FLEET') {
+      return true;
+    }
+  }
+  isYellow(niggle: Niggle): Boolean {
+    if (this.isCompleted(niggle)) {
+      return false;
+    }else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'YELLOW_FLEET') {
+      return true;
+    }
+  }
+  isCompleted(niggle: Niggle): Boolean {
+    if (niggle.status.toString() === 'COMPLETED') {
+      return true;
+    }
+    return false;
+  }
+
+  isAuthorised(niggle: Niggle): Boolean {
+    if (niggle.assignedContractor['name'] !== 'Quattra') {
+      return false;
+    } else if (this.allowedStatus.indexOf(niggle.status.toString()) === -1) {
+      return false;
+    } else if (!niggle.priority) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

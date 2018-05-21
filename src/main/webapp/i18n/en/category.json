@@ -25,6 +25,7 @@
             "hourlyRate": "Hourly Rate",
             "isEarchMovingPlant": "Is Earch Moving Plant",
             "isTrackedForInternalBilling": "Is Tracked For Internal Billing",
+            "maintenanceGroup": "Maintenance Group",
             "competency": "Competency"
         }
     }

@@ -40,6 +40,10 @@
         <dd>
             <span>{{category.isTrackedForInternalBilling}}</span>
         </dd>
+        <dt><span jhiTranslate="fleetManagementApp.category.maintenanceGroup">Maintenance Group</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.MaintenanceGroup.' + category.maintenanceGroup}}">{{category.maintenanceGroup}}</span>
+        </dd>
         <dt><span jhiTranslate="fleetManagementApp.category.competency">Competency</span></dt>
         <dd>
             <div *ngIf="category.competency">

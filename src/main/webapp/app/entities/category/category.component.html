@@ -26,6 +26,7 @@
             <th><span jhiTranslate="fleetManagementApp.category.hourlyRate">Hourly Rate</span></th>
             <th><span jhiTranslate="fleetManagementApp.category.isEarchMovingPlant">Is Earch Moving Plant</span></th>
             <th><span jhiTranslate="fleetManagementApp.category.isTrackedForInternalBilling">Is Tracked For Internal Billing</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.maintenanceGroup">Maintenance Group</span></th>
             <th><span jhiTranslate="fleetManagementApp.category.competency">Competency</span></th>
             <th></th>
             </tr>
@@ -42,6 +43,7 @@
                 <td>{{category.hourlyRate}}</td>
                 <td>{{category.isEarchMovingPlant}}</td>
                 <td>{{category.isTrackedForInternalBilling}}</td>
+                <td jhiTranslate="{{'fleetManagementApp.MaintenanceGroup.' + category.maintenanceGroup}}">{{category.maintenanceGroup}}</td>
                 <td>
                     <div *ngIf="category.competency">
                         <a [routerLink]="['../competency', category.competency?.id ]" >{{category.competency?.id}}</a>

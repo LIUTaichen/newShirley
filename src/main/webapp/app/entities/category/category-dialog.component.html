@@ -57,6 +57,13 @@
             <input type="checkbox" class="form-control" name="isTrackedForInternalBilling" id="field_isTrackedForInternalBilling"
                 [(ngModel)]="category.isTrackedForInternalBilling" />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.category.maintenanceGroup" for="field_maintenanceGroup">Maintenance Group</label>
+            <select class="form-control" name="maintenanceGroup" [(ngModel)]="category.maintenanceGroup" id="field_maintenanceGroup" >
+                <option value="YELLOW_FLEET">{{'fleetManagementApp.MaintenanceGroup.YELLOW_FLEET' | translate}}</option>
+                <option value="WHITE_FLEET">{{'fleetManagementApp.MaintenanceGroup.WHITE_FLEET' | translate}}</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="fleetManagementApp.category.competency" for="field_competency">Competency</label>

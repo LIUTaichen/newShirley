@@ -44,6 +44,11 @@
         {
             "fieldName": "isTrackedForInternalBilling",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "maintenanceGroup",
+            "fieldType": "MaintenanceGroup",
+            "fieldValues": "YELLOW_FLEET,WHITE_FLEET"
         }
     ],
     "changelogDate": "20180422232209",

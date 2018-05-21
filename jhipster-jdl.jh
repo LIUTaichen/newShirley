@@ -42,7 +42,8 @@ entity Category{
     loadCapacity Integer,
     hourlyRate Double,
     isEarchMovingPlant Boolean,
-    isTrackedForInternalBilling Boolean
+    isTrackedForInternalBilling Boolean,
+    maintenanceGroup MaintenanceGroup
 }
 
 entity Company{
@@ -142,6 +143,11 @@ relationship ManyToOne {
     PlantLog{operator} to People,
     PlantLog{site} to Project
 
+}
+
+enum MaintenanceGroup {
+    YELLOW_FLEET,
+    WHITE_FLEET
 }
 
 filter Niggle

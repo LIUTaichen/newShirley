@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.dempseywood.domain.enumeration.MaintenanceGroup;
+
 /**
  * A Category.
  */
@@ -45,6 +47,10 @@ public class Category extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "is_tracked_for_internal_billing")
     private Boolean isTrackedForInternalBilling;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "maintenance_group")
+    private MaintenanceGroup maintenanceGroup;
 
     @ManyToOne
     private Competency competency;
@@ -175,6 +181,19 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         this.isTrackedForInternalBilling = isTrackedForInternalBilling;
     }
 
+    public MaintenanceGroup getMaintenanceGroup() {
+        return maintenanceGroup;
+    }
+
+    public Category maintenanceGroup(MaintenanceGroup maintenanceGroup) {
+        this.maintenanceGroup = maintenanceGroup;
+        return this;
+    }
+
+    public void setMaintenanceGroup(MaintenanceGroup maintenanceGroup) {
+        this.maintenanceGroup = maintenanceGroup;
+    }
+
     public Competency getCompetency() {
         return competency;
     }
@@ -222,6 +241,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
             ", hourlyRate=" + getHourlyRate() +
             ", isEarchMovingPlant='" + isIsEarchMovingPlant() + "'" +
             ", isTrackedForInternalBilling='" + isIsTrackedForInternalBilling() + "'" +
+            ", maintenanceGroup='" + getMaintenanceGroup() + "'" +
             "}";
     }
 }

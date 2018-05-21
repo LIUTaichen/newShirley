@@ -29,6 +29,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.dempseywood.domain.enumeration.MaintenanceGroup;
 /**
  * Test class for the CategoryResource REST controller.
  *
@@ -64,6 +65,9 @@ public class CategoryResourceIntTest {
 
     private static final Boolean DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING = false;
     private static final Boolean UPDATED_IS_TRACKED_FOR_INTERNAL_BILLING = true;
+
+    private static final MaintenanceGroup DEFAULT_MAINTENANCE_GROUP = MaintenanceGroup.YELLOW_FLEET;
+    private static final MaintenanceGroup UPDATED_MAINTENANCE_GROUP = MaintenanceGroup.WHITE_FLEET;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -111,7 +115,8 @@ public class CategoryResourceIntTest {
             .loadCapacity(DEFAULT_LOAD_CAPACITY)
             .hourlyRate(DEFAULT_HOURLY_RATE)
             .isEarchMovingPlant(DEFAULT_IS_EARCH_MOVING_PLANT)
-            .isTrackedForInternalBilling(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING);
+            .isTrackedForInternalBilling(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING)
+            .maintenanceGroup(DEFAULT_MAINTENANCE_GROUP);
         return category;
     }
 
@@ -144,6 +149,7 @@ public class CategoryResourceIntTest {
         assertThat(testCategory.getHourlyRate()).isEqualTo(DEFAULT_HOURLY_RATE);
         assertThat(testCategory.isIsEarchMovingPlant()).isEqualTo(DEFAULT_IS_EARCH_MOVING_PLANT);
         assertThat(testCategory.isIsTrackedForInternalBilling()).isEqualTo(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING);
+        assertThat(testCategory.getMaintenanceGroup()).isEqualTo(DEFAULT_MAINTENANCE_GROUP);
     }
 
     @Test
@@ -184,7 +190,8 @@ public class CategoryResourceIntTest {
             .andExpect(jsonPath("$.[*].loadCapacity").value(hasItem(DEFAULT_LOAD_CAPACITY)))
             .andExpect(jsonPath("$.[*].hourlyRate").value(hasItem(DEFAULT_HOURLY_RATE.doubleValue())))
             .andExpect(jsonPath("$.[*].isEarchMovingPlant").value(hasItem(DEFAULT_IS_EARCH_MOVING_PLANT.booleanValue())))
-            .andExpect(jsonPath("$.[*].isTrackedForInternalBilling").value(hasItem(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING.booleanValue())));
+            .andExpect(jsonPath("$.[*].isTrackedForInternalBilling").value(hasItem(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING.booleanValue())))
+            .andExpect(jsonPath("$.[*].maintenanceGroup").value(hasItem(DEFAULT_MAINTENANCE_GROUP.toString())));
     }
 
     @Test
@@ -206,7 +213,8 @@ public class CategoryResourceIntTest {
             .andExpect(jsonPath("$.loadCapacity").value(DEFAULT_LOAD_CAPACITY))
             .andExpect(jsonPath("$.hourlyRate").value(DEFAULT_HOURLY_RATE.doubleValue()))
             .andExpect(jsonPath("$.isEarchMovingPlant").value(DEFAULT_IS_EARCH_MOVING_PLANT.booleanValue()))
-            .andExpect(jsonPath("$.isTrackedForInternalBilling").value(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING.booleanValue()));
+            .andExpect(jsonPath("$.isTrackedForInternalBilling").value(DEFAULT_IS_TRACKED_FOR_INTERNAL_BILLING.booleanValue()))
+            .andExpect(jsonPath("$.maintenanceGroup").value(DEFAULT_MAINTENANCE_GROUP.toString()));
     }
 
     @Test
@@ -237,7 +245,8 @@ public class CategoryResourceIntTest {
             .loadCapacity(UPDATED_LOAD_CAPACITY)
             .hourlyRate(UPDATED_HOURLY_RATE)
             .isEarchMovingPlant(UPDATED_IS_EARCH_MOVING_PLANT)
-            .isTrackedForInternalBilling(UPDATED_IS_TRACKED_FOR_INTERNAL_BILLING);
+            .isTrackedForInternalBilling(UPDATED_IS_TRACKED_FOR_INTERNAL_BILLING)
+            .maintenanceGroup(UPDATED_MAINTENANCE_GROUP);
 
         restCategoryMockMvc.perform(put("/api/categories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -257,6 +266,7 @@ public class CategoryResourceIntTest {
         assertThat(testCategory.getHourlyRate()).isEqualTo(UPDATED_HOURLY_RATE);
         assertThat(testCategory.isIsEarchMovingPlant()).isEqualTo(UPDATED_IS_EARCH_MOVING_PLANT);
         assertThat(testCategory.isIsTrackedForInternalBilling()).isEqualTo(UPDATED_IS_TRACKED_FOR_INTERNAL_BILLING);
+        assertThat(testCategory.getMaintenanceGroup()).isEqualTo(UPDATED_MAINTENANCE_GROUP);
     }
 
     @Test

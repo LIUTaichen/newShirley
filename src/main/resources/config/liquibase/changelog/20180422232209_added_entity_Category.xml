@@ -81,4 +81,13 @@
         </addColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+
+
+    <changeSet id="add-maintenance-group" author="jason">
+        <addColumn tableName="category">
+                <column name="maintenance_group"  type="varchar(255)">
+                    <constraints nullable="true" />
+                </column>
+        </addColumn>
+	</changeSet>
 </databaseChangeLog>

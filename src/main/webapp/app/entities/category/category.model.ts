@@ -1,5 +1,10 @@
 import { BaseEntity } from './../../shared';
 
+export const enum MaintenanceGroup {
+    'YELLOW_FLEET',
+    'WHITE_FLEET'
+}
+
 export class Category implements BaseEntity {
     constructor(
         public id?: number,
@@ -12,6 +17,7 @@ export class Category implements BaseEntity {
         public hourlyRate?: number,
         public isEarchMovingPlant?: boolean,
         public isTrackedForInternalBilling?: boolean,
+        public maintenanceGroup?: MaintenanceGroup,
         public competency?: BaseEntity,
     ) {
         this.trackUsage = false;
