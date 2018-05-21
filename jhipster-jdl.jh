@@ -99,7 +99,6 @@ entity Niggle{
     quattraReference String,
     quattraComments String,
 	invoiceNo String,
-	auditNo String,
     dateOpened Instant,
     dateClosed Instant
 }
@@ -131,6 +130,10 @@ entity PlantLog{
     serviceDueDate Instant
 }
 
+entity PurchaseOrder{
+
+}
+
 relationship ManyToOne {
 	Plant{category} to Category,
     Plant{owner} to Company,
@@ -143,6 +146,10 @@ relationship ManyToOne {
     PlantLog{operator} to People,
     PlantLog{site} to Project
 
+}
+
+relationship OneToOne {
+    Niggle{purchaseOrder} to PurchaseOrder
 }
 
 enum MaintenanceGroup {
