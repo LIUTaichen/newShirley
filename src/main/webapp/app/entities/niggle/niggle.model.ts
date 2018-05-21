@@ -11,7 +11,7 @@ export const enum Status {
     'TBR'
 }
 
-export const enum Priority {
+export enum Priority {
     'LOW',
     'MEDIUM',
     'HIGH'

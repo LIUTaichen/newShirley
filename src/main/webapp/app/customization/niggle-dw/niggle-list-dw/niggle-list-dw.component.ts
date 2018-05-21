@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { Niggle } from '../../../entities/niggle/niggle.model';
+import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/Plant/plant.model';
 import { NiggleRow } from './niggle-row.model';
 import { NiggleService } from '../../../entities/niggle/niggle.service';
@@ -34,7 +34,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     'owner',
     'dateOpened',
     'daysOpened',
-    'priority',
+    'priorityOrder',
     'createdBy',
     'createdDate',
     'lastModifiedBy',
@@ -159,12 +159,14 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       owner = plant.owner ? plant.owner['company'] : '';
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
+    const priorityOrder: any = Priority[niggle.priority];
     const niggleRow: NiggleRow = {
       id: niggle.id,
       description: niggle.description,
       status: niggle.status,
       note: niggle.note,
       priority: niggle.priority,
+      priorityOrder,
       quattraReference: niggle.quattraReference,
       quattraComments: niggle.quattraComments,
       dateOpened: niggle.dateOpened,

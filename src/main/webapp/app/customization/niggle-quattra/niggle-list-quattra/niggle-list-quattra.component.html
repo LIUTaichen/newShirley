@@ -23,7 +23,7 @@
         <div class="table-container">
             <mat-table #table [dataSource]="dataSource" matSort matSortActive="lastModifiedDate" matSortDirection="desc">
 
-                <ng-container matColumnDef="priority">
+                <ng-container matColumnDef="priorityOrder">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.priority}} </mat-cell>
                 </ng-container>

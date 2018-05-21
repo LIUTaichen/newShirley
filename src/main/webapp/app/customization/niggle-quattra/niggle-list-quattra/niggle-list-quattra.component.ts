@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { Niggle, Status } from '../../../entities/niggle/niggle.model';
+import { Niggle, Status, Priority } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/Plant/plant.model';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
@@ -22,7 +22,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   idOfFocusedRow;
-  displayedColumns = ['priority', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
+  displayedColumns = ['priorityOrder', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
     'description',
     'status',
     'quattraComments',
@@ -118,12 +118,14 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       owner = plant.owner ? plant.owner['company'] : '';
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
+    const priorityOrder: any = Priority[niggle.priority];
     const niggleRow: NiggleRow = {
       id: niggle.id,
       description: niggle.description,
       status: niggle.status,
       note: niggle.note,
       priority: niggle.priority,
+      priorityOrder,
       quattraReference: niggle.quattraReference,
       quattraComments: niggle.quattraComments,
       dateOpened: niggle.dateOpened,
@@ -142,6 +144,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       lastModifiedBy: niggle.lastModifiedBy,
       lastModifiedDate: niggle.lastModifiedDate
     };
+    console.log(niggleRow);
     return niggleRow;
   }
 

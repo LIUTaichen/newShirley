@@ -7,6 +7,7 @@ export class NiggleRow {
         public status?: Status,
         public note?: string,
         public priority?: Priority,
+        public priorityOrder?: number,
         public quattraReference?: string,
         public quattraComments?: string,
         public dateOpened?: any,
