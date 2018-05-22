@@ -4,6 +4,7 @@
 /target/www/**
 /src/test/javascript/coverage/
 /src/test/javascript/PhantomJS*/
+jhipster-jdl.png
 
 ######################
 # Node
@@ -141,4 +142,4 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-jhipster-jdl.png
+
