@@ -22,7 +22,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   idOfFocusedRow;
-  displayedColumns = ['priorityOrder', 'plantNumber', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
+  displayedColumns = ['priorityOrder', 'plantNumber', 'auditNo', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
     'description',
     'status',
     'quattraComments',
@@ -106,7 +106,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   convertEntityToRow(niggle: Niggle): NiggleRow {
     const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor;
+    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor, auditNo;
     if (niggle.plant) {
       const plant: Plant = niggle.plant;
       fleetId = plant.fleetId;
@@ -117,10 +117,12 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       owner = plant.owner ? plant.owner['company'] : '';
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
+    auditNo = niggle.purchaseOrder ? niggle.purchaseOrder.id : '';
     const priorityOrder: any = Priority[niggle.priority];
     const niggleRow: NiggleRow = {
       id: niggle.id,
       description: niggle.description,
+      auditNo,
       status: niggle.status,
       note: niggle.note,
       priority: niggle.priority,
