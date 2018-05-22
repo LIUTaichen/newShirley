@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NiggleService } from '../../../../entities/niggle/niggle.service';
-import { Niggle, Priority } from '../../../../entities/niggle/niggle.model';
+import { Niggle } from '../../../../entities/niggle/niggle.model';
 import { Plant , PlantService} from '../../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../../entities/maintenance-contractor';
 
