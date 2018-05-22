@@ -18,14 +18,12 @@ export class NiggleService {
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
 
     create(niggle: Niggle): Observable<EntityResponseType> {
-        const copy = this.convert(niggle);
-        return this.http.post<Niggle>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<Niggle>(this.resourceUrl, niggle, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(niggle: Niggle): Observable<EntityResponseType> {
-        const copy = this.convert(niggle);
-        return this.http.put<Niggle>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<Niggle>(this.resourceUrl, niggle, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
