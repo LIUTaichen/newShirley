@@ -2,12 +2,19 @@
 <form [formGroup]="niggleForm" (ngSubmit)="onSubmit()">
     <div class="form-container">
         <mat-form-field>
-            <mat-select placeholder="Plant Number" formControlName="plant" [compareWith]="compareObjects">
-                <mat-option *ngFor="let plant of plants" [value]="plant">
-                    {{ plant.fleetId }}
-                </mat-option>
-            </mat-select>
+            <input matInput placeholder="Plant Number" [matAutocomplete]="auto" (blur)="handleLowerCaseInput()" formControlName="plant">
+            <mat-error *ngIf="!niggleForm.get('plant').hasError('required') && niggleForm.get('plant').invalid">
+                Please enter a valid plant number.
+            </mat-error>
+            <mat-error *ngIf="niggleForm.get('plant').hasError('required')">
+                Plant number is required
+            </mat-error>
         </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPlant" autoActiveFirstOption>
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.fleetId }}
+            </mat-option>
+        </mat-autocomplete>
         <mat-form-field>
             <textarea matInput placeholder="Repairs Needed" formControlName="description"></textarea>
         </mat-form-field>
@@ -28,7 +35,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Assigned To" formControlName="contractor" [compareWith]="compareObjects">
-                <mat-option *ngFor="let con of maintenancecontractors" [value]="con">
+                <mat-option *ngFor="let con of maintenanceContractors" [value]="con">
                     {{ con.name }}
                 </mat-option>
             </mat-select>
