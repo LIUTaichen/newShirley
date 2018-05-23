@@ -167,6 +167,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       panelClass: 'niggle-panel',
       data: {
         niggle,
+        plants: this.plants,
+        maintenanceContractors: this.maintenanceContractors
       }
     });
 
