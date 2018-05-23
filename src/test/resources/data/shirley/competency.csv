@@ -1,0 +1,65 @@
+﻿ID,Competency,Grouping,sort_order,CREATED_BY,CREATED_DATE,LAST_MODIFIED_BY,LAST_MODIFIED_DATE
+1,Small Tipper,Large Plant,200,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+2,6 Wheeler,Large Plant,210,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+3,Loader,Large Plant,230,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+4,Digger 1.5 - 10 Ton,Large Plant,300,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+5,Locating_Services,Large Plant,320,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+6,Service_Spotter,Large Plant,330,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+7,Digger 10 ton+,Large Plant,310,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+8,Trenching,NULL,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+9,Rock Breaker,Large Plant,340,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+10,Pile Drilling,NULL,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+11,Tractor,Large Plant,150,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+12,Single Engine Motor Scraper,Large Plant,10,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+13,Twin Power Motor Scraper,Large Plant,20,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+14,4 Wheeled Compactor,Large Plant,30,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+15,Tractor & Scoop,Large Plant,40,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+16,6x6 Dump Truck,Large Plant,50,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+17,Bulldozer,Large Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+18,Grader,Large Plant,110,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+19,Vibrating Roller,Large Plant,60,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+20,Static Roller,Large Plant,140,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+21,Dynapac Roller,Large Plant,120,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+22,BobCat,Large Plant,130,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+23,Watercart,Large Plant,65,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+24,Onsite Track Marooka,Large Plant,70,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+25,Truck mounted Palfinger 2.9t (crane),Large Plant,75,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+26,Power Tools / Small Plant,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+27,Concrete Saw,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+28,Chainsaw,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+29,Nail Gun,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+30,Circular Saw,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+31,Grinder,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+32,Small Plant,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+33,Skilled Labouring,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+34,Pipe Laying,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+35,Concrete Repairs,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+36,Bitumen Handling,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+37,Asphalt / Concrete,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+38,Silt Fence,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+39,Decants,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+40,Floc Shed,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+41,Earthworks,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+42,Underground Services Spotter - Small Plant,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+43,SW50 Roller,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+44,Piloting Services,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+45,Lifting Chains,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+46,Spill Kits,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+47,LX30 Loader,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+48,MS Excel,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+49,MS Word,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+50,Blue Beam,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+51,12 D,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+52,iPhone,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+53,Android Phones,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+54,MS Project,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+55,Union Square,IT/Office,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+56,RTW Licence,Large Plant,1,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+57,Thwaites,Large Plant,260,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+58,Company Induction,Company,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+59,Transporter,Large Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+60,Truck and Trailer,Large Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+61,Electrical Table Saw,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+62,Confined Space,Small Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+63,Sheeps Foot Compactor,Large Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357
+64,Smooth Drum Roller,Large Plant,0,System,2018-05-23 13:33:41.357,System,2018-05-23 13:33:41.357

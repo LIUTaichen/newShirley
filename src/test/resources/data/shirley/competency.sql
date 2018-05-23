@@ -1,0 +1,1 @@
+select ID,Competency,Grouping, isnull(Sort_Order, 0) as sort_order, 'System' as "CREATED_BY", getdate() as "CREATED_DATE", 'System' as "LAST_MODIFIED_BY", getdate() as "LAST_MODIFIED_DATE" from shirley..Access_Competency_Areas
