@@ -26,7 +26,6 @@
                 <mat-option value="CLOSED">CLOSED</mat-option>
             </mat-select>
         </mat-form-field>
-        {{niggleForm.value.status | json}}
         <mat-form-field>
             <mat-select placeholder="Assigned To" formControlName="contractor" [compareWith]="compareObjects">
                 <mat-option *ngFor="let con of maintenancecontractors" [value]="con">
