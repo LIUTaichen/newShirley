@@ -11,6 +11,8 @@ import { Principal } from '../../../shared';
 import { NiggleCreateDialogComponent } from './niggle-create-dialog/niggle-create-dialog.component';
 import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dialog.component';
 import { NiggleDeleteDialogDwComponent } from './niggle-delete-dialog-dw/niggle-delete-dialog-dw.component';
+import { PlantService } from '../../../entities/plant';
+import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
@@ -20,6 +22,8 @@ import { NiggleDeleteDialogDwComponent } from './niggle-delete-dialog-dw/niggle-
 export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
+  plants: Plant[];
+  maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
   displayedColumns = [
     'plantNumber',
@@ -54,6 +58,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     private eventManager: JhiEventManager,
     private principal: Principal,
     public dialog: MatDialog,
+    private plantService: PlantService,
+    private maintenanceContractorService: MaintenanceContractorService,
   ) {
   }
 
@@ -67,6 +73,24 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
+
+    this.plantService.query()
+      .subscribe((res: HttpResponse<Plant[]>) => {
+        const plants = res.body;
+        this.plants = plants.sort((a: Plant, b: Plant) => {
+          if (a.fleetId < b.fleetId) {
+            return -1;
+          } else if (a.fleetId > b.fleetId) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      }, (res: HttpErrorResponse) => this.onError(res.message));
+    this.maintenanceContractorService.query()
+      .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
+        this.maintenanceContractors = res.body;
+      }, (res: HttpErrorResponse) => this.onError(res.message));
   }
   ngOnInit() {
     this.loadAll();
@@ -109,7 +133,10 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(NiggleCreateDialogComponent, {
       width: '500px',
       panelClass: 'niggle-panel',
-      data: { name: 'this.name', animal: 'this.animal' }
+      data: {
+        plants: this.plants,
+        maintenanceContractors: this.maintenanceContractors
+      }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -138,7 +165,9 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(NiggleEditDialogComponent, {
       width: '500px',
       panelClass: 'niggle-panel',
-      data: { niggle }
+      data: {
+        niggle,
+      }
     });
 
     dialogRef.afterClosed().subscribe((result) => {

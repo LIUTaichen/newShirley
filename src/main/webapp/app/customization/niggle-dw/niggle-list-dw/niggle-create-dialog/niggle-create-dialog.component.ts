@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Niggle } from '../../../../entities/niggle/niggle.model';
 import { NiggleService } from '../../../../entities/niggle/niggle.service';
@@ -9,7 +9,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
 
 @Component({
   selector: 'jhi-niggle-create-dialog',
@@ -20,8 +22,9 @@ export class NiggleCreateDialogComponent implements OnInit {
 
   niggleForm: FormGroup;
   plants: Plant[];
-  maintenancecontractors: MaintenanceContractor[];
+  maintenanceContractors: MaintenanceContractor[];
   isSaving: boolean;
+  filteredOptions: Observable<Plant[]>;
 
   constructor(
     public snackBar: MatSnackBar,
@@ -31,32 +34,46 @@ export class NiggleCreateDialogComponent implements OnInit {
     private plantService: PlantService,
     private maintenanceContractorService: MaintenanceContractorService,
     public dialogRef: MatDialogRef<NiggleCreateDialogComponent>,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.plants = data.plants;
+    this.maintenanceContractors = data.maintenanceContractors;
     this.createForm();
+    this.filteredOptions = this.niggleForm.controls.plant.valueChanges
+      .pipe(
+        startWith(''),
+        map((val) => {
+          const filtered = this.filter(val);
+          console.log(filtered.length);
+          return filtered;
+        }
+        )
+      );
   }
 
   createForm() {
     this.niggleForm = this.fb.group({
       description: ['', Validators.required],
-      status: 'OPEN',
+      status: 'SUBMITTED',
       priority: 'LOW',
       plant: ['', Validators.required],
-      contractor: '',
+      contractor: this.maintenanceContractors[0],
       note: ''
     });
   }
 
   ngOnInit() {
-    this.plantService.query()
-      .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-    this.maintenanceContractorService.query()
-      .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
-        this.maintenancecontractors = res.body;
-        this.niggleForm.patchValue({
-          contractor: this.maintenancecontractors[0]
-        });
-      }, (res: HttpErrorResponse) => this.onError(res.message));
+    // TODO: remove comments
+    // this.plantService.query()
+    //   .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+    // this.maintenanceContractorService.query()
+    //   .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
+    //     this.maintenancecontractors = res.body;
+    //     this.niggleForm.patchValue({
+    //       contractor: this.maintenancecontractors[0]
+    //     });
+    //   }, (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   private onError(error: any) {
@@ -97,7 +114,7 @@ export class NiggleCreateDialogComponent implements OnInit {
   private onSaveSuccess(result: Niggle) {
     this.isSaving = false;
     this.eventManager.broadcast({ name: 'niggleListModification', content: 'OK' });
-    this.snackBar.open('Niggle created',  'Dismiss', {
+    this.snackBar.open('Niggle created', 'Dismiss', {
       duration: 3000
     });
     this.onCancel();
@@ -105,6 +122,39 @@ export class NiggleCreateDialogComponent implements OnInit {
 
   private onSaveError() {
     this.isSaving = false;
+  }
+
+  filter(val: string): Plant[] {
+    console.log('filtering with', val);
+    let feed: string;
+    if (val === null) {
+      feed = '';
+    } else {
+      feed = val.toString().toLocaleLowerCase();
+    }
+    return this.plants.filter((option) =>
+      option.fleetId.toLowerCase().indexOf(feed) === 0
+    );
+  }
+
+  displayPlant(plant?: Plant): string | undefined {
+    return plant ? plant.fleetId : undefined;
+  }
+
+  handleLowerCaseInput() {
+    let feed: string;
+    if (this.niggleForm.value.plant && !this.niggleForm.value.plant.id) {
+      feed = this.niggleForm.value.plant.toLocaleLowerCase();
+      console.log('looking for a match with feed: ', feed);
+      for (let i = 0; i < this.plants.length; i++) {
+        const option = this.plants[i];
+        if (option.fleetId.toLowerCase() === feed) {
+          console.log('found matching record: ', option);
+          this.niggleForm.controls.plant.setValue(option);
+        }
+      }
+
+    }
   }
 
 }
