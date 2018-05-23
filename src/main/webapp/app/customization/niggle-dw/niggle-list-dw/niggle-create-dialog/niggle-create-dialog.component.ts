@@ -2,13 +2,13 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Niggle } from '../../../../entities/niggle/niggle.model';
 import { NiggleService } from '../../../../entities/niggle/niggle.service';
-import { Plant, PlantService } from '../../../../entities/plant';
-import { MaintenanceContractor, MaintenanceContractorService } from '../../../../entities/maintenance-contractor';
+import { Plant } from '../../../../entities/plant';
+import { MaintenanceContractor } from '../../../../entities/maintenance-contractor';
 
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
@@ -29,10 +29,7 @@ export class NiggleCreateDialogComponent implements OnInit {
   constructor(
     public snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private jhiAlertService: JhiAlertService,
     private niggleService: NiggleService,
-    private plantService: PlantService,
-    private maintenanceContractorService: MaintenanceContractorService,
     public dialogRef: MatDialogRef<NiggleCreateDialogComponent>,
     private eventManager: JhiEventManager,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -76,9 +73,9 @@ export class NiggleCreateDialogComponent implements OnInit {
     //   }, (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  private onError(error: any) {
-    this.jhiAlertService.error(error.message, null, null);
-  }
+  // private onError(error: any) {
+  //   this.jhiAlertService.error(error.message, null, null);
+  // }
   onSubmit() {
     this.isSaving = true;
     console.log('save!!');
