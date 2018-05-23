@@ -8,7 +8,7 @@ export const niggleQuattraRoute: Routes = [
       component: NiggleListQuattraComponent,
       data: {
           authorities: ['ROLE_QUATTRA'],
-          pageTitle: 'Quattra Niggles List'
+          pageTitle: 'fleetManagementApp.niggle.quattra.home.title'
       },
       canActivate: [UserRouteAccessService]
   }
