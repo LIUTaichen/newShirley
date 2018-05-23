@@ -27,7 +27,17 @@
             "dateClosed": "Date Closed",
             "purchaseOrder": "Purchase Order",
             "plant": "Plant",
-            "assignedContractor": "Assigned Contractor"
+            "assignedContractor": "Assigned Contractor",
+            "dw" : {
+                "home": {
+                    "title": "Dempsey Wood Niggles List"
+                }
+            },
+            "quattra" : {
+                "home": {
+                    "title": "Quattra Niggles List"
+                }
+            }
         }
     }
 }

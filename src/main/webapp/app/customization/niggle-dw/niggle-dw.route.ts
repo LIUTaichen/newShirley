@@ -8,7 +8,7 @@ export const niggleDwRoute: Routes = [
     component: NiggleListDwComponent,
     data: {
       authorities: ['ROLE_DW'],
-      pageTitle: 'Dempsey Wood Niggles List'
+      pageTitle: 'fleetManagementApp.niggle.dw.home.title'
     },
     canActivate: [UserRouteAccessService]
   }];
