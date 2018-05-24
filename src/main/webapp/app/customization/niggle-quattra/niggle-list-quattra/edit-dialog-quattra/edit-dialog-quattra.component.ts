@@ -85,8 +85,6 @@ export class EditDialogQuattraComponent implements OnInit {
 
   prepareSaveNiggle() {
     const formModel = this.niggleForm.value;
-
-    this.niggle.description = formModel.description;
     this.niggle.status = formModel.status;
     this.niggle.quattraReference = formModel.reference;
     this.niggle.invoiceNo = formModel.invoiceNo;
