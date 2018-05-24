@@ -20,6 +20,7 @@ import java.util.List;
 @Transactional
 public class NiggleService {
 
+    public static final String DEMPSEY_WOOD_PURCHASE_ORDER_PREFIX = "DW";
     private final Logger log = LoggerFactory.getLogger(NiggleService.class);
 
     private final NiggleRepository niggleRepository;
@@ -44,6 +45,7 @@ public class NiggleService {
         if(Status.OPEN == niggle.getStatus() && niggle.getDateOpened() == null){
             log.debug("Niggle is being opened. Creating purchase order and setting timestamp for dateOpened");
             PurchaseOrder newPurchaseOrder = purchaseOrderRepository.save(new PurchaseOrder());
+            newPurchaseOrder.setOrderNumber(DEMPSEY_WOOD_PURCHASE_ORDER_PREFIX +newPurchaseOrder.getId());
             niggle.setPurchaseOrder(newPurchaseOrder);
             niggle.setDateOpened(Instant.now());
         }
