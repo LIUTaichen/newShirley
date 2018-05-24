@@ -15,7 +15,8 @@
             },
             "detail": {
                 "title": "Purchase Order"
-            }
+            },
+            "orderNumber": "Order Number"
         }
     }
 }

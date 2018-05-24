@@ -131,7 +131,7 @@ entity PlantLog{
 }
 
 entity PurchaseOrder{
-
+    orderNumber String
 }
 
 relationship ManyToOne {

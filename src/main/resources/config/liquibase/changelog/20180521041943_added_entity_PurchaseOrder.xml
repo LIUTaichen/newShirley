@@ -41,4 +41,12 @@
         </addColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+
+    <changeSet id="add-orderNumber-column" author="jason">
+        <addColumn tableName="purchase_order">
+            <column name="order_number" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

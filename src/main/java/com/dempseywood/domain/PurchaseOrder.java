@@ -19,6 +19,9 @@ public class PurchaseOrder extends AbstractAuditingEntity implements Serializabl
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "order_number")
+    private String orderNumber;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -26,6 +29,19 @@ public class PurchaseOrder extends AbstractAuditingEntity implements Serializabl
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public PurchaseOrder orderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+        return this;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -53,6 +69,7 @@ public class PurchaseOrder extends AbstractAuditingEntity implements Serializabl
     public String toString() {
         return "PurchaseOrder{" +
             "id=" + getId() +
+            ", orderNumber='" + getOrderNumber() + "'" +
             "}";
     }
 }

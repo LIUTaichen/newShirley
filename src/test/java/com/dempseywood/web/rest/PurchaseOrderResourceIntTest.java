@@ -38,6 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = FleetManagementApp.class)
 public class PurchaseOrderResourceIntTest {
 
+    private static final String DEFAULT_ORDER_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_ORDER_NUMBER = "BBBBBBBBBB";
+
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
 
@@ -75,7 +78,8 @@ public class PurchaseOrderResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static PurchaseOrder createEntity(EntityManager em) {
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        PurchaseOrder purchaseOrder = new PurchaseOrder()
+            .orderNumber(DEFAULT_ORDER_NUMBER);
         return purchaseOrder;
     }
 
@@ -99,6 +103,7 @@ public class PurchaseOrderResourceIntTest {
         List<PurchaseOrder> purchaseOrderList = purchaseOrderRepository.findAll();
         assertThat(purchaseOrderList).hasSize(databaseSizeBeforeCreate + 1);
         PurchaseOrder testPurchaseOrder = purchaseOrderList.get(purchaseOrderList.size() - 1);
+        assertThat(testPurchaseOrder.getOrderNumber()).isEqualTo(DEFAULT_ORDER_NUMBER);
     }
 
     @Test
@@ -130,7 +135,8 @@ public class PurchaseOrderResourceIntTest {
         restPurchaseOrderMockMvc.perform(get("/api/purchase-orders?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(purchaseOrder.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(purchaseOrder.getId().intValue())))
+            .andExpect(jsonPath("$.[*].orderNumber").value(hasItem(DEFAULT_ORDER_NUMBER.toString())));
     }
 
     @Test
@@ -143,7 +149,8 @@ public class PurchaseOrderResourceIntTest {
         restPurchaseOrderMockMvc.perform(get("/api/purchase-orders/{id}", purchaseOrder.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(purchaseOrder.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(purchaseOrder.getId().intValue()))
+            .andExpect(jsonPath("$.orderNumber").value(DEFAULT_ORDER_NUMBER.toString()));
     }
 
     @Test
@@ -165,6 +172,8 @@ public class PurchaseOrderResourceIntTest {
         PurchaseOrder updatedPurchaseOrder = purchaseOrderRepository.findOne(purchaseOrder.getId());
         // Disconnect from session so that the updates on updatedPurchaseOrder are not directly saved in db
         em.detach(updatedPurchaseOrder);
+        updatedPurchaseOrder
+            .orderNumber(UPDATED_ORDER_NUMBER);
 
         restPurchaseOrderMockMvc.perform(put("/api/purchase-orders")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -175,6 +184,7 @@ public class PurchaseOrderResourceIntTest {
         List<PurchaseOrder> purchaseOrderList = purchaseOrderRepository.findAll();
         assertThat(purchaseOrderList).hasSize(databaseSizeBeforeUpdate);
         PurchaseOrder testPurchaseOrder = purchaseOrderList.get(purchaseOrderList.size() - 1);
+        assertThat(testPurchaseOrder.getOrderNumber()).isEqualTo(UPDATED_ORDER_NUMBER);
     }
 
     @Test
