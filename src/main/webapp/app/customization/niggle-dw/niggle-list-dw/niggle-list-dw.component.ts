@@ -3,7 +3,7 @@ import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
-import { Plant } from '../../../entities/Plant/plant.model';
+import { Plant } from '../../../entities/plant/plant.model';
 import { NiggleRow } from './niggle-row.model';
 import { NiggleService } from '../../../entities/niggle/niggle.service';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
