@@ -27,7 +27,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   idOfFocusedRow;
   displayedColumns = [
     'plantNumber',
-    'auditNo',
+    'orderNo',
     'quattraReference',
     'plantDescription',
     'site',
