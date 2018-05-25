@@ -105,3 +105,11 @@ jhipster:
 # ===================================================================
 
 application:
+    blackhawk-api:
+        username: ${APPLICATION_BLACKHAWKAPI_USERNAME}
+        password: ${APPLICATION_BLACKHAWKAPI_PASSWORD}
+        applicationId: 279EEA55-9497-4DC5-887E-EF61DA455E56
+        companyId: 2971
+        url:
+            root: https://webapi.blackhawktracking.com/api
+            login: /Login
