@@ -92,6 +92,30 @@ public class LocationUpdateServiceTest {
         assertThat(updatedPlant.getLocation().equals(vehicle.getAddress())).isTrue();
     }
 
+    @Test
+    @Transactional
+    public void assertThatWhenPlantLocationUpdateTimeIsNullItIsUpdated() {
+        VehicleDTO[] vehicles = new VehicleDTO[1];
+        VehicleDTO vehicle = new VehicleDTO();
+        vehicle.setVehicleInformationDTO(new VehicleInformationDTO());
+        vehicle.getVehicleInformationDTO().setDeviceDTO(new DeviceDTO());
+        vehicle.getVehicleInformationDTO().getDeviceDTO().setSerialNumber("526168");
+        vehicle.setAddress("new location");
+        vehicle.setLastValidGpsTime(Instant.now());
+        vehicles[0] = vehicle;
+
+        Plant plant = new Plant();
+        plant.setGpsDeviceSerial("526168");
+        plant.setLastLocationUpdateTime(null);
+        plant.setLocation("stale location");
+        List<Plant> plantList = new ArrayList<>();
+        plantList.add(plant);
+        Map<String, VehicleDTO> map = locationUpdateService.generateVehiclesMap(vehicles);
+        Plant updatedPlant = locationUpdateService.generatePlantsToBeUpdated(map , plantList).iterator().next();
+        assertThat(updatedPlant.getLastLocationUpdateTime().equals(vehicle.getLastValidGpsTime())).isTrue();
+        assertThat(updatedPlant.getLocation().equals(vehicle.getAddress())).isTrue();
+    }
+
 
     @Test
     @Transactional

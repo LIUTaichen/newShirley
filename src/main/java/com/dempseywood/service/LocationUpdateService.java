@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -56,7 +57,7 @@ public class LocationUpdateService {
                 continue;
             }else{
                 VehicleDTO vehicle = vehiclesMap.get(plant.getGpsDeviceSerial());
-                if(vehicle.getLastValidGpsTime().isAfter(plant.getLastLocationUpdateTime())){
+                if(plant.getLastLocationUpdateTime() == null || vehicle.getLastValidGpsTime().isAfter(plant.getLastLocationUpdateTime())){
                     plant.setLastLocationUpdateTime(vehicle.getLastValidGpsTime());
                     plant.setLocation(vehicle.getAddress());
                     plantsToUpdate.add(plant);
@@ -82,5 +83,16 @@ public class LocationUpdateService {
             map.put(deviceSerial,vehicle);
         }
         return map;
+    }
+
+    @Scheduled(fixedRate = 1000 * 60 * 2)
+    public void updatePlantLocation(){
+        log.info("starting to update plant location");
+        VehicleDTO[] vehicles = getVehicles();
+        List<Plant> plants = getPlants();
+        Map<String, VehicleDTO> map = generateVehiclesMap(vehicles);
+        List<Plant> plantsToUpDate = generatePlantsToBeUpdated(map,plants);
+        log.info("number of plants to be updated: " + plantsToUpDate.size() );
+        plantRepository.save(plantsToUpDate);
     }
 }
