@@ -27,4 +27,10 @@ public class BlackhawkSessionIdServiceTest {
         assertThat(blackhawkSessionIdService.getSessionId()).isNotEmpty().isNotNull();
     }
 
+    @Test
+    @Transactional
+    public void assertThatSessionIsValid() {
+        assertThat(blackhawkSessionIdService.isSessionIdValid()).isTrue();
+    }
+
 }
