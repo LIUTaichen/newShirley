@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.List;
+
 
 /**
  * Spring Data JPA repository for the Plant entity.
@@ -13,4 +15,6 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Long> {
 
+
+    List<Plant> findByGpsDeviceSerialIsNotNull();
 }
