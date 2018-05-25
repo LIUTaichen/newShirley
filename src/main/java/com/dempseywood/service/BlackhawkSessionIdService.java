@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -64,6 +65,9 @@ public class BlackhawkSessionIdService {
     }
 
     public Boolean isSessionIdValid(){
+        if(sessionId.isEmpty()){
+            return false;
+        }
         RestTemplate restTemplate = new RestTemplate();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(loginUrl)
             .queryParam("sessionId", sessionId);
@@ -78,5 +82,14 @@ public class BlackhawkSessionIdService {
             return login.getValid();
         }
 
+    }
+
+
+    @Scheduled(fixedRate = 1000 * 60 * 10)
+    public void refresh(){
+        log.debug("refreshing blackhawk session id");
+        if(!this.isSessionIdValid()){
+            this.renewSessionId();
+        }
     }
 }

@@ -70,6 +70,7 @@ public class ApplicationProperties {
 
             private String root = "";
             private String login = "";
+            private String vehicle= "/Vehicle";
 
             public String getRoot() {
                 return root;
@@ -85,6 +86,14 @@ public class ApplicationProperties {
 
             public void setLogin(String login) {
                 this.login = login;
+            }
+
+            public String getVehicle() {
+                return vehicle;
+            }
+
+            public void setVehicles(String vehicle) {
+                this.vehicle = vehicle;
             }
         }
     }
