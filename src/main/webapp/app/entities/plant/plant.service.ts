@@ -71,8 +71,6 @@ export class PlantService {
             .convertDateTimeFromServer(plant.certificateDueDate);
         copy.registrationDueDate = this.dateUtils
             .convertDateTimeFromServer(plant.registrationDueDate);
-        copy.lastLocationUpdateTime = this.dateUtils
-            .convertDateTimeFromServer(plant.lastLocationUpdateTime);
         return copy;
     }
 
@@ -89,8 +87,6 @@ export class PlantService {
         copy.certificateDueDate = this.dateUtils.toDate(plant.certificateDueDate);
 
         copy.registrationDueDate = this.dateUtils.toDate(plant.registrationDueDate);
-
-        copy.lastLocationUpdateTime = this.dateUtils.toDate(plant.lastLocationUpdateTime);
         return copy;
     }
 }

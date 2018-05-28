@@ -38,7 +38,6 @@
             "hireStatus": "Hire Status",
             "gpsDeviceSerial": "Gps Device Serial",
             "location": "Location",
-            "lastLocationUpdateTime": "Last Location Update Time",
             "category": "Category",
             "owner": "Owner",
             "assignedContractor": "Assigned Contractor",

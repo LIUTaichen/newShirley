@@ -2,6 +2,14 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "plant"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "category",
             "otherEntityName": "category",
@@ -113,21 +121,13 @@
         {
             "fieldName": "gpsDeviceSerial",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "location",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "lastLocationUpdateTime",
-            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20180422232207",
     "entityTableName": "plant",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false,
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
     "enableEntityAudit": true
 }

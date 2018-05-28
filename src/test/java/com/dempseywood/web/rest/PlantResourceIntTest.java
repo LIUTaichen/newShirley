@@ -3,8 +3,16 @@ package com.dempseywood.web.rest;
 import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.Plant;
+import com.dempseywood.domain.Location;
+import com.dempseywood.domain.Category;
+import com.dempseywood.domain.Company;
+import com.dempseywood.domain.MaintenanceContractor;
+import com.dempseywood.domain.Project;
 import com.dempseywood.repository.PlantRepository;
+import com.dempseywood.service.PlantService;
 import com.dempseywood.web.rest.errors.ExceptionTranslator;
+import com.dempseywood.service.dto.PlantCriteria;
+import com.dempseywood.service.PlantQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -108,14 +116,14 @@ public class PlantResourceIntTest {
     private static final String DEFAULT_GPS_DEVICE_SERIAL = "AAAAAAAAAA";
     private static final String UPDATED_GPS_DEVICE_SERIAL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_LOCATION = "AAAAAAAAAA";
-    private static final String UPDATED_LOCATION = "BBBBBBBBBB";
-
-    private static final Instant DEFAULT_LAST_LOCATION_UPDATE_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_LAST_LOCATION_UPDATE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     @Autowired
     private PlantRepository plantRepository;
+
+    @Autowired
+    private PlantService plantService;
+
+    @Autowired
+    private PlantQueryService plantQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -136,7 +144,7 @@ public class PlantResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PlantResource plantResource = new PlantResource(plantRepository);
+        final PlantResource plantResource = new PlantResource(plantService, plantQueryService);
         this.restPlantMockMvc = MockMvcBuilders.standaloneSetup(plantResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -173,9 +181,7 @@ public class PlantResourceIntTest {
             .hourlyRate(DEFAULT_HOURLY_RATE)
             .registrationDueDate(DEFAULT_REGISTRATION_DUE_DATE)
             .hireStatus(DEFAULT_HIRE_STATUS)
-            .gpsDeviceSerial(DEFAULT_GPS_DEVICE_SERIAL)
-            .location(DEFAULT_LOCATION)
-            .lastLocationUpdateTime(DEFAULT_LAST_LOCATION_UPDATE_TIME);
+            .gpsDeviceSerial(DEFAULT_GPS_DEVICE_SERIAL);
         return plant;
     }
 
@@ -221,8 +227,6 @@ public class PlantResourceIntTest {
         assertThat(testPlant.getRegistrationDueDate()).isEqualTo(DEFAULT_REGISTRATION_DUE_DATE);
         assertThat(testPlant.getHireStatus()).isEqualTo(DEFAULT_HIRE_STATUS);
         assertThat(testPlant.getGpsDeviceSerial()).isEqualTo(DEFAULT_GPS_DEVICE_SERIAL);
-        assertThat(testPlant.getLocation()).isEqualTo(DEFAULT_LOCATION);
-        assertThat(testPlant.getLastLocationUpdateTime()).isEqualTo(DEFAULT_LAST_LOCATION_UPDATE_TIME);
     }
 
     @Test
@@ -276,9 +280,7 @@ public class PlantResourceIntTest {
             .andExpect(jsonPath("$.[*].hourlyRate").value(hasItem(DEFAULT_HOURLY_RATE.doubleValue())))
             .andExpect(jsonPath("$.[*].registrationDueDate").value(hasItem(DEFAULT_REGISTRATION_DUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].hireStatus").value(hasItem(DEFAULT_HIRE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].gpsDeviceSerial").value(hasItem(DEFAULT_GPS_DEVICE_SERIAL.toString())))
-            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].lastLocationUpdateTime").value(hasItem(DEFAULT_LAST_LOCATION_UPDATE_TIME.toString())));
+            .andExpect(jsonPath("$.[*].gpsDeviceSerial").value(hasItem(DEFAULT_GPS_DEVICE_SERIAL.toString())));
     }
 
     @Test
@@ -313,10 +315,1061 @@ public class PlantResourceIntTest {
             .andExpect(jsonPath("$.hourlyRate").value(DEFAULT_HOURLY_RATE.doubleValue()))
             .andExpect(jsonPath("$.registrationDueDate").value(DEFAULT_REGISTRATION_DUE_DATE.toString()))
             .andExpect(jsonPath("$.hireStatus").value(DEFAULT_HIRE_STATUS.toString()))
-            .andExpect(jsonPath("$.gpsDeviceSerial").value(DEFAULT_GPS_DEVICE_SERIAL.toString()))
-            .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION.toString()))
-            .andExpect(jsonPath("$.lastLocationUpdateTime").value(DEFAULT_LAST_LOCATION_UPDATE_TIME.toString()));
+            .andExpect(jsonPath("$.gpsDeviceSerial").value(DEFAULT_GPS_DEVICE_SERIAL.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByFleetIdIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where fleetId equals to DEFAULT_FLEET_ID
+        defaultPlantShouldBeFound("fleetId.equals=" + DEFAULT_FLEET_ID);
+
+        // Get all the plantList where fleetId equals to UPDATED_FLEET_ID
+        defaultPlantShouldNotBeFound("fleetId.equals=" + UPDATED_FLEET_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByFleetIdIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where fleetId in DEFAULT_FLEET_ID or UPDATED_FLEET_ID
+        defaultPlantShouldBeFound("fleetId.in=" + DEFAULT_FLEET_ID + "," + UPDATED_FLEET_ID);
+
+        // Get all the plantList where fleetId equals to UPDATED_FLEET_ID
+        defaultPlantShouldNotBeFound("fleetId.in=" + UPDATED_FLEET_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByFleetIdIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where fleetId is not null
+        defaultPlantShouldBeFound("fleetId.specified=true");
+
+        // Get all the plantList where fleetId is null
+        defaultPlantShouldNotBeFound("fleetId.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where name equals to DEFAULT_NAME
+        defaultPlantShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the plantList where name equals to UPDATED_NAME
+        defaultPlantShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultPlantShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the plantList where name equals to UPDATED_NAME
+        defaultPlantShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where name is not null
+        defaultPlantShouldBeFound("name.specified=true");
+
+        // Get all the plantList where name is null
+        defaultPlantShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNotesIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where notes equals to DEFAULT_NOTES
+        defaultPlantShouldBeFound("notes.equals=" + DEFAULT_NOTES);
+
+        // Get all the plantList where notes equals to UPDATED_NOTES
+        defaultPlantShouldNotBeFound("notes.equals=" + UPDATED_NOTES);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNotesIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where notes in DEFAULT_NOTES or UPDATED_NOTES
+        defaultPlantShouldBeFound("notes.in=" + DEFAULT_NOTES + "," + UPDATED_NOTES);
+
+        // Get all the plantList where notes equals to UPDATED_NOTES
+        defaultPlantShouldNotBeFound("notes.in=" + UPDATED_NOTES);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByNotesIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where notes is not null
+        defaultPlantShouldBeFound("notes.specified=true");
+
+        // Get all the plantList where notes is null
+        defaultPlantShouldNotBeFound("notes.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByPurchaseDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where purchaseDate equals to DEFAULT_PURCHASE_DATE
+        defaultPlantShouldBeFound("purchaseDate.equals=" + DEFAULT_PURCHASE_DATE);
+
+        // Get all the plantList where purchaseDate equals to UPDATED_PURCHASE_DATE
+        defaultPlantShouldNotBeFound("purchaseDate.equals=" + UPDATED_PURCHASE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByPurchaseDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where purchaseDate in DEFAULT_PURCHASE_DATE or UPDATED_PURCHASE_DATE
+        defaultPlantShouldBeFound("purchaseDate.in=" + DEFAULT_PURCHASE_DATE + "," + UPDATED_PURCHASE_DATE);
+
+        // Get all the plantList where purchaseDate equals to UPDATED_PURCHASE_DATE
+        defaultPlantShouldNotBeFound("purchaseDate.in=" + UPDATED_PURCHASE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByPurchaseDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where purchaseDate is not null
+        defaultPlantShouldBeFound("purchaseDate.specified=true");
+
+        // Get all the plantList where purchaseDate is null
+        defaultPlantShouldNotBeFound("purchaseDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByIsActiveIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where isActive equals to DEFAULT_IS_ACTIVE
+        defaultPlantShouldBeFound("isActive.equals=" + DEFAULT_IS_ACTIVE);
+
+        // Get all the plantList where isActive equals to UPDATED_IS_ACTIVE
+        defaultPlantShouldNotBeFound("isActive.equals=" + UPDATED_IS_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByIsActiveIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where isActive in DEFAULT_IS_ACTIVE or UPDATED_IS_ACTIVE
+        defaultPlantShouldBeFound("isActive.in=" + DEFAULT_IS_ACTIVE + "," + UPDATED_IS_ACTIVE);
+
+        // Get all the plantList where isActive equals to UPDATED_IS_ACTIVE
+        defaultPlantShouldNotBeFound("isActive.in=" + UPDATED_IS_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByIsActiveIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where isActive is not null
+        defaultPlantShouldBeFound("isActive.specified=true");
+
+        // Get all the plantList where isActive is null
+        defaultPlantShouldNotBeFound("isActive.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDescriptionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where description equals to DEFAULT_DESCRIPTION
+        defaultPlantShouldBeFound("description.equals=" + DEFAULT_DESCRIPTION);
+
+        // Get all the plantList where description equals to UPDATED_DESCRIPTION
+        defaultPlantShouldNotBeFound("description.equals=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDescriptionIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
+        defaultPlantShouldBeFound("description.in=" + DEFAULT_DESCRIPTION + "," + UPDATED_DESCRIPTION);
+
+        // Get all the plantList where description equals to UPDATED_DESCRIPTION
+        defaultPlantShouldNotBeFound("description.in=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDescriptionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where description is not null
+        defaultPlantShouldBeFound("description.specified=true");
+
+        // Get all the plantList where description is null
+        defaultPlantShouldNotBeFound("description.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByVinIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where vin equals to DEFAULT_VIN
+        defaultPlantShouldBeFound("vin.equals=" + DEFAULT_VIN);
+
+        // Get all the plantList where vin equals to UPDATED_VIN
+        defaultPlantShouldNotBeFound("vin.equals=" + UPDATED_VIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByVinIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where vin in DEFAULT_VIN or UPDATED_VIN
+        defaultPlantShouldBeFound("vin.in=" + DEFAULT_VIN + "," + UPDATED_VIN);
+
+        // Get all the plantList where vin equals to UPDATED_VIN
+        defaultPlantShouldNotBeFound("vin.in=" + UPDATED_VIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByVinIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where vin is not null
+        defaultPlantShouldBeFound("vin.specified=true");
+
+        // Get all the plantList where vin is null
+        defaultPlantShouldNotBeFound("vin.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rego equals to DEFAULT_REGO
+        defaultPlantShouldBeFound("rego.equals=" + DEFAULT_REGO);
+
+        // Get all the plantList where rego equals to UPDATED_REGO
+        defaultPlantShouldNotBeFound("rego.equals=" + UPDATED_REGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegoIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rego in DEFAULT_REGO or UPDATED_REGO
+        defaultPlantShouldBeFound("rego.in=" + DEFAULT_REGO + "," + UPDATED_REGO);
+
+        // Get all the plantList where rego equals to UPDATED_REGO
+        defaultPlantShouldNotBeFound("rego.in=" + UPDATED_REGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rego is not null
+        defaultPlantShouldBeFound("rego.specified=true");
+
+        // Get all the plantList where rego is null
+        defaultPlantShouldNotBeFound("rego.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDateOfManufactureIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where dateOfManufacture equals to DEFAULT_DATE_OF_MANUFACTURE
+        defaultPlantShouldBeFound("dateOfManufacture.equals=" + DEFAULT_DATE_OF_MANUFACTURE);
+
+        // Get all the plantList where dateOfManufacture equals to UPDATED_DATE_OF_MANUFACTURE
+        defaultPlantShouldNotBeFound("dateOfManufacture.equals=" + UPDATED_DATE_OF_MANUFACTURE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDateOfManufactureIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where dateOfManufacture in DEFAULT_DATE_OF_MANUFACTURE or UPDATED_DATE_OF_MANUFACTURE
+        defaultPlantShouldBeFound("dateOfManufacture.in=" + DEFAULT_DATE_OF_MANUFACTURE + "," + UPDATED_DATE_OF_MANUFACTURE);
+
+        // Get all the plantList where dateOfManufacture equals to UPDATED_DATE_OF_MANUFACTURE
+        defaultPlantShouldNotBeFound("dateOfManufacture.in=" + UPDATED_DATE_OF_MANUFACTURE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByDateOfManufactureIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where dateOfManufacture is not null
+        defaultPlantShouldBeFound("dateOfManufacture.specified=true");
+
+        // Get all the plantList where dateOfManufacture is null
+        defaultPlantShouldNotBeFound("dateOfManufacture.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByTankSizeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where tankSize equals to DEFAULT_TANK_SIZE
+        defaultPlantShouldBeFound("tankSize.equals=" + DEFAULT_TANK_SIZE);
+
+        // Get all the plantList where tankSize equals to UPDATED_TANK_SIZE
+        defaultPlantShouldNotBeFound("tankSize.equals=" + UPDATED_TANK_SIZE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByTankSizeIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where tankSize in DEFAULT_TANK_SIZE or UPDATED_TANK_SIZE
+        defaultPlantShouldBeFound("tankSize.in=" + DEFAULT_TANK_SIZE + "," + UPDATED_TANK_SIZE);
+
+        // Get all the plantList where tankSize equals to UPDATED_TANK_SIZE
+        defaultPlantShouldNotBeFound("tankSize.in=" + UPDATED_TANK_SIZE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByTankSizeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where tankSize is not null
+        defaultPlantShouldBeFound("tankSize.specified=true");
+
+        // Get all the plantList where tankSize is null
+        defaultPlantShouldNotBeFound("tankSize.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByTankSizeIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where tankSize greater than or equals to DEFAULT_TANK_SIZE
+        defaultPlantShouldBeFound("tankSize.greaterOrEqualThan=" + DEFAULT_TANK_SIZE);
+
+        // Get all the plantList where tankSize greater than or equals to UPDATED_TANK_SIZE
+        defaultPlantShouldNotBeFound("tankSize.greaterOrEqualThan=" + UPDATED_TANK_SIZE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByTankSizeIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where tankSize less than or equals to DEFAULT_TANK_SIZE
+        defaultPlantShouldNotBeFound("tankSize.lessThan=" + DEFAULT_TANK_SIZE);
+
+        // Get all the plantList where tankSize less than or equals to UPDATED_TANK_SIZE
+        defaultPlantShouldBeFound("tankSize.lessThan=" + UPDATED_TANK_SIZE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMaintenanceDueAtIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where maintenanceDueAt equals to DEFAULT_MAINTENANCE_DUE_AT
+        defaultPlantShouldBeFound("maintenanceDueAt.equals=" + DEFAULT_MAINTENANCE_DUE_AT);
+
+        // Get all the plantList where maintenanceDueAt equals to UPDATED_MAINTENANCE_DUE_AT
+        defaultPlantShouldNotBeFound("maintenanceDueAt.equals=" + UPDATED_MAINTENANCE_DUE_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMaintenanceDueAtIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where maintenanceDueAt in DEFAULT_MAINTENANCE_DUE_AT or UPDATED_MAINTENANCE_DUE_AT
+        defaultPlantShouldBeFound("maintenanceDueAt.in=" + DEFAULT_MAINTENANCE_DUE_AT + "," + UPDATED_MAINTENANCE_DUE_AT);
+
+        // Get all the plantList where maintenanceDueAt equals to UPDATED_MAINTENANCE_DUE_AT
+        defaultPlantShouldNotBeFound("maintenanceDueAt.in=" + UPDATED_MAINTENANCE_DUE_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMaintenanceDueAtIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where maintenanceDueAt is not null
+        defaultPlantShouldBeFound("maintenanceDueAt.specified=true");
+
+        // Get all the plantList where maintenanceDueAt is null
+        defaultPlantShouldNotBeFound("maintenanceDueAt.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMaintenanceDueAtIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where maintenanceDueAt greater than or equals to DEFAULT_MAINTENANCE_DUE_AT
+        defaultPlantShouldBeFound("maintenanceDueAt.greaterOrEqualThan=" + DEFAULT_MAINTENANCE_DUE_AT);
+
+        // Get all the plantList where maintenanceDueAt greater than or equals to UPDATED_MAINTENANCE_DUE_AT
+        defaultPlantShouldNotBeFound("maintenanceDueAt.greaterOrEqualThan=" + UPDATED_MAINTENANCE_DUE_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMaintenanceDueAtIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where maintenanceDueAt less than or equals to DEFAULT_MAINTENANCE_DUE_AT
+        defaultPlantShouldNotBeFound("maintenanceDueAt.lessThan=" + DEFAULT_MAINTENANCE_DUE_AT);
+
+        // Get all the plantList where maintenanceDueAt less than or equals to UPDATED_MAINTENANCE_DUE_AT
+        defaultPlantShouldBeFound("maintenanceDueAt.lessThan=" + UPDATED_MAINTENANCE_DUE_AT);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterUnitIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterUnit equals to DEFAULT_METER_UNIT
+        defaultPlantShouldBeFound("meterUnit.equals=" + DEFAULT_METER_UNIT);
+
+        // Get all the plantList where meterUnit equals to UPDATED_METER_UNIT
+        defaultPlantShouldNotBeFound("meterUnit.equals=" + UPDATED_METER_UNIT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterUnitIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterUnit in DEFAULT_METER_UNIT or UPDATED_METER_UNIT
+        defaultPlantShouldBeFound("meterUnit.in=" + DEFAULT_METER_UNIT + "," + UPDATED_METER_UNIT);
+
+        // Get all the plantList where meterUnit equals to UPDATED_METER_UNIT
+        defaultPlantShouldNotBeFound("meterUnit.in=" + UPDATED_METER_UNIT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterUnitIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterUnit is not null
+        defaultPlantShouldBeFound("meterUnit.specified=true");
+
+        // Get all the plantList where meterUnit is null
+        defaultPlantShouldNotBeFound("meterUnit.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByCertificateDueDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where certificateDueDate equals to DEFAULT_CERTIFICATE_DUE_DATE
+        defaultPlantShouldBeFound("certificateDueDate.equals=" + DEFAULT_CERTIFICATE_DUE_DATE);
+
+        // Get all the plantList where certificateDueDate equals to UPDATED_CERTIFICATE_DUE_DATE
+        defaultPlantShouldNotBeFound("certificateDueDate.equals=" + UPDATED_CERTIFICATE_DUE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByCertificateDueDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where certificateDueDate in DEFAULT_CERTIFICATE_DUE_DATE or UPDATED_CERTIFICATE_DUE_DATE
+        defaultPlantShouldBeFound("certificateDueDate.in=" + DEFAULT_CERTIFICATE_DUE_DATE + "," + UPDATED_CERTIFICATE_DUE_DATE);
+
+        // Get all the plantList where certificateDueDate equals to UPDATED_CERTIFICATE_DUE_DATE
+        defaultPlantShouldNotBeFound("certificateDueDate.in=" + UPDATED_CERTIFICATE_DUE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByCertificateDueDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where certificateDueDate is not null
+        defaultPlantShouldBeFound("certificateDueDate.specified=true");
+
+        // Get all the plantList where certificateDueDate is null
+        defaultPlantShouldNotBeFound("certificateDueDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRucDueAtKmIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rucDueAtKm equals to DEFAULT_RUC_DUE_AT_KM
+        defaultPlantShouldBeFound("rucDueAtKm.equals=" + DEFAULT_RUC_DUE_AT_KM);
+
+        // Get all the plantList where rucDueAtKm equals to UPDATED_RUC_DUE_AT_KM
+        defaultPlantShouldNotBeFound("rucDueAtKm.equals=" + UPDATED_RUC_DUE_AT_KM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRucDueAtKmIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rucDueAtKm in DEFAULT_RUC_DUE_AT_KM or UPDATED_RUC_DUE_AT_KM
+        defaultPlantShouldBeFound("rucDueAtKm.in=" + DEFAULT_RUC_DUE_AT_KM + "," + UPDATED_RUC_DUE_AT_KM);
+
+        // Get all the plantList where rucDueAtKm equals to UPDATED_RUC_DUE_AT_KM
+        defaultPlantShouldNotBeFound("rucDueAtKm.in=" + UPDATED_RUC_DUE_AT_KM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRucDueAtKmIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rucDueAtKm is not null
+        defaultPlantShouldBeFound("rucDueAtKm.specified=true");
+
+        // Get all the plantList where rucDueAtKm is null
+        defaultPlantShouldNotBeFound("rucDueAtKm.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRucDueAtKmIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rucDueAtKm greater than or equals to DEFAULT_RUC_DUE_AT_KM
+        defaultPlantShouldBeFound("rucDueAtKm.greaterOrEqualThan=" + DEFAULT_RUC_DUE_AT_KM);
+
+        // Get all the plantList where rucDueAtKm greater than or equals to UPDATED_RUC_DUE_AT_KM
+        defaultPlantShouldNotBeFound("rucDueAtKm.greaterOrEqualThan=" + UPDATED_RUC_DUE_AT_KM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRucDueAtKmIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where rucDueAtKm less than or equals to DEFAULT_RUC_DUE_AT_KM
+        defaultPlantShouldNotBeFound("rucDueAtKm.lessThan=" + DEFAULT_RUC_DUE_AT_KM);
+
+        // Get all the plantList where rucDueAtKm less than or equals to UPDATED_RUC_DUE_AT_KM
+        defaultPlantShouldBeFound("rucDueAtKm.lessThan=" + UPDATED_RUC_DUE_AT_KM);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHubboReadingIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hubboReading equals to DEFAULT_HUBBO_READING
+        defaultPlantShouldBeFound("hubboReading.equals=" + DEFAULT_HUBBO_READING);
+
+        // Get all the plantList where hubboReading equals to UPDATED_HUBBO_READING
+        defaultPlantShouldNotBeFound("hubboReading.equals=" + UPDATED_HUBBO_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHubboReadingIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hubboReading in DEFAULT_HUBBO_READING or UPDATED_HUBBO_READING
+        defaultPlantShouldBeFound("hubboReading.in=" + DEFAULT_HUBBO_READING + "," + UPDATED_HUBBO_READING);
+
+        // Get all the plantList where hubboReading equals to UPDATED_HUBBO_READING
+        defaultPlantShouldNotBeFound("hubboReading.in=" + UPDATED_HUBBO_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHubboReadingIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hubboReading is not null
+        defaultPlantShouldBeFound("hubboReading.specified=true");
+
+        // Get all the plantList where hubboReading is null
+        defaultPlantShouldNotBeFound("hubboReading.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHubboReadingIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hubboReading greater than or equals to DEFAULT_HUBBO_READING
+        defaultPlantShouldBeFound("hubboReading.greaterOrEqualThan=" + DEFAULT_HUBBO_READING);
+
+        // Get all the plantList where hubboReading greater than or equals to UPDATED_HUBBO_READING
+        defaultPlantShouldNotBeFound("hubboReading.greaterOrEqualThan=" + UPDATED_HUBBO_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHubboReadingIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hubboReading less than or equals to DEFAULT_HUBBO_READING
+        defaultPlantShouldNotBeFound("hubboReading.lessThan=" + DEFAULT_HUBBO_READING);
+
+        // Get all the plantList where hubboReading less than or equals to UPDATED_HUBBO_READING
+        defaultPlantShouldBeFound("hubboReading.lessThan=" + UPDATED_HUBBO_READING);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLoadCapacityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where loadCapacity equals to DEFAULT_LOAD_CAPACITY
+        defaultPlantShouldBeFound("loadCapacity.equals=" + DEFAULT_LOAD_CAPACITY);
+
+        // Get all the plantList where loadCapacity equals to UPDATED_LOAD_CAPACITY
+        defaultPlantShouldNotBeFound("loadCapacity.equals=" + UPDATED_LOAD_CAPACITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLoadCapacityIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where loadCapacity in DEFAULT_LOAD_CAPACITY or UPDATED_LOAD_CAPACITY
+        defaultPlantShouldBeFound("loadCapacity.in=" + DEFAULT_LOAD_CAPACITY + "," + UPDATED_LOAD_CAPACITY);
+
+        // Get all the plantList where loadCapacity equals to UPDATED_LOAD_CAPACITY
+        defaultPlantShouldNotBeFound("loadCapacity.in=" + UPDATED_LOAD_CAPACITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLoadCapacityIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where loadCapacity is not null
+        defaultPlantShouldBeFound("loadCapacity.specified=true");
+
+        // Get all the plantList where loadCapacity is null
+        defaultPlantShouldNotBeFound("loadCapacity.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLoadCapacityIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where loadCapacity greater than or equals to DEFAULT_LOAD_CAPACITY
+        defaultPlantShouldBeFound("loadCapacity.greaterOrEqualThan=" + DEFAULT_LOAD_CAPACITY);
+
+        // Get all the plantList where loadCapacity greater than or equals to UPDATED_LOAD_CAPACITY
+        defaultPlantShouldNotBeFound("loadCapacity.greaterOrEqualThan=" + UPDATED_LOAD_CAPACITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLoadCapacityIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where loadCapacity less than or equals to DEFAULT_LOAD_CAPACITY
+        defaultPlantShouldNotBeFound("loadCapacity.lessThan=" + DEFAULT_LOAD_CAPACITY);
+
+        // Get all the plantList where loadCapacity less than or equals to UPDATED_LOAD_CAPACITY
+        defaultPlantShouldBeFound("loadCapacity.lessThan=" + UPDATED_LOAD_CAPACITY);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHourlyRateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hourlyRate equals to DEFAULT_HOURLY_RATE
+        defaultPlantShouldBeFound("hourlyRate.equals=" + DEFAULT_HOURLY_RATE);
+
+        // Get all the plantList where hourlyRate equals to UPDATED_HOURLY_RATE
+        defaultPlantShouldNotBeFound("hourlyRate.equals=" + UPDATED_HOURLY_RATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHourlyRateIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hourlyRate in DEFAULT_HOURLY_RATE or UPDATED_HOURLY_RATE
+        defaultPlantShouldBeFound("hourlyRate.in=" + DEFAULT_HOURLY_RATE + "," + UPDATED_HOURLY_RATE);
+
+        // Get all the plantList where hourlyRate equals to UPDATED_HOURLY_RATE
+        defaultPlantShouldNotBeFound("hourlyRate.in=" + UPDATED_HOURLY_RATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHourlyRateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hourlyRate is not null
+        defaultPlantShouldBeFound("hourlyRate.specified=true");
+
+        // Get all the plantList where hourlyRate is null
+        defaultPlantShouldNotBeFound("hourlyRate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegistrationDueDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where registrationDueDate equals to DEFAULT_REGISTRATION_DUE_DATE
+        defaultPlantShouldBeFound("registrationDueDate.equals=" + DEFAULT_REGISTRATION_DUE_DATE);
+
+        // Get all the plantList where registrationDueDate equals to UPDATED_REGISTRATION_DUE_DATE
+        defaultPlantShouldNotBeFound("registrationDueDate.equals=" + UPDATED_REGISTRATION_DUE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegistrationDueDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where registrationDueDate in DEFAULT_REGISTRATION_DUE_DATE or UPDATED_REGISTRATION_DUE_DATE
+        defaultPlantShouldBeFound("registrationDueDate.in=" + DEFAULT_REGISTRATION_DUE_DATE + "," + UPDATED_REGISTRATION_DUE_DATE);
+
+        // Get all the plantList where registrationDueDate equals to UPDATED_REGISTRATION_DUE_DATE
+        defaultPlantShouldNotBeFound("registrationDueDate.in=" + UPDATED_REGISTRATION_DUE_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByRegistrationDueDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where registrationDueDate is not null
+        defaultPlantShouldBeFound("registrationDueDate.specified=true");
+
+        // Get all the plantList where registrationDueDate is null
+        defaultPlantShouldNotBeFound("registrationDueDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHireStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hireStatus equals to DEFAULT_HIRE_STATUS
+        defaultPlantShouldBeFound("hireStatus.equals=" + DEFAULT_HIRE_STATUS);
+
+        // Get all the plantList where hireStatus equals to UPDATED_HIRE_STATUS
+        defaultPlantShouldNotBeFound("hireStatus.equals=" + UPDATED_HIRE_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHireStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hireStatus in DEFAULT_HIRE_STATUS or UPDATED_HIRE_STATUS
+        defaultPlantShouldBeFound("hireStatus.in=" + DEFAULT_HIRE_STATUS + "," + UPDATED_HIRE_STATUS);
+
+        // Get all the plantList where hireStatus equals to UPDATED_HIRE_STATUS
+        defaultPlantShouldNotBeFound("hireStatus.in=" + UPDATED_HIRE_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByHireStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where hireStatus is not null
+        defaultPlantShouldBeFound("hireStatus.specified=true");
+
+        // Get all the plantList where hireStatus is null
+        defaultPlantShouldNotBeFound("hireStatus.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByGpsDeviceSerialIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where gpsDeviceSerial equals to DEFAULT_GPS_DEVICE_SERIAL
+        defaultPlantShouldBeFound("gpsDeviceSerial.equals=" + DEFAULT_GPS_DEVICE_SERIAL);
+
+        // Get all the plantList where gpsDeviceSerial equals to UPDATED_GPS_DEVICE_SERIAL
+        defaultPlantShouldNotBeFound("gpsDeviceSerial.equals=" + UPDATED_GPS_DEVICE_SERIAL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByGpsDeviceSerialIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where gpsDeviceSerial in DEFAULT_GPS_DEVICE_SERIAL or UPDATED_GPS_DEVICE_SERIAL
+        defaultPlantShouldBeFound("gpsDeviceSerial.in=" + DEFAULT_GPS_DEVICE_SERIAL + "," + UPDATED_GPS_DEVICE_SERIAL);
+
+        // Get all the plantList where gpsDeviceSerial equals to UPDATED_GPS_DEVICE_SERIAL
+        defaultPlantShouldNotBeFound("gpsDeviceSerial.in=" + UPDATED_GPS_DEVICE_SERIAL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByGpsDeviceSerialIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where gpsDeviceSerial is not null
+        defaultPlantShouldBeFound("gpsDeviceSerial.specified=true");
+
+        // Get all the plantList where gpsDeviceSerial is null
+        defaultPlantShouldNotBeFound("gpsDeviceSerial.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByLocationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Location location = LocationResourceIntTest.createEntity(em);
+        em.persist(location);
+        em.flush();
+        plant.setLocation(location);
+        plantRepository.saveAndFlush(plant);
+        Long locationId = location.getId();
+
+        // Get all the plantList where location equals to locationId
+        defaultPlantShouldBeFound("locationId.equals=" + locationId);
+
+        // Get all the plantList where location equals to locationId + 1
+        defaultPlantShouldNotBeFound("locationId.equals=" + (locationId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByCategoryIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Category category = CategoryResourceIntTest.createEntity(em);
+        em.persist(category);
+        em.flush();
+        plant.setCategory(category);
+        plantRepository.saveAndFlush(plant);
+        Long categoryId = category.getId();
+
+        // Get all the plantList where category equals to categoryId
+        defaultPlantShouldBeFound("categoryId.equals=" + categoryId);
+
+        // Get all the plantList where category equals to categoryId + 1
+        defaultPlantShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByOwnerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Company owner = CompanyResourceIntTest.createEntity(em);
+        em.persist(owner);
+        em.flush();
+        plant.setOwner(owner);
+        plantRepository.saveAndFlush(plant);
+        Long ownerId = owner.getId();
+
+        // Get all the plantList where owner equals to ownerId
+        defaultPlantShouldBeFound("ownerId.equals=" + ownerId);
+
+        // Get all the plantList where owner equals to ownerId + 1
+        defaultPlantShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByAssignedContractorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        MaintenanceContractor assignedContractor = MaintenanceContractorResourceIntTest.createEntity(em);
+        em.persist(assignedContractor);
+        em.flush();
+        plant.setAssignedContractor(assignedContractor);
+        plantRepository.saveAndFlush(plant);
+        Long assignedContractorId = assignedContractor.getId();
+
+        // Get all the plantList where assignedContractor equals to assignedContractorId
+        defaultPlantShouldBeFound("assignedContractorId.equals=" + assignedContractorId);
+
+        // Get all the plantList where assignedContractor equals to assignedContractorId + 1
+        defaultPlantShouldNotBeFound("assignedContractorId.equals=" + (assignedContractorId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByProjectIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Project project = ProjectResourceIntTest.createEntity(em);
+        em.persist(project);
+        em.flush();
+        plant.setProject(project);
+        plantRepository.saveAndFlush(plant);
+        Long projectId = project.getId();
+
+        // Get all the plantList where project equals to projectId
+        defaultPlantShouldBeFound("projectId.equals=" + projectId);
+
+        // Get all the plantList where project equals to projectId + 1
+        defaultPlantShouldNotBeFound("projectId.equals=" + (projectId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultPlantShouldBeFound(String filter) throws Exception {
+        restPlantMockMvc.perform(get("/api/plants?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(plant.getId().intValue())))
+            .andExpect(jsonPath("$.[*].fleetId").value(hasItem(DEFAULT_FLEET_ID.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
+            .andExpect(jsonPath("$.[*].purchaseDate").value(hasItem(DEFAULT_PURCHASE_DATE.toString())))
+            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].vin").value(hasItem(DEFAULT_VIN.toString())))
+            .andExpect(jsonPath("$.[*].rego").value(hasItem(DEFAULT_REGO.toString())))
+            .andExpect(jsonPath("$.[*].dateOfManufacture").value(hasItem(DEFAULT_DATE_OF_MANUFACTURE.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].tankSize").value(hasItem(DEFAULT_TANK_SIZE)))
+            .andExpect(jsonPath("$.[*].maintenanceDueAt").value(hasItem(DEFAULT_MAINTENANCE_DUE_AT)))
+            .andExpect(jsonPath("$.[*].meterUnit").value(hasItem(DEFAULT_METER_UNIT.toString())))
+            .andExpect(jsonPath("$.[*].certificateDueDate").value(hasItem(DEFAULT_CERTIFICATE_DUE_DATE.toString())))
+            .andExpect(jsonPath("$.[*].rucDueAtKm").value(hasItem(DEFAULT_RUC_DUE_AT_KM)))
+            .andExpect(jsonPath("$.[*].hubboReading").value(hasItem(DEFAULT_HUBBO_READING)))
+            .andExpect(jsonPath("$.[*].loadCapacity").value(hasItem(DEFAULT_LOAD_CAPACITY)))
+            .andExpect(jsonPath("$.[*].hourlyRate").value(hasItem(DEFAULT_HOURLY_RATE.doubleValue())))
+            .andExpect(jsonPath("$.[*].registrationDueDate").value(hasItem(DEFAULT_REGISTRATION_DUE_DATE.toString())))
+            .andExpect(jsonPath("$.[*].hireStatus").value(hasItem(DEFAULT_HIRE_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].gpsDeviceSerial").value(hasItem(DEFAULT_GPS_DEVICE_SERIAL.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultPlantShouldNotBeFound(String filter) throws Exception {
+        restPlantMockMvc.perform(get("/api/plants?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
 
     @Test
     @Transactional
@@ -330,7 +1383,8 @@ public class PlantResourceIntTest {
     @Transactional
     public void updatePlant() throws Exception {
         // Initialize the database
-        plantRepository.saveAndFlush(plant);
+        plantService.save(plant);
+
         int databaseSizeBeforeUpdate = plantRepository.findAll().size();
 
         // Update the plant
@@ -359,9 +1413,7 @@ public class PlantResourceIntTest {
             .hourlyRate(UPDATED_HOURLY_RATE)
             .registrationDueDate(UPDATED_REGISTRATION_DUE_DATE)
             .hireStatus(UPDATED_HIRE_STATUS)
-            .gpsDeviceSerial(UPDATED_GPS_DEVICE_SERIAL)
-            .location(UPDATED_LOCATION)
-            .lastLocationUpdateTime(UPDATED_LAST_LOCATION_UPDATE_TIME);
+            .gpsDeviceSerial(UPDATED_GPS_DEVICE_SERIAL);
 
         restPlantMockMvc.perform(put("/api/plants")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -394,8 +1446,6 @@ public class PlantResourceIntTest {
         assertThat(testPlant.getRegistrationDueDate()).isEqualTo(UPDATED_REGISTRATION_DUE_DATE);
         assertThat(testPlant.getHireStatus()).isEqualTo(UPDATED_HIRE_STATUS);
         assertThat(testPlant.getGpsDeviceSerial()).isEqualTo(UPDATED_GPS_DEVICE_SERIAL);
-        assertThat(testPlant.getLocation()).isEqualTo(UPDATED_LOCATION);
-        assertThat(testPlant.getLastLocationUpdateTime()).isEqualTo(UPDATED_LAST_LOCATION_UPDATE_TIME);
     }
 
     @Test
@@ -420,7 +1470,8 @@ public class PlantResourceIntTest {
     @Transactional
     public void deletePlant() throws Exception {
         // Initialize the database
-        plantRepository.saveAndFlush(plant);
+        plantService.save(plant);
+
         int databaseSizeBeforeDelete = plantRepository.findAll().size();
 
         // Get the plant

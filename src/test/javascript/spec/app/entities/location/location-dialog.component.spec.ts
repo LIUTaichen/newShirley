@@ -6,45 +6,35 @@ import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { FleetManagementTestModule } from '../../../test.module';
-import { PlantDialogComponent } from '../../../../../../main/webapp/app/entities/plant/plant-dialog.component';
-import { PlantService } from '../../../../../../main/webapp/app/entities/plant/plant.service';
-import { Plant } from '../../../../../../main/webapp/app/entities/plant/plant.model';
-import { LocationService } from '../../../../../../main/webapp/app/entities/location';
-import { CategoryService } from '../../../../../../main/webapp/app/entities/category';
-import { CompanyService } from '../../../../../../main/webapp/app/entities/company';
-import { MaintenanceContractorService } from '../../../../../../main/webapp/app/entities/maintenance-contractor';
-import { ProjectService } from '../../../../../../main/webapp/app/entities/project';
+import { LocationDialogComponent } from '../../../../../../main/webapp/app/entities/location/location-dialog.component';
+import { LocationService } from '../../../../../../main/webapp/app/entities/location/location.service';
+import { Location } from '../../../../../../main/webapp/app/entities/location/location.model';
 
 describe('Component Tests', () => {
 
-    describe('Plant Management Dialog Component', () => {
-        let comp: PlantDialogComponent;
-        let fixture: ComponentFixture<PlantDialogComponent>;
-        let service: PlantService;
+    describe('Location Management Dialog Component', () => {
+        let comp: LocationDialogComponent;
+        let fixture: ComponentFixture<LocationDialogComponent>;
+        let service: LocationService;
         let mockEventManager: any;
         let mockActiveModal: any;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [FleetManagementTestModule],
-                declarations: [PlantDialogComponent],
+                declarations: [LocationDialogComponent],
                 providers: [
-                    LocationService,
-                    CategoryService,
-                    CompanyService,
-                    MaintenanceContractorService,
-                    ProjectService,
-                    PlantService
+                    LocationService
                 ]
             })
-            .overrideTemplate(PlantDialogComponent, '')
+            .overrideTemplate(LocationDialogComponent, '')
             .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(PlantDialogComponent);
+            fixture = TestBed.createComponent(LocationDialogComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(PlantService);
+            service = fixture.debugElement.injector.get(LocationService);
             mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
             mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
         });
@@ -54,9 +44,9 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new Plant(123);
+                        const entity = new Location(123);
                         spyOn(service, 'update').and.returnValue(Observable.of(new HttpResponse({body: entity})));
-                        comp.plant = entity;
+                        comp.location = entity;
                         // WHEN
                         comp.save();
                         tick(); // simulate async
@@ -64,7 +54,7 @@ describe('Component Tests', () => {
                         // THEN
                         expect(service.update).toHaveBeenCalledWith(entity);
                         expect(comp.isSaving).toEqual(false);
-                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'plantListModification', content: 'OK'});
+                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'locationListModification', content: 'OK'});
                         expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
                     })
                 )
@@ -74,9 +64,9 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new Plant();
+                        const entity = new Location();
                         spyOn(service, 'create').and.returnValue(Observable.of(new HttpResponse({body: entity})));
-                        comp.plant = entity;
+                        comp.location = entity;
                         // WHEN
                         comp.save();
                         tick(); // simulate async
@@ -84,7 +74,7 @@ describe('Component Tests', () => {
                         // THEN
                         expect(service.create).toHaveBeenCalledWith(entity);
                         expect(comp.isSaving).toEqual(false);
-                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'plantListModification', content: 'OK'});
+                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'locationListModification', content: 'OK'});
                         expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
                     })
                 )
