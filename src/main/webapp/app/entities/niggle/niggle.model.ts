@@ -3,7 +3,7 @@ import { BaseEntity } from './../../shared';
 export const enum Status {
     'SUBMITTED',
     'OPEN',
-    'ASSIGNED',
+    'WINTER_WORK',
     'IN_PROGRESS',
     'ON_HOLD',
     'COMPLETED',
