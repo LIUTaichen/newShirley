@@ -19,18 +19,18 @@
                 </a>
             </li>
             <li *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/niggle-dw" (click)="collapseNavbar()">
+                <a class="nav-link" routerLink="/pf-dw" (click)="collapseNavbar()">
                     <span>
                         <i class="fa fa-wrench" aria-hidden="true"></i>
-                        <span>Niggles</span>
+                        <span>Plant Faults</span>
                     </span>
                 </a>
             </li>
             <li *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_QUATTRA']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/niggle-quattra" (click)="collapseNavbar()">
+                <a class="nav-link" routerLink="/pf-quattra" (click)="collapseNavbar()">
                     <span>
                         <i class="fa fa-wrench" aria-hidden="true"></i>
-                        <span>Niggles</span>
+                        <span>Plant Faults</span>
                     </span>
                 </a>
             </li>

@@ -4,7 +4,7 @@ import { NiggleListDwComponent } from './niggle-list-dw/niggle-list-dw.component
 
 export const niggleDwRoute: Routes = [
   {
-    path: 'niggle-dw',
+    path: 'pf-dw',
     component: NiggleListDwComponent,
     data: {
       authorities: ['ROLE_DW'],

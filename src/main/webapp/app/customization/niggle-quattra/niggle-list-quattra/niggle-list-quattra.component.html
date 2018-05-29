@@ -1,13 +1,13 @@
 <div class="mat-typography niggles-container">
     <h2 class="mat-h2 header">
-        <span>Niggles</span>
+        <span>Plant Faults</span>
         <button mat-raised-button color="primary" hidden class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
         <mat-form-field class="option float-right" >
             <mat-select [(value)]="selectedOption" (change)="updateDataSource()" >
-                <mat-option value="ALL">All niggles</mat-option>
+                <mat-option value="ALL">All plant faults</mat-option>
                 <mat-option value="WHITE">White fleet</mat-option>
                 <mat-option value="YELLOW">Yellow fleet</mat-option>
-                <mat-option value="COMPLETED">Completed Niggles</mat-option>
+                <mat-option value="COMPLETED">Completed plant faults</mat-option>
             </mat-select>
         </mat-form-field>
 

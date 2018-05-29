@@ -4,7 +4,7 @@ import { NiggleListQuattraComponent } from './niggle-list-quattra/niggle-list-qu
 
 export const niggleQuattraRoute: Routes = [
   {
-      path: 'niggle-quattra',
+      path: 'pf-quattra',
       component: NiggleListQuattraComponent,
       data: {
           authorities: ['ROLE_QUATTRA'],
