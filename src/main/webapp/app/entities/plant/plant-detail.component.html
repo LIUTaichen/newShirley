@@ -93,11 +93,9 @@
         </dd>
         <dt><span jhiTranslate="fleetManagementApp.plant.location">Location</span></dt>
         <dd>
-            <span>{{plant.location}}</span>
-        </dd>
-        <dt><span jhiTranslate="fleetManagementApp.plant.lastLocationUpdateTime">Last Location Update Time</span></dt>
-        <dd>
-            <span>{{plant.lastLocationUpdateTime | date:'medium'}}</span>
+            <div *ngIf="plant.location">
+                <a [routerLink]="['/location', plant.location?.id]">{{plant.location?.id}}</a>
+            </div>
         </dd>
         <dt><span jhiTranslate="fleetManagementApp.plant.category">Category</span></dt>
         <dd>

@@ -93,11 +93,9 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
     @Column(name = "gps_device_serial")
     private String gpsDeviceSerial;
 
-    @Column(name = "location")
-    private String location;
-
-    @Column(name = "last_location_update_time")
-    private Instant lastLocationUpdateTime;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Location location;
 
     @ManyToOne
     private Category category;
@@ -406,30 +404,17 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
         this.gpsDeviceSerial = gpsDeviceSerial;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public Plant location(String location) {
+    public Plant location(Location location) {
         this.location = location;
         return this;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Instant getLastLocationUpdateTime() {
-        return lastLocationUpdateTime;
-    }
-
-    public Plant lastLocationUpdateTime(Instant lastLocationUpdateTime) {
-        this.lastLocationUpdateTime = lastLocationUpdateTime;
-        return this;
-    }
-
-    public void setLastLocationUpdateTime(Instant lastLocationUpdateTime) {
-        this.lastLocationUpdateTime = lastLocationUpdateTime;
     }
 
     public Category getCategory() {
@@ -531,8 +516,6 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
             ", registrationDueDate='" + getRegistrationDueDate() + "'" +
             ", hireStatus='" + getHireStatus() + "'" +
             ", gpsDeviceSerial='" + getGpsDeviceSerial() + "'" +
-            ", location='" + getLocation() + "'" +
-            ", lastLocationUpdateTime='" + getLastLocationUpdateTime() + "'" +
             "}";
     }
 }

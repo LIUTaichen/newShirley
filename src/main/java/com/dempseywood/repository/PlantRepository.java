@@ -13,8 +13,8 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PlantRepository extends JpaRepository<Plant, Long> {
-
+public interface PlantRepository extends JpaRepository<Plant, Long>, JpaSpecificationExecutor<Plant> {
 
     List<Plant> findByGpsDeviceSerialIsNotNull();
+
 }

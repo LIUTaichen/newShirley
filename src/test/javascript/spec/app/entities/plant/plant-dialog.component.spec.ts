@@ -9,6 +9,7 @@ import { FleetManagementTestModule } from '../../../test.module';
 import { PlantDialogComponent } from '../../../../../../main/webapp/app/entities/plant/plant-dialog.component';
 import { PlantService } from '../../../../../../main/webapp/app/entities/plant/plant.service';
 import { Plant } from '../../../../../../main/webapp/app/entities/plant/plant.model';
+import { LocationService } from '../../../../../../main/webapp/app/entities/location';
 import { CategoryService } from '../../../../../../main/webapp/app/entities/category';
 import { CompanyService } from '../../../../../../main/webapp/app/entities/company';
 import { MaintenanceContractorService } from '../../../../../../main/webapp/app/entities/maintenance-contractor';
@@ -28,6 +29,7 @@ describe('Component Tests', () => {
                 imports: [FleetManagementTestModule],
                 declarations: [PlantDialogComponent],
                 providers: [
+                    LocationService,
                     CategoryService,
                     CompanyService,
                     MaintenanceContractorService,

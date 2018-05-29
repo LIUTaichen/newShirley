@@ -2,10 +2,11 @@ package com.dempseywood.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dempseywood.domain.Plant;
-
-import com.dempseywood.repository.PlantRepository;
+import com.dempseywood.service.PlantService;
 import com.dempseywood.web.rest.errors.BadRequestAlertException;
 import com.dempseywood.web.rest.util.HeaderUtil;
+import com.dempseywood.service.dto.PlantCriteria;
+import com.dempseywood.service.PlantQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,13 @@ public class PlantResource {
 
     private static final String ENTITY_NAME = "plant";
 
-    private final PlantRepository plantRepository;
+    private final PlantService plantService;
 
-    public PlantResource(PlantRepository plantRepository) {
-        this.plantRepository = plantRepository;
+    private final PlantQueryService plantQueryService;
+
+    public PlantResource(PlantService plantService, PlantQueryService plantQueryService) {
+        this.plantService = plantService;
+        this.plantQueryService = plantQueryService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class PlantResource {
         if (plant.getId() != null) {
             throw new BadRequestAlertException("A new plant cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Plant result = plantRepository.save(plant);
+        Plant result = plantService.save(plant);
         return ResponseEntity.created(new URI("/api/plants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +75,7 @@ public class PlantResource {
         if (plant.getId() == null) {
             return createPlant(plant);
         }
-        Plant result = plantRepository.save(plant);
+        Plant result = plantService.save(plant);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, plant.getId().toString()))
             .body(result);
@@ -80,14 +84,16 @@ public class PlantResource {
     /**
      * GET  /plants : get all the plants.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of plants in body
      */
     @GetMapping("/plants")
     @Timed
-    public List<Plant> getAllPlants() {
-        log.debug("REST request to get all Plants");
-        return plantRepository.findAll();
-        }
+    public ResponseEntity<List<Plant>> getAllPlants(PlantCriteria criteria) {
+        log.debug("REST request to get Plants by criteria: {}", criteria);
+        List<Plant> entityList = plantQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
 
     /**
      * GET  /plants/:id : get the "id" plant.
@@ -99,7 +105,7 @@ public class PlantResource {
     @Timed
     public ResponseEntity<Plant> getPlant(@PathVariable Long id) {
         log.debug("REST request to get Plant : {}", id);
-        Plant plant = plantRepository.findOne(id);
+        Plant plant = plantService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(plant));
     }
 
@@ -113,7 +119,7 @@ public class PlantResource {
     @Timed
     public ResponseEntity<Void> deletePlant(@PathVariable Long id) {
         log.debug("REST request to delete Plant : {}", id);
-        plantRepository.delete(id);
+        plantService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

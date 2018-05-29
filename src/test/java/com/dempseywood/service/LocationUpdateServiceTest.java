@@ -1,7 +1,9 @@
 package com.dempseywood.service;
 
 import com.dempseywood.FleetManagementApp;
+import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
+import com.dempseywood.repository.LocationRepository;
 import com.dempseywood.service.dto.DeviceDTO;
 import com.dempseywood.service.dto.VehicleDTO;
 import com.dempseywood.service.dto.VehicleInformationDTO;
@@ -27,6 +29,8 @@ import static org.junit.Assert.*;
 public class LocationUpdateServiceTest {
     @Autowired
     private LocationUpdateService locationUpdateService;
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Test
     @Transactional
@@ -70,7 +74,7 @@ public class LocationUpdateServiceTest {
 
     @Test
     @Transactional
-    public void assertThatWhenFresherLocationDataIsRetrievedPlantIsUpdated() {
+    public void assertThatWhenFresherLocationDataIsRetrievedPlantLocationIsUpdated() {
         VehicleDTO[] vehicles = new VehicleDTO[1];
         VehicleDTO vehicle = new VehicleDTO();
         vehicle.setVehicleInformationDTO(new VehicleInformationDTO());
@@ -82,14 +86,17 @@ public class LocationUpdateServiceTest {
 
         Plant plant = new Plant();
         plant.setGpsDeviceSerial("526168");
-        plant.setLastLocationUpdateTime(Instant.now().minus(1, ChronoUnit.DAYS));
-        plant.setLocation("stale location");
+        Location location = new Location();
+        location.setAddress("stale location");
+        location.setTimestamp(Instant.now().minus(1, ChronoUnit.DAYS));
+        location = locationRepository.save(location);
+        plant.setLocation(location);
         List<Plant> plantList = new ArrayList<>();
         plantList.add(plant);
         Map<String, VehicleDTO> map = locationUpdateService.generateVehiclesMap(vehicles);
         Plant updatedPlant = locationUpdateService.generatePlantsToBeUpdated(map , plantList).iterator().next();
-        assertThat(updatedPlant.getLastLocationUpdateTime().equals(vehicle.getLastValidGpsTime())).isTrue();
-        assertThat(updatedPlant.getLocation().equals(vehicle.getAddress())).isTrue();
+        assertThat(updatedPlant.getLocation().getTimestamp().equals(vehicle.getLastValidGpsTime())).isTrue();
+        assertThat(updatedPlant.getLocation().getAddress().equals(vehicle.getAddress())).isTrue();
     }
 
     @Test
@@ -106,14 +113,17 @@ public class LocationUpdateServiceTest {
 
         Plant plant = new Plant();
         plant.setGpsDeviceSerial("526168");
-        plant.setLastLocationUpdateTime(null);
-        plant.setLocation("stale location");
+        Location location = new Location();
+        location.setAddress("stale location");
+        location.setTimestamp(null);
+        location = locationRepository.save(location);
+        plant.setLocation(location);
         List<Plant> plantList = new ArrayList<>();
         plantList.add(plant);
         Map<String, VehicleDTO> map = locationUpdateService.generateVehiclesMap(vehicles);
         Plant updatedPlant = locationUpdateService.generatePlantsToBeUpdated(map , plantList).iterator().next();
-        assertThat(updatedPlant.getLastLocationUpdateTime().equals(vehicle.getLastValidGpsTime())).isTrue();
-        assertThat(updatedPlant.getLocation().equals(vehicle.getAddress())).isTrue();
+        assertThat(updatedPlant.getLocation().getTimestamp().equals(vehicle.getLastValidGpsTime())).isTrue();
+        assertThat(updatedPlant.getLocation().getAddress().equals(vehicle.getAddress())).isTrue();
     }
 
 
@@ -131,8 +141,11 @@ public class LocationUpdateServiceTest {
 
         Plant plant = new Plant();
         plant.setGpsDeviceSerial("526168");
-        plant.setLastLocationUpdateTime(Instant.now());
-        plant.setLocation("fresher location");
+        Location location = new Location();
+        location.setAddress("fresher location");
+        location.setTimestamp(Instant.now());
+        location = locationRepository.save(location);
+        plant.setLocation(location);
         List<Plant> plantList = new ArrayList<>();
         plantList.add(plant);
         Map<String, VehicleDTO> map = locationUpdateService.generateVehiclesMap(vehicles);

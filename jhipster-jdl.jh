@@ -19,9 +19,18 @@ entity Plant {
     hourlyRate Double,
     registrationDueDate Instant,
     hireStatus HireStatus,
-    gpsDeviceSerial String,
-    location String,
-    lastLocationUpdateTime Instant
+    gpsDeviceSerial String
+}
+
+entity Location {
+    latitude Double,
+    longitude Double,
+    address String,
+    bearing Double,
+    direction String,
+    speed Double,
+    timestamp Instant,
+    provider String
 }
 
 enum HireStatus{
@@ -112,7 +121,7 @@ enum Priority{
 enum Status{
 	SUBMITTED,
     OPEN,
-    ASSIGNED,
+    WINTER_WORK,
     IN_PROGRESS,
     ON_HOLD,
     COMPLETED,
@@ -149,7 +158,8 @@ relationship ManyToOne {
 }
 
 relationship OneToOne {
-    Niggle{purchaseOrder} to PurchaseOrder
+    Niggle{purchaseOrder} to PurchaseOrder,
+    Plant{location} to Location
 }
 
 enum MaintenanceGroup {
@@ -158,4 +168,5 @@ enum MaintenanceGroup {
 }
 
 filter Niggle
+filter Plant
 

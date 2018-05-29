@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="header">Edit niggle</mat-toolbar>
+<mat-toolbar color="primary" class="header">Edit plant fault</mat-toolbar>
 <form [formGroup]="niggleForm" (ngSubmit)="onSubmit()">
     <div class="form-container">
         <mat-form-field>
@@ -29,7 +29,9 @@
             <mat-select placeholder="State" formControlName="status">
                 <mat-option value="SUBMITTED">SUBMITTED</mat-option>
                 <mat-option value="OPEN">OPEN</mat-option>
-                <mat-option value="ASSIGNED">ASSIGNED</mat-option>
+                <mat-option value="IN_PROGRESS">IN PROGRESS</mat-option>
+                <mat-option value="ON_HOLD">ON HOLD</mat-option>
+                <mat-option value="WINTER_WORK">WINTER WORK</mat-option>
                 <mat-option value="COMPLETED">COMPLETED</mat-option>
                 <mat-option value="CLOSED">CLOSED</mat-option>
             </mat-select>

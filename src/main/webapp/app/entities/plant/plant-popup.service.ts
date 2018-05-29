@@ -39,8 +39,6 @@ export class PlantPopupService {
                             .transform(plant.certificateDueDate, 'yyyy-MM-ddTHH:mm:ss');
                         plant.registrationDueDate = this.datePipe
                             .transform(plant.registrationDueDate, 'yyyy-MM-ddTHH:mm:ss');
-                        plant.lastLocationUpdateTime = this.datePipe
-                            .transform(plant.lastLocationUpdateTime, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.plantModalRef(component, plant);
                         resolve(this.ngbModalRef);
                     });

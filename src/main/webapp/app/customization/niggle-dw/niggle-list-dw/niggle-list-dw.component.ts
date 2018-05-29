@@ -187,8 +187,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       fleetId = plant.fleetId;
       plantDesctiption = plant.description;
       siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
-      location = plant.location;
-      locationUpdateTime = plant.lastLocationUpdateTime;
+      location = plant.location ? plant.location['address'] : '';
+      locationUpdateTime = plant.location ? plant.location['timestamp'] : '';
       owner = plant.owner ? plant.owner['company'] : '';
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';

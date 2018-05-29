@@ -9,6 +9,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { Plant } from './plant.model';
 import { PlantPopupService } from './plant-popup.service';
 import { PlantService } from './plant.service';
+import { Location, LocationService } from '../location';
 import { Category, CategoryService } from '../category';
 import { Company, CompanyService } from '../company';
 import { MaintenanceContractor, MaintenanceContractorService } from '../maintenance-contractor';
@@ -23,6 +24,8 @@ export class PlantDialogComponent implements OnInit {
     plant: Plant;
     isSaving: boolean;
 
+    locations: Location[];
+
     categories: Category[];
 
     companies: Company[];
@@ -36,6 +39,7 @@ export class PlantDialogComponent implements OnInit {
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private plantService: PlantService,
+        private locationService: LocationService,
         private categoryService: CategoryService,
         private companyService: CompanyService,
         private maintenanceContractorService: MaintenanceContractorService,
@@ -46,6 +50,19 @@ export class PlantDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.locationService
+            .query({filter: 'plant-is-null'})
+            .subscribe((res: HttpResponse<Location[]>) => {
+                if (!this.plant.location || !this.plant.location.id) {
+                    this.locations = res.body;
+                } else {
+                    this.locationService
+                        .find(this.plant.location.id)
+                        .subscribe((subRes: HttpResponse<Location>) => {
+                            this.locations = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
         this.categoryService.query()
             .subscribe((res: HttpResponse<Category[]>) => { this.categories = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.companyService.query()
@@ -100,6 +117,10 @@ export class PlantDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackLocationById(index: number, item: Location) {
+        return item.id;
     }
 
     trackCategoryById(index: number, item: Category) {

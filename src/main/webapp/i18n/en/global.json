@@ -18,6 +18,7 @@
                 "niggle": "Niggle",
                 "plantLog": "Plant Log",
                 "purchaseOrder": "Purchase Order",
+                "location": "Location",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

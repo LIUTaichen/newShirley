@@ -33,4 +33,13 @@
                                  referencedTableName="project"/>
 
     </changeSet>
+	
+	 <changeSet id="add-constraint-location" author="jason">
+        
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+    </changeSet>
 </databaseChangeLog>
