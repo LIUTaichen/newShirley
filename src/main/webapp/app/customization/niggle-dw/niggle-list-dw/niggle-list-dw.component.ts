@@ -223,4 +223,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     return niggleRow;
   }
 
+  getCount(): number {
+    return this.dataSource.filteredData.length;
+  }
 }
