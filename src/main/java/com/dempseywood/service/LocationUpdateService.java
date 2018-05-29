@@ -1,7 +1,9 @@
 package com.dempseywood.service;
 
 import com.dempseywood.config.ApplicationProperties;
+import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
+import com.dempseywood.repository.LocationRepository;
 import com.dempseywood.repository.PlantRepository;
 import com.dempseywood.service.dto.VehicleDTO;
 import org.slf4j.Logger;
@@ -24,14 +26,17 @@ public class LocationUpdateService {
     private BlackhawkSessionIdService blackhawkSessionIdService;
     private ApplicationProperties props;
     private PlantRepository plantRepository;
+    private PlantService plantService;
     private final Logger log = LoggerFactory.getLogger(LocationUpdateService.class);
 
     public LocationUpdateService(BlackhawkSessionIdService blackhawkSessionIdService,
                                  ApplicationProperties props,
-                                 PlantRepository plantRepository) {
+                                 PlantRepository plantRepository,
+                                 PlantService plantService) {
         this.blackhawkSessionIdService = blackhawkSessionIdService;
         this.props = props;
         this.plantRepository = plantRepository;
+        this.plantService = plantService;
     }
 
 
@@ -57,9 +62,14 @@ public class LocationUpdateService {
                 continue;
             }else{
                 VehicleDTO vehicle = vehiclesMap.get(plant.getGpsDeviceSerial());
-                if(plant.getLastLocationUpdateTime() == null || vehicle.getLastValidGpsTime().isAfter(plant.getLastLocationUpdateTime())){
-                    plant.setLastLocationUpdateTime(vehicle.getLastValidGpsTime());
-                    plant.setLocation(vehicle.getAddress());
+                if(plant.getLocation() == null){
+                    Location location = new Location();
+                    plant.setLocation(location);
+                }
+                if(plant.getLocation().getTimestamp() == null
+                     || vehicle.getLastValidGpsTime().isAfter(plant.getLocation().getTimestamp())){
+                    plant.getLocation().setTimestamp(vehicle.getLastValidGpsTime());
+                    plant.getLocation().setAddress(vehicle.getAddress());
                     plantsToUpdate.add(plant);
                 }
             }
@@ -93,6 +103,8 @@ public class LocationUpdateService {
         Map<String, VehicleDTO> map = generateVehiclesMap(vehicles);
         List<Plant> plantsToUpDate = generatePlantsToBeUpdated(map,plants);
         log.info("number of plants to be updated: " + plantsToUpDate.size() );
-        plantRepository.save(plantsToUpDate);
+        plantsToUpDate.forEach(plant-> {
+            plantService.savePlantLocation(plant);
+        });
     }
 }
