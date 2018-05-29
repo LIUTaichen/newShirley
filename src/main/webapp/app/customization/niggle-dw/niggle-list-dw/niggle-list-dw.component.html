@@ -45,7 +45,7 @@
                 </ng-container>
                 <ng-container matColumnDef="locationUpdateTime">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Location Update Time </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.locationUpdateTime | date}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.locationUpdateTime | date:'medium'}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="description">

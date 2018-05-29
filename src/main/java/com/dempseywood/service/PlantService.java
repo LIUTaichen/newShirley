@@ -77,9 +77,9 @@ public class PlantService {
         if(plant.getLocation() == null){
             return;
         }
-        Location location = locationRepository.save(plant.getLocation());
-        if(plant.getLocation().getId() == null){
-            plant.setLocation(location);
+        boolean needToSaveLocationId = plant.getLocation().getId() == null;
+        locationRepository.save(plant.getLocation());
+        if(needToSaveLocationId){
             plantRepository.save(plant);
         }
     }
