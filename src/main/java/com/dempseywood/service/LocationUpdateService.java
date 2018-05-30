@@ -27,16 +27,19 @@ public class LocationUpdateService {
     private ApplicationProperties props;
     private PlantRepository plantRepository;
     private PlantService plantService;
+    private GeofenceService geofenceService;
     private final Logger log = LoggerFactory.getLogger(LocationUpdateService.class);
 
     public LocationUpdateService(BlackhawkSessionIdService blackhawkSessionIdService,
                                  ApplicationProperties props,
                                  PlantRepository plantRepository,
-                                 PlantService plantService) {
+                                 PlantService plantService,
+                                 GeofenceService geofenceService) {
         this.blackhawkSessionIdService = blackhawkSessionIdService;
         this.props = props;
         this.plantRepository = plantRepository;
         this.plantService = plantService;
+        this.geofenceService = geofenceService;
     }
 
 
