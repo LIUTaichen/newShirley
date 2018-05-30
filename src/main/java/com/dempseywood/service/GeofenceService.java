@@ -79,8 +79,11 @@ public class GeofenceService {
          return geofences;
       }
 
-      public GeofenceDTO getContainingGeofence(double lat, double lng){
+      public GeofenceDTO getContainingGeofence(Double lat, Double lng){
           if(this.geofences ==null || this.geofences.isEmpty()){
+              return null;
+          }
+          if(lat == null || lng == null){
               return null;
           }
           Point point = geometryFactory.createPoint(new Coordinate(lng, lat));
