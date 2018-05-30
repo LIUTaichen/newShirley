@@ -108,13 +108,14 @@
                     </mat-cell>
                 </ng-container>
 
-                
+
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"
                     class="table-row" matRipple></mat-row>
+               
             </mat-table>
-            <div>
-                <span>Count : {{getCount()}}</span>
+            <div class="footer">
+                <span class="footer-count">Count : {{getCount()}}</span>
             </div>
         </div>
     </div>
