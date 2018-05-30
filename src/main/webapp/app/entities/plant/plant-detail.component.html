@@ -1,0 +1,133 @@
+
+<div *ngIf="plant">
+    <h2><span jhiTranslate="fleetManagementApp.plant.detail.title">Plant</span> {{plant.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.plant.fleetId">Fleet Id</span></dt>
+        <dd>
+            <span>{{plant.fleetId}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.name">Name</span></dt>
+        <dd>
+            <span>{{plant.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.notes">Notes</span></dt>
+        <dd>
+            <span>{{plant.notes}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.purchaseDate">Purchase Date</span></dt>
+        <dd>
+            <span>{{plant.purchaseDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.isActive">Is Active</span></dt>
+        <dd>
+            <span>{{plant.isActive}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.description">Description</span></dt>
+        <dd>
+            <span>{{plant.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.vin">Vin</span></dt>
+        <dd>
+            <span>{{plant.vin}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.rego">Rego</span></dt>
+        <dd>
+            <span>{{plant.rego}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.dateOfManufacture">Date Of Manufacture</span></dt>
+        <dd>
+            <span>{{plant.dateOfManufacture | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.image">Image</span></dt>
+        <dd>
+            <div *ngIf="plant.image">
+                <a (click)="openFile(plant.imageContentType, plant.image)" jhiTranslate="entity.action.open">open</a>
+                {{plant.imageContentType}}, {{byteSize(plant.image)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.tankSize">Tank Size</span></dt>
+        <dd>
+            <span>{{plant.tankSize}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.maintenanceDueAt">Maintenance Due At</span></dt>
+        <dd>
+            <span>{{plant.maintenanceDueAt}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.meterUnit">Meter Unit</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.MeterUnit.' + plant.meterUnit}}">{{plant.meterUnit}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.certificateDueDate">Certificate Due Date</span></dt>
+        <dd>
+            <span>{{plant.certificateDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.rucDueAtKm">Ruc Due At Km</span></dt>
+        <dd>
+            <span>{{plant.rucDueAtKm}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.hubboReading">Hubbo Reading</span></dt>
+        <dd>
+            <span>{{plant.hubboReading}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.loadCapacity">Load Capacity</span></dt>
+        <dd>
+            <span>{{plant.loadCapacity}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.hourlyRate">Hourly Rate</span></dt>
+        <dd>
+            <span>{{plant.hourlyRate}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.registrationDueDate">Registration Due Date</span></dt>
+        <dd>
+            <span>{{plant.registrationDueDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.hireStatus">Hire Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.HireStatus.' + plant.hireStatus}}">{{plant.hireStatus}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.gpsDeviceSerial">Gps Device Serial</span></dt>
+        <dd>
+            <span>{{plant.gpsDeviceSerial}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.location">Location</span></dt>
+        <dd>
+            <div *ngIf="plant.location">
+                <a [routerLink]="['/location', plant.location?.id]">{{plant.location?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.category">Category</span></dt>
+        <dd>
+            <div *ngIf="plant.category">
+                <a [routerLink]="['/category', plant.category?.id]">{{plant.category?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.owner">Owner</span></dt>
+        <dd>
+            <div *ngIf="plant.owner">
+                <a [routerLink]="['/company', plant.owner?.id]">{{plant.owner?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.assignedContractor">Assigned Contractor</span></dt>
+        <dd>
+            <div *ngIf="plant.assignedContractor">
+                <a [routerLink]="['/maintenance-contractor', plant.assignedContractor?.id]">{{plant.assignedContractor?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'plant/'+ plant.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

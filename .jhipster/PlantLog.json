@@ -1,0 +1,59 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "plant",
+            "otherEntityName": "plant",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "operator",
+            "otherEntityName": "people",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "site",
+            "otherEntityName": "project",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "meterReading",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "hubboReading",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "serviceDueAt",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "rucDueAt",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "wofDueDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "cofDueDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "serviceDueDate",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180530060143",
+    "entityTableName": "plant_log",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

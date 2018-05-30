@@ -1,0 +1,60 @@
+
+<div *ngIf="location">
+    <h2><span jhiTranslate="fleetManagementApp.location.detail.title">Location</span> {{location.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.location.latitude">Latitude</span></dt>
+        <dd>
+            <span>{{location.latitude}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.longitude">Longitude</span></dt>
+        <dd>
+            <span>{{location.longitude}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.address">Address</span></dt>
+        <dd>
+            <span>{{location.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.bearing">Bearing</span></dt>
+        <dd>
+            <span>{{location.bearing}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.direction">Direction</span></dt>
+        <dd>
+            <span>{{location.direction}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.speed">Speed</span></dt>
+        <dd>
+            <span>{{location.speed}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.timestamp">Timestamp</span></dt>
+        <dd>
+            <span>{{location.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.provider">Provider</span></dt>
+        <dd>
+            <span>{{location.provider}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.location.project">Project</span></dt>
+        <dd>
+            <div *ngIf="location.project">
+                <a [routerLink]="['/project', location.project?.id]">{{location.project?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'location/'+ location.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,33 @@
+
+{
+    "fleetManagementApp": {
+        "niggle" : {
+            "home": {
+                "title": "Niggles",
+                "createLabel": "Create a new Niggle",
+                "createOrEditLabel": "Create or edit a Niggle"
+            },
+            "created": "A new Niggle is created with identifier {{ param }}",
+            "updated": "A Niggle is updated with identifier {{ param }}",
+            "deleted": "A Niggle is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Niggle {{ id }}?"
+            },
+            "detail": {
+                "title": "Niggle"
+            },
+            "description": "Description",
+            "status": "Status",
+            "note": "Note",
+            "priority": "Priority",
+            "quattraReference": "Quattra Reference",
+            "quattraComments": "Quattra Comments",
+            "invoiceNo": "Invoice No",
+            "dateOpened": "Date Opened",
+            "dateClosed": "Date Closed",
+            "purchaseOrder": "Purchase Order",
+            "plant": "Plant",
+            "assignedContractor": "Assigned Contractor"
+        }
+    }
+}

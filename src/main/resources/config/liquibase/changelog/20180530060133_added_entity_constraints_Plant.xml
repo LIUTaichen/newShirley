@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Plant.
+    -->
+    <changeSet id="20180530060133-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
+        <addForeignKeyConstraint baseColumnNames="assigned_contractor_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_assigned_contractor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="maintenance_contractor"/>
+
+    </changeSet>
+</databaseChangeLog>

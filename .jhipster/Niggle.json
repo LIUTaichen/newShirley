@@ -1,0 +1,72 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "purchaseOrder",
+            "otherEntityName": "purchaseOrder",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "niggle"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "plant",
+            "otherEntityName": "plant",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "assignedContractor",
+            "otherEntityName": "maintenanceContractor",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "SUBMITTED,OPEN,WINTER_WORK,IN_PROGRESS,ON_HOLD,COMPLETED,CLOSED,TBR"
+        },
+        {
+            "fieldName": "note",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "priority",
+            "fieldType": "Priority",
+            "fieldValues": "LOW,MEDIUM,HIGH"
+        },
+        {
+            "fieldName": "quattraReference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "quattraComments",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "invoiceNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOpened",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "dateClosed",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180530060142",
+    "entityTableName": "niggle",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "enableEntityAudit": true
+}

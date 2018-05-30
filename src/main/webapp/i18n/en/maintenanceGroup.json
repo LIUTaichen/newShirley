@@ -1,0 +1,9 @@
+{
+    "fleetManagementApp": {
+        "MaintenanceGroup" : {
+            "null": "",
+            "YELLOW_FLEET": "YELLOW_FLEET",
+            "WHITE_FLEET": "WHITE_FLEET"
+        }
+    }
+}

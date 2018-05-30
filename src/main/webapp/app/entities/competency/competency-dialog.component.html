@@ -1,0 +1,40 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCompetencyLabel" jhiTranslate="fleetManagementApp.competency.home.createOrEditLabel">Create or edit a Competency</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!competency.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="competency.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.competency.competency" for="field_competency">Competency</label>
+            <input type="text" class="form-control" name="competency" id="field_competency"
+                [(ngModel)]="competency.competency" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.competency.grouping" for="field_grouping">Grouping</label>
+            <input type="text" class="form-control" name="grouping" id="field_grouping"
+                [(ngModel)]="competency.grouping" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.competency.sortOrder" for="field_sortOrder">Sort Order</label>
+            <input type="number" class="form-control" name="sortOrder" id="field_sortOrder"
+                [(ngModel)]="competency.sortOrder" />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

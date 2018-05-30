@@ -1,0 +1,16 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "orderNumber",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180530060144",
+    "entityTableName": "purchase_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

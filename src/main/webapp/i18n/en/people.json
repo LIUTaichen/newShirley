@@ -1,0 +1,24 @@
+
+{
+    "fleetManagementApp": {
+        "people" : {
+            "home": {
+                "title": "People",
+                "createLabel": "Create a new People",
+                "createOrEditLabel": "Create or edit a People"
+            },
+            "created": "A new People is created with identifier {{ param }}",
+            "updated": "A People is updated with identifier {{ param }}",
+            "deleted": "A People is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete People {{ id }}?"
+            },
+            "detail": {
+                "title": "People"
+            },
+            "email": "Email",
+            "phone": "Phone",
+            "name": "Name"
+        }
+    }
+}

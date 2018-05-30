@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PlantLog.
+    -->
+    <changeSet id="20180530060143-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="plant_id"
+                                 baseTableName="plant_log"
+                                 constraintName="fk_plant_log_plant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plant"/>
+
+        <addForeignKeyConstraint baseColumnNames="operator_id"
+                                 baseTableName="plant_log"
+                                 constraintName="fk_plant_log_operator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="people"/>
+
+        <addForeignKeyConstraint baseColumnNames="site_id"
+                                 baseTableName="plant_log"
+                                 constraintName="fk_plant_log_site_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+
+    </changeSet>
+</databaseChangeLog>

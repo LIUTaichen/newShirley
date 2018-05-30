@@ -1,0 +1,15 @@
+{
+    "fleetManagementApp": {
+        "Status" : {
+            "null": "",
+            "SUBMITTED": "SUBMITTED",
+            "OPEN": "OPEN",
+            "WINTER_WORK": "WINTER_WORK",
+            "IN_PROGRESS": "IN_PROGRESS",
+            "ON_HOLD": "ON_HOLD",
+            "COMPLETED": "COMPLETED",
+            "CLOSED": "CLOSED",
+            "TBR": "TBR"
+        }
+    }
+}
