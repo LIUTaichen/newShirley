@@ -84,3 +84,13 @@
     overflow: hidden;
     position: relative;
 }
+
+.footer {
+    display:flex;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.footer-count{
+    padding: 10px;
+}

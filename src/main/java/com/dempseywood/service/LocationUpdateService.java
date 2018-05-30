@@ -5,6 +5,7 @@ import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.repository.LocationRepository;
 import com.dempseywood.repository.PlantRepository;
+import com.dempseywood.service.dto.GeofenceDTO;
 import com.dempseywood.service.dto.VehicleDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +28,19 @@ public class LocationUpdateService {
     private ApplicationProperties props;
     private PlantRepository plantRepository;
     private PlantService plantService;
+    private GeofenceService geofenceService;
     private final Logger log = LoggerFactory.getLogger(LocationUpdateService.class);
 
     public LocationUpdateService(BlackhawkSessionIdService blackhawkSessionIdService,
                                  ApplicationProperties props,
                                  PlantRepository plantRepository,
-                                 PlantService plantService) {
+                                 PlantService plantService,
+                                 GeofenceService geofenceService) {
         this.blackhawkSessionIdService = blackhawkSessionIdService;
         this.props = props;
         this.plantRepository = plantRepository;
         this.plantService = plantService;
+        this.geofenceService = geofenceService;
     }
 
 
@@ -70,6 +74,20 @@ public class LocationUpdateService {
                      || vehicle.getLastValidGpsTime().isAfter(plant.getLocation().getTimestamp())){
                     plant.getLocation().setTimestamp(vehicle.getLastValidGpsTime());
                     plant.getLocation().setAddress(vehicle.getAddress());
+                    Double latitude = vehicle.getPoint().getLatitude();
+                    Double longitude = vehicle.getPoint().getLongitude();
+                    plant.getLocation().setLatitude(latitude);
+                    plant.getLocation().setLongitude(longitude);
+                    GeofenceDTO geofence = this.geofenceService.getContainingGeofence(latitude, longitude);
+                    if(geofence != null){
+                        String newAddress;
+                        if(plant.getLocation().getAddress().isEmpty()){
+                            newAddress = "Site: "  +geofence.getDescription();
+                        }else{
+                            newAddress = plant.getLocation().getAddress() +", Site: "  +geofence.getDescription();
+                        }
+                        plant.getLocation().setAddress(newAddress);
+                    }
                     plantsToUpdate.add(plant);
                 }
             }

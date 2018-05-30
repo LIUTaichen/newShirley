@@ -1,0 +1,172 @@
+entity Plant {
+	fleetId String,
+    name String,
+    notes String,
+    purchaseDate Instant,
+    isActive Boolean,
+    description String,
+    vin String,
+    rego String,
+    dateOfManufacture Instant,
+    image Blob,
+    tankSize Integer,
+    maintenanceDueAt Integer,
+    meterUnit MeterUnit,
+    certificateDueDate Instant,
+    rucDueAtKm Integer,
+    hubboReading Integer,
+    loadCapacity Integer,
+    hourlyRate Double,
+    registrationDueDate Instant,
+    hireStatus HireStatus,
+    gpsDeviceSerial String
+}
+
+entity Location {
+    latitude Double,
+    longitude Double,
+    address String,
+    bearing Double,
+    direction String,
+    speed Double,
+    timestamp Instant,
+    provider String
+}
+
+enum HireStatus{
+	ONHIRE,
+    OFFHIRE
+}
+
+entity OffHireRequest {
+
+}
+
+entity Category{
+	category String,
+    description String,
+    type String,
+    trackUsage Boolean,
+    dailyRate Double,
+    loadCapacity Integer,
+    hourlyRate Double,
+    isEarchMovingPlant Boolean,
+    isTrackedForInternalBilling Boolean,
+    maintenanceGroup MaintenanceGroup
+}
+
+entity Company{
+	company String,
+    phone String,
+    address String,
+    location String,
+    webPage String,
+    notes String,
+    isActive Boolean,
+    abbreviation String
+}
+
+enum MeterUnit{
+	KM,
+    HOUR
+}
+
+entity MaintenanceContractor{
+	name String
+}
+
+entity Project{
+	jobNo String,
+	name String,
+    location String,
+    notes String,
+    startDate Instant,
+    endDate Instant,
+    isActive Boolean,
+    isOnHold Boolean,
+    details String
+}
+
+entity Competency{
+	competency String,
+    grouping String,
+    sortOrder Integer
+}
+
+entity People{
+    email String,
+    phone String,
+    name String
+
+}
+
+entity Niggle{
+    description String,
+    status Status,
+    note String,
+    priority Priority,
+    quattraReference String,
+    quattraComments String,
+	invoiceNo String,
+    dateOpened Instant,
+    dateClosed Instant
+}
+
+enum Priority{
+   LOW,
+   MEDIUM,
+   HIGH
+}
+
+enum Status{
+	SUBMITTED,
+    OPEN,
+    WINTER_WORK,
+    IN_PROGRESS,
+    ON_HOLD,
+    COMPLETED,
+    CLOSED,
+    TBR
+}
+
+entity PlantLog{
+    meterReading Integer,
+    hubboReading Integer,
+    serviceDueAt Integer,
+    rucDueAt Integer,
+    wofDueDate Instant,
+    cofDueDate Instant,
+    serviceDueDate Instant
+}
+
+entity PurchaseOrder{
+    orderNumber String
+}
+
+relationship ManyToOne {
+	Plant{category} to Category,
+    Plant{owner} to Company,
+    Plant{assignedContractor} to MaintenanceContractor,
+    PlantLog{plant} to Plant,
+    Niggle{ plant} to Plant,
+    Niggle{ assignedContractor } to MaintenanceContractor,
+    Category{competency} to Competency,
+    PlantLog{operator} to People,
+    PlantLog{site} to Project,
+	Location{project} to Project
+
+}
+
+relationship OneToOne {
+    Niggle{purchaseOrder} to PurchaseOrder,
+    Plant{location} to Location
+}
+
+enum MaintenanceGroup {
+    YELLOW_FLEET,
+    WHITE_FLEET
+}
+
+filter Niggle
+filter Plant
+

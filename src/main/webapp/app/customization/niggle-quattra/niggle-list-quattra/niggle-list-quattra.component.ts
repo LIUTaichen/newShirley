@@ -246,4 +246,12 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     }
   }
 
+  getCount(): number {
+    if (this.dataSource) {
+      return this.dataSource.filteredData.length;
+    } else {
+      return 0;
+    }
+  }
+
 }

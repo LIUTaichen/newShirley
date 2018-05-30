@@ -5,6 +5,7 @@ import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.repository.LocationRepository;
 import com.dempseywood.service.dto.DeviceDTO;
+import com.dempseywood.service.dto.PointDTO;
 import com.dempseywood.service.dto.VehicleDTO;
 import com.dempseywood.service.dto.VehicleInformationDTO;
 import org.junit.Test;
@@ -82,6 +83,7 @@ public class LocationUpdateServiceTest {
         vehicle.getVehicleInformationDTO().getDeviceDTO().setSerialNumber("526168");
         vehicle.setAddress("new location");
         vehicle.setLastValidGpsTime(Instant.now());
+        vehicle.setPoint(new PointDTO());
         vehicles[0] = vehicle;
 
         Plant plant = new Plant();
@@ -109,6 +111,7 @@ public class LocationUpdateServiceTest {
         vehicle.getVehicleInformationDTO().getDeviceDTO().setSerialNumber("526168");
         vehicle.setAddress("new location");
         vehicle.setLastValidGpsTime(Instant.now());
+        vehicle.setPoint(new PointDTO());
         vehicles[0] = vehicle;
 
         Plant plant = new Plant();

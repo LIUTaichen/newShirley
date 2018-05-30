@@ -71,6 +71,7 @@ public class ApplicationProperties {
             private String root = "";
             private String login = "";
             private String vehicle= "/Vehicle";
+            private String geofence="/Geofence?includeGeometries=true&roleBasedFilter=false";
 
             public String getRoot() {
                 return root;
@@ -92,8 +93,16 @@ public class ApplicationProperties {
                 return vehicle;
             }
 
-            public void setVehicles(String vehicle) {
+            public void setVehicle(String vehicle) {
                 this.vehicle = vehicle;
+            }
+
+            public String getGeofence() {
+                return geofence;
+            }
+
+            public void setGeofence(String geofence) {
+                this.geofence = geofence;
             }
         }
     }
