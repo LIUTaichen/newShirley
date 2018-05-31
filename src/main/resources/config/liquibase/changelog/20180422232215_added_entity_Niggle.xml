@@ -22,7 +22,7 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="description" type="varchar(255)">
+            <column name="description" type="varchar(1024)">
                 <constraints nullable="true" />
             </column>
 
@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="note" type="varchar(255)">
+            <column name="note" type="varchar(1024)">
                 <constraints nullable="true" />
             </column>
 
@@ -42,7 +42,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="quattra_comments" type="varchar(255)">
+            <column name="quattra_comments" type="varchar(1024)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="invoice_no" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -53,11 +57,9 @@
             <column name="date_closed" type="timestamp">
                 <constraints nullable="true" />
             </column>
-
-            <column name="invoice_no" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="purchase_order_id" type="bigint">
+                <constraints unique="true" nullable="true" />
             </column>
-
             <column name="plant_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -74,7 +76,7 @@
     </changeSet>
     
     <!-- Added the entity audit columns -->
-    <changeSet id="20180510011427-audit-1" author="jhipster-entity-audit">
+    <changeSet id="20180422232215-audit-1" author="jhipster-entity-audit">
         <addColumn tableName="niggle">
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
@@ -86,39 +88,5 @@
             <column name="last_modified_date" type="timestamp"/>
         </addColumn>
     </changeSet>
-	
-	<changeSet id="add-audit-no" author="jason">
-	<addColumn tableName="niggle">
-            <column name="audit_no" type="varchar(50)"/>
-	</addColumn>
-	</changeSet>
-
-    <changeSet id="drop audit no and add purchase no" author="jason">
-        <addColumn tableName="niggle">
-            <column name="purchase_order_id" type="bigint">
-                    <constraints unique="true" nullable="true" />
-            </column>
-        </addColumn>
-        <dropColumn columnName="audit_no"  tableName="niggle">
-        </dropColumn>
-	</changeSet>
-
-     <changeSet id="increase-text-column-size" author="jason">
-        <modifyDataType 
-                columnName="description"
-                newDataType="TEXT"
-                tableName="niggle"/>
-        <modifyDataType 
-                columnName="note"
-                newDataType="TEXT"
-                tableName="niggle"/>
-        <modifyDataType 
-                columnName="quattra_comments"
-                newDataType="TEXT"
-                tableName="niggle"/>
-    </changeSet>
-
-
-
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

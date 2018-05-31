@@ -76,6 +76,9 @@ export class NiggleService {
     private convert(niggle: Niggle): Niggle {
         const copy: Niggle = Object.assign({}, niggle);
 
+        copy.dateOpened = this.dateUtils.toDate(niggle.dateOpened);
+
+        copy.dateClosed = this.dateUtils.toDate(niggle.dateClosed);
         return copy;
     }
 }
