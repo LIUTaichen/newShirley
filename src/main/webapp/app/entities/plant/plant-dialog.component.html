@@ -154,21 +154,21 @@
             <label class="form-control-label" jhiTranslate="fleetManagementApp.plant.category" for="field_category">Category</label>
             <select class="form-control" id="field_category" name="category" [(ngModel)]="plant.category" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="categoryOption.id === plant.category?.id ? plant.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
+                <option [ngValue]="categoryOption.id === plant.category?.id ? plant.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id + ' ' + categoryOption.category}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="fleetManagementApp.plant.owner" for="field_owner">Owner</label>
             <select class="form-control" id="field_owner" name="owner" [(ngModel)]="plant.owner" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="companyOption.id === plant.owner?.id ? plant.owner : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                <option [ngValue]="companyOption.id === plant.owner?.id ? plant.owner : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id + ' ' + companyOption.company}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="fleetManagementApp.plant.assignedContractor" for="field_assignedContractor">Assigned Contractor</label>
             <select class="form-control" id="field_assignedContractor" name="assignedContractor" [(ngModel)]="plant.assignedContractor" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="maintenanceContractorOption.id === plant.assignedContractor?.id ? plant.assignedContractor : maintenanceContractorOption" *ngFor="let maintenanceContractorOption of maintenancecontractors; trackBy: trackMaintenanceContractorById">{{maintenanceContractorOption.id}}</option>
+                <option [ngValue]="maintenanceContractorOption.id === plant.assignedContractor?.id ? plant.assignedContractor : maintenanceContractorOption" *ngFor="let maintenanceContractorOption of maintenancecontractors; trackBy: trackMaintenanceContractorById">{{maintenanceContractorOption.id + ' ' + maintenanceContractorOption.name}}</option>
             </select>
         </div>
         <div class="form-group">

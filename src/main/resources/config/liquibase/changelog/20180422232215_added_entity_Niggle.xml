@@ -103,8 +103,20 @@
         </dropColumn>
 	</changeSet>
 
-
-
+     <changeSet id="increase-text-column-size" author="jason">
+        <modifyDataType 
+                columnName="description"
+                newDataType="TEXT"
+                tableName="niggle"/>
+        <modifyDataType 
+                columnName="note"
+                newDataType="TEXT"
+                tableName="niggle"/>
+        <modifyDataType 
+                columnName="quattra_comments"
+                newDataType="TEXT"
+                tableName="niggle"/>
+    </changeSet>
 
 
 
