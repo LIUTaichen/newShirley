@@ -25,11 +25,7 @@
     "fields": [
         {
             "fieldName": "description",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 65535
+            "fieldType": "String"
         },
         {
             "fieldName": "status",
@@ -38,11 +34,7 @@
         },
         {
             "fieldName": "note",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 65535
+            "fieldType": "String"
         },
         {
             "fieldName": "priority",
@@ -55,11 +47,7 @@
         },
         {
             "fieldName": "quattraComments",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 65535
+            "fieldType": "String"
         },
         {
             "fieldName": "invoiceNo",

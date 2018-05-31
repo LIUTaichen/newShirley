@@ -2,7 +2,6 @@ package com.dempseywood.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -11,6 +10,7 @@ import java.util.Objects;
 import com.dempseywood.domain.enumeration.Status;
 
 import com.dempseywood.domain.enumeration.Priority;
+import org.hibernate.annotations.Type;
 
 /**
  * A Niggle.
@@ -25,7 +25,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 65535)
     @Column(name = "description", length = 65535)
     private String description;
 
@@ -33,7 +32,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    @Size(max = 65535)
     @Column(name = "note", length = 65535)
     private String note;
 
@@ -44,7 +42,6 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "quattra_reference")
     private String quattraReference;
 
-    @Size(max = 65535)
     @Column(name = "quattra_comments", length = 65535)
     private String quattraComments;
 
