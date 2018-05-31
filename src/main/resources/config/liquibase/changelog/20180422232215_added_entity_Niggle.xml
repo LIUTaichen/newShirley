@@ -118,6 +118,21 @@
                 tableName="niggle"/>
     </changeSet>
 
+	
+	<changeSet id="change-column-type-to-varchar" author="jason">
+        <modifyDataType 
+                columnName="description"
+                newDataType="varchar(65535)"
+                tableName="niggle"/>
+        <modifyDataType 
+                columnName="note"
+                newDataType="varchar(65535)"
+                tableName="niggle"/>
+        <modifyDataType 
+                columnName="quattra_comments"
+                newDataType="varchar(65535)"
+                tableName="niggle"/>
+    </changeSet>
 
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
