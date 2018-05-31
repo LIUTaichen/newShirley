@@ -144,7 +144,6 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       lastModifiedBy: niggle.lastModifiedBy,
       lastModifiedDate: niggle.lastModifiedDate
     };
-    console.log(niggleRow);
     return niggleRow;
   }
 
@@ -235,6 +234,9 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   }
 
   isAuthorised(niggle: Niggle): Boolean {
+    if (!niggle.assignedContractor) {
+      return false;
+    }
     if (niggle.assignedContractor['name'] !== 'Quattra') {
       return false;
     } else if (this.allowedStatus.indexOf(niggle.status.toString()) === -1) {
