@@ -1,12 +1,16 @@
 package com.dempseywood.service;
 
 import com.dempseywood.domain.Niggle;
+import com.dempseywood.domain.PurchaseOrder;
+import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.repository.NiggleRepository;
+import com.dempseywood.repository.PurchaseOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -16,12 +20,18 @@ import java.util.List;
 @Transactional
 public class NiggleService {
 
+    public static final String DEMPSEY_WOOD_PURCHASE_ORDER_PREFIX = "DW";
     private final Logger log = LoggerFactory.getLogger(NiggleService.class);
 
     private final NiggleRepository niggleRepository;
 
-    public NiggleService(NiggleRepository niggleRepository) {
+    private final PurchaseOrderRepository purchaseOrderRepository;
+
+
+
+    public NiggleService(NiggleRepository niggleRepository, PurchaseOrderRepository purchaseOrderRepository) {
         this.niggleRepository = niggleRepository;
+        this.purchaseOrderRepository = purchaseOrderRepository;
     }
 
     /**
@@ -32,6 +42,18 @@ public class NiggleService {
      */
     public Niggle save(Niggle niggle) {
         log.debug("Request to save Niggle : {}", niggle);
+        if(Status.OPEN == niggle.getStatus() && niggle.getDateOpened() == null){
+            log.debug("Niggle is being opened. Creating purchase order and setting timestamp for dateOpened");
+            PurchaseOrder newPurchaseOrder = purchaseOrderRepository.save(new PurchaseOrder());
+            newPurchaseOrder.setOrderNumber(DEMPSEY_WOOD_PURCHASE_ORDER_PREFIX +newPurchaseOrder.getId());
+            niggle.setPurchaseOrder(newPurchaseOrder);
+            niggle.setDateOpened(Instant.now());
+        }
+
+        if(Status.CLOSED == niggle.getStatus() && niggle.getDateClosed() == null){
+            log.debug("Niggle is being closed. Setting timestamp for dateClosed");
+            niggle.setDateClosed(Instant.now());
+        }
         return niggleRepository.save(niggle);
     }
 

@@ -11,9 +11,9 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -49,7 +49,8 @@ public class NiggleResource {
      */
     @PostMapping("/niggles")
     @Timed
-    public ResponseEntity<Niggle> createNiggle(@Valid @RequestBody Niggle niggle) throws URISyntaxException {
+    @Secured({"ROLE_ADMIN", "ROLE_USER", "ROLE_DW"})
+    public ResponseEntity<Niggle> createNiggle(@RequestBody Niggle niggle) throws URISyntaxException {
         log.debug("REST request to save Niggle : {}", niggle);
         if (niggle.getId() != null) {
             throw new BadRequestAlertException("A new niggle cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +72,7 @@ public class NiggleResource {
      */
     @PutMapping("/niggles")
     @Timed
-    public ResponseEntity<Niggle> updateNiggle(@Valid @RequestBody Niggle niggle) throws URISyntaxException {
+    public ResponseEntity<Niggle> updateNiggle(@RequestBody Niggle niggle) throws URISyntaxException {
         log.debug("REST request to update Niggle : {}", niggle);
         if (niggle.getId() == null) {
             return createNiggle(niggle);
@@ -118,6 +119,7 @@ public class NiggleResource {
      */
     @DeleteMapping("/niggles/{id}")
     @Timed
+    @Secured({"ROLE_ADMIN", "ROLE_USER", "ROLE_DW"})
     public ResponseEntity<Void> deleteNiggle(@PathVariable Long id) {
         log.debug("REST request to delete Niggle : {}", id);
         niggleService.delete(id);

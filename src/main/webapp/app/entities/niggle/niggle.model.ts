@@ -11,7 +11,7 @@ export const enum Status {
     'TBR'
 }
 
-export const enum Priority {
+export enum Priority {
     'LOW',
     'MEDIUM',
     'HIGH'
@@ -32,6 +32,10 @@ export class Niggle implements BaseEntity {
         public purchaseOrder?: BaseEntity,
         public plant?: BaseEntity,
         public assignedContractor?: BaseEntity,
+        public createdBy?: string,
+        public createdDate?: any,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: any
     ) {
     }
 }
