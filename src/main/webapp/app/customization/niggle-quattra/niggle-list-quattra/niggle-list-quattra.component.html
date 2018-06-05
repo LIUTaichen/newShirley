@@ -96,9 +96,9 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"
                     class="table-row" matRipple></mat-row>
             </mat-table>
-            <div class="footer">
-                <h3 class="footer-count">Count : {{getCount()}}</h3>
-            </div>
         </div>
     </div>
+    <h3 class="footer mat-h3">
+        <span class="footer-count">Count : {{getCount()}}</span>
+    </h3>
 </div>

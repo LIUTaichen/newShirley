@@ -101,12 +101,12 @@ entity People{
 }
 
 entity Niggle{
-    description String,
+    description String maxlength(1024),
     status Status,
-    note String,
+    note String maxlength(1024),
     priority Priority,
     quattraReference String,
-    quattraComments String,
+    quattraComments String maxlength(1024),
 	invoiceNo String,
     dateOpened Instant,
     dateClosed Instant

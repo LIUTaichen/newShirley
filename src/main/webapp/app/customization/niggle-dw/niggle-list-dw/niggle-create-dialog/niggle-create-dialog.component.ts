@@ -12,6 +12,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { plantValidator } from '../../../plant-number-validator/plant-number-validator.directive';
 
 @Component({
   selector: 'jhi-niggle-create-dialog',
@@ -54,7 +55,7 @@ export class NiggleCreateDialogComponent implements OnInit {
       description: ['', Validators.required],
       status: 'SUBMITTED',
       priority: 'LOW',
-      plant: ['', Validators.required],
+      plant: ['', [Validators.required, plantValidator]],
       contractor: this.maintenanceContractors[0],
       note: ''
     });
