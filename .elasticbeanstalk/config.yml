@@ -1,5 +1,5 @@
 branch-defaults:
-  filter-niggle-for-quattra:
+  staging:
     environment: staging
 environment-defaults:
   staging:
