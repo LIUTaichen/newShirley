@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface MaintenanceContractorRepository extends JpaRepository<MaintenanceContractor, Long> {
 
+    MaintenanceContractor findOneByName(String name);
 }
