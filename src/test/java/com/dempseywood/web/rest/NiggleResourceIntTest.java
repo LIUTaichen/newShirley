@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -138,6 +139,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void createNiggle() throws Exception {
         int databaseSizeBeforeCreate = niggleRepository.findAll().size();
 
@@ -164,6 +166,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void createNiggleWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = niggleRepository.findAll().size();
 
@@ -183,6 +186,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNiggles() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -205,6 +209,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getNiggle() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -227,6 +232,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDescriptionIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -240,6 +246,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDescriptionIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -253,6 +260,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDescriptionIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -266,6 +274,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByStatusIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -279,6 +288,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByStatusIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -292,6 +302,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByStatusIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -305,6 +316,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByNoteIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -318,6 +330,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByNoteIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -331,6 +344,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByNoteIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -344,6 +358,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPriorityIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -357,6 +372,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPriorityIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -370,6 +386,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPriorityIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -383,6 +400,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraReferenceIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -396,6 +414,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraReferenceIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -409,6 +428,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraReferenceIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -422,6 +442,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraCommentsIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -435,6 +456,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraCommentsIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -448,6 +470,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByQuattraCommentsIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -461,6 +484,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByInvoiceNoIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -474,6 +498,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByInvoiceNoIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -487,6 +512,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByInvoiceNoIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -500,6 +526,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateOpenedIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -513,6 +540,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateOpenedIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -526,6 +554,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateOpenedIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -539,6 +568,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateClosedIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -552,6 +582,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateClosedIsInShouldWork() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -565,6 +596,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByDateClosedIsNullOrNotNull() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -578,6 +610,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPurchaseOrderIsEqualToSomething() throws Exception {
         // Initialize the database
         PurchaseOrder purchaseOrder = PurchaseOrderResourceIntTest.createEntity(em);
@@ -597,6 +630,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPlantIsEqualToSomething() throws Exception {
         // Initialize the database
         Plant plant = PlantResourceIntTest.createEntity(em);
@@ -616,6 +650,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByAssignedContractorIsEqualToSomething() throws Exception {
         // Initialize the database
         MaintenanceContractor assignedContractor = MaintenanceContractorResourceIntTest.createEntity(em);
@@ -665,6 +700,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getNonExistingNiggle() throws Exception {
         // Get the niggle
         restNiggleMockMvc.perform(get("/api/niggles/{id}", Long.MAX_VALUE))
@@ -673,6 +709,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void updateNiggle() throws Exception {
         // Initialize the database
         niggleService.save(niggle);
@@ -716,6 +753,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void updateNonExistingNiggle() throws Exception {
         int databaseSizeBeforeUpdate = niggleRepository.findAll().size();
 
@@ -734,6 +772,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void deleteNiggle() throws Exception {
         // Initialize the database
         niggleService.save(niggle);
@@ -752,6 +791,7 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Niggle.class);
         Niggle niggle1 = new Niggle();
