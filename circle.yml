@@ -17,9 +17,18 @@ dependencies:
         - npm -v
         - java -version
         - npm install
+    pre:
+        - pip install awsebcli
 test:
     override:
         - chmod +x mvnw
         - ./mvnw clean test
         - npm test
         - ./mvnw verify -Pprod -DskipTests
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - eb use staging --profile default
+      - eb deploy --profile default
+
