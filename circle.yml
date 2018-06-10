@@ -25,6 +25,9 @@ test:
         - ./mvnw clean test
         - npm test
         - ./mvnw verify -Pprod -DskipTests
+compile:
+    override:
+        - ./mvnw -Pprod package
 deployment:
   staging:
     branch: staging
