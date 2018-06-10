@@ -27,6 +27,7 @@ test:
         - ./mvnw verify -Pprod -DskipTests
 compile:
     override:
+        - chmod +x mvnw
         - ./mvnw -Pprod package
 deployment:
   staging:
