@@ -86,12 +86,36 @@
 }
 
 .footer {
-    display:flex;
+    display: flex;
     padding-left: 24px;
     padding-right: 24px;
-    height:30px
+    height: 30px
 }
 
-.footer-count{
+.footer-count {
     padding: 10px;
+}
+
+.mat-column-description {
+    flex: 5;
+}
+
+.mat-column-quattraComments {
+    flex: 2;
+}
+
+.mat-column-location {
+    flex: 2;
+}
+
+.mat-column-plantDescription {
+    flex: 2;
+}
+
+.mat-column-status {
+    flex: 2;
+}
+
+.mat-cell.mat-column-daysOpened {
+    text-align : center
 }

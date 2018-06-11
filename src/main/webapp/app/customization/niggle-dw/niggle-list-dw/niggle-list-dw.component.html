@@ -9,27 +9,26 @@
     <div class="example-container mat-elevation-z8">
         <div class="example-header float-right">
             <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter the list by typing in here...">
             </mat-form-field>
         </div>
 
         <div class="table-container">
 
-
             <mat-table #table [dataSource]="dataSource" matSort matSortActive="lastModifiedDate" matSortDirection="desc">
 
                 <ng-container matColumnDef="plantNumber">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Number </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header > Plant # </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="orderNo">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Purchase Order </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> PO # </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.orderNo}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="quattraReference">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Reference </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Quattra Job # </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.quattraReference}} </mat-cell>
                 </ng-container>
 
@@ -74,7 +73,7 @@
 
                 <ng-container matColumnDef="dateOpened">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Date Opened </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.dateOpened | date}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.dateOpened | date:'dd-MM-yyyy'}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="daysOpened">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Days Opened </mat-header-cell>
@@ -95,21 +94,12 @@
                 </ng-container>
                 <ng-container matColumnDef="lastModifiedDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Date Edited </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.lastModifiedDate | date}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.lastModifiedDate | date:'dd-MM-yyyy'}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="lastModifiedBy">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Edited By </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.lastModifiedBy}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="delete">
-                    <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
-                    <mat-cell *matCellDef="let niggle" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
-                        <button mat-button (click)="openDeleteDialog(niggle.id)" class="delete-button">
-                            <i class="material-icons delete-icon">delete</i>
-                        </button>
-                    </mat-cell>
-                </ng-container>
-
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"

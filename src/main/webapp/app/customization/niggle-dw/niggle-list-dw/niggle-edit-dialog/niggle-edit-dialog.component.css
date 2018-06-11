@@ -11,5 +11,8 @@
 
 .action {
   display: flex;
-  justify-content: flex-end;
+}
+
+.action .delete-button{
+    margin-left: auto
 }
