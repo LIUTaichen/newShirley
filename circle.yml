@@ -33,6 +33,6 @@ deployment:
   staging:
     branch: staging
     commands:
-      - eb use staging --profile default
-      - eb deploy --profile default
+      - eb use staging
+      - eb deploy
 
