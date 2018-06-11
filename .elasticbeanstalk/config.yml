@@ -1,6 +1,8 @@
 branch-defaults:
   staging:
     environment: staging
+deploy:
+  artifact: target/fleet-management-0.0.1-SNAPSHOT.war.original
 environment-defaults:
   staging:
     branch: staging
@@ -18,5 +20,3 @@ global:
   profile: eb-cli
   sc: git
   workspace_type: Application
-deploy:
-  artifact: target/fleet-management-0.0.1-SNAPSHOT.war.original
