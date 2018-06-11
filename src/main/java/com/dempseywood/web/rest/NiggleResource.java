@@ -91,6 +91,7 @@ public class NiggleResource {
      */
     @GetMapping("/niggles")
     @Timed
+    @Secured({"ROLE_ADMIN", "ROLE_USER", "ROLE_DW" , "ROLE_DW_READ_ONLY" , "ROLE_QUATTRA"})
     public ResponseEntity<List<Niggle>> getAllNiggles(NiggleCriteria criteria) {
         log.debug("REST request to get Niggles by criteria: {}", criteria);
         List<Niggle> entityList = niggleQueryService.findByCriteria(criteria);
@@ -105,6 +106,7 @@ public class NiggleResource {
      */
     @GetMapping("/niggles/{id}")
     @Timed
+    @Secured({"ROLE_ADMIN", "ROLE_USER", "ROLE_DW", "ROLE_DW_READ_ONLY", "ROLE_QUATTRA"})
     public ResponseEntity<Niggle> getNiggle(@PathVariable Long id) {
         log.debug("REST request to get Niggle : {}", id);
         Niggle niggle = niggleService.findOne(id);

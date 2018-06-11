@@ -2,7 +2,9 @@
     <h2 class="mat-h2 header">
         <span>Plant Faults</span>
 
-        <button mat-raised-button color="primary" class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Plant Fault</button>
+        <button mat-raised-button color="primary" 
+        *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']"
+        class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Plant Fault</button>
     </h2>
     <div class="example-container mat-elevation-z8">
         <div class="example-header float-right">
