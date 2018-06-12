@@ -9,7 +9,7 @@
     <div class="example-container mat-elevation-z8">
         <div class="example-header float-right">
             <mat-form-field>
-                <input matInput [value]="filter"  placeholder="Filter the list by typing in here..." (change) ="applyFilter()">
+                <input matInput [(ngModel)]="filter"  placeholder="Filter the list by typing in here..." (keyup) ="applyFilter()">
             </mat-form-field>
         </div>
 

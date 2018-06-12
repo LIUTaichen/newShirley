@@ -21,6 +21,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   idOfFocusedRow;
+  filter: string;
   displayedColumns = ['priorityOrder', 'plantNumber', 'orderNo', 'quattraReference', 'plantDescription', 'location', 'locationUpdateTime',
     'description',
     'status',
@@ -89,7 +90,8 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     this.jhiAlertService.error(error.message, null, null);
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter() {
+    let filterValue = this.filter;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -210,6 +212,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     }
     this.dataSource = new MatTableDataSource(rowsToShow);
     this.dataSource.sort = this.sort;
+    this.applyFilter();
   }
 
   isWhite(niggle: Niggle): Boolean {

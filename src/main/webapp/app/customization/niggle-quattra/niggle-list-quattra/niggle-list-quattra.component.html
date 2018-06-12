@@ -17,7 +17,7 @@
 
         <div class="example-header">
             <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                <input matInput [(ngModel)]="filter"  placeholder="Filter the list by typing in here..." (change) ="applyFilter()">
             </mat-form-field>
         </div>
         <div class="table-container">

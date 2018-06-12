@@ -22,7 +22,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   plants: Plant[];
-  filter: string;
+  filter = '';
   maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
   displayedColumns = [
@@ -86,6 +86,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
         const rows = this.niggles.map(this.convertEntityToRow, this);
         this.dataSource = new MatTableDataSource(rows);
         this.dataSource.sort = this.sort;
+        this.applyFilter();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -114,9 +115,12 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   applyFilter() {
+    console.log('applying filter');
     let filterValue = this.filter;
+    console.log(this.filter);
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    console.log(filterValue);
     this.dataSource.filter = filterValue;
   }
 
