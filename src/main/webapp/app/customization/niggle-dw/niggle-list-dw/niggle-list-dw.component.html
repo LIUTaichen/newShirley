@@ -9,7 +9,7 @@
     <div class="example-container mat-elevation-z8">
         <div class="example-header float-right">
             <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter the list by typing in here...">
+                <input matInput [value]="filter"  placeholder="Filter the list by typing in here..." (change) ="applyFilter()">
             </mat-form-field>
         </div>
 

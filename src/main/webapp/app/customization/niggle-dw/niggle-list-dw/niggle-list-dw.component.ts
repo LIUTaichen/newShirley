@@ -22,6 +22,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   plants: Plant[];
+  filter: string;
   maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
   displayedColumns = [
@@ -112,7 +113,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     this.jhiAlertService.error(error.message, null, null);
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter() {
+    let filterValue = this.filter;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
