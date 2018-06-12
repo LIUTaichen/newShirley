@@ -16,7 +16,17 @@
             </mat-option>
         </mat-autocomplete>
         <mat-form-field>
-            <textarea matInput placeholder="Repairs Needed" formControlName="description" cdkFocusInitial></textarea>
+            <textarea matInput placeholder="Repairs Needed" formControlName="description" matTextareaAutosize matAutosizeMinRows="2"
+                matAutosizeMaxRows="5" cdkFocusInitial></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Created by" value="{{niggleRow.createdBy}}" disabled="true">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Created at" value="{{niggleRow.createdDate | date:'medium'}}" disabled="true">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Location updated at" value="{{niggleRow.locationUpdateTime | date:'medium'}}" disabled="true">
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Priority" formControlName="priority">
@@ -47,8 +57,12 @@
             <textarea matInput placeholder="Additional Note" formControlName="note"></textarea>
         </mat-form-field>
         <mat-dialog-actions class="action">
+            <button *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" mat-raised-button type="submit" color="primary" [disabled]="!niggleForm.valid || isSaving">SAVE</button>
             <button mat-button type="button" (click)="onCancel()">Cancel</button>
-            <button mat-raised-button type="submit" color="primary" [disabled]="!niggleForm.valid || isSaving">SAVE</button>
+            <button *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" type="button" mat-button (click)="onCancel();openDeleteDialog(niggle.id)"
+                (mousedown)="$event.stopPropagation()" class="delete-button">
+                <i class="material-icons delete-icon">delete</i>
+            </button>
         </mat-dialog-actions>
     </div>
 

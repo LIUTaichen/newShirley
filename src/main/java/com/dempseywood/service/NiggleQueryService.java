@@ -1,13 +1,23 @@
 package com.dempseywood.service;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.dempseywood.repository.MaintenanceContractorRepository;
+import com.dempseywood.security.AuthoritiesConstants;
+import io.github.jhipster.service.filter.LongFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +31,8 @@ import com.dempseywood.service.dto.NiggleCriteria;
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.domain.enumeration.Priority;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Service for executing complex queries for Niggle entities in the database.
  * The main input is a {@link NiggleCriteria} which get's converted to {@link Specifications},
@@ -31,13 +43,19 @@ import com.dempseywood.domain.enumeration.Priority;
 @Transactional(readOnly = true)
 public class NiggleQueryService extends QueryService<Niggle> {
 
+    public static final String QUATTRA_NAME = "Quattra";
     private final Logger log = LoggerFactory.getLogger(NiggleQueryService.class);
 
 
     private final NiggleRepository niggleRepository;
+    public static final Status[] ALLOWED_STATUS = new Status[]{Status.OPEN, Status.COMPLETED, Status.IN_PROGRESS, Status.ON_HOLD};
 
-    public NiggleQueryService(NiggleRepository niggleRepository) {
+    private MaintenanceContractorRepository maintenanceContractorRepository;
+
+    public NiggleQueryService(NiggleRepository niggleRepository,
+                              MaintenanceContractorRepository maintenanceContractorRepository) {
         this.niggleRepository = niggleRepository;
+        this.maintenanceContractorRepository = maintenanceContractorRepository;
     }
 
     /**
@@ -48,7 +66,19 @@ public class NiggleQueryService extends QueryService<Niggle> {
     @Transactional(readOnly = true)
     public List<Niggle> findByCriteria(NiggleCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
-        final Specifications<Niggle> specification = createSpecification(criteria);
+
+        Specifications<Niggle> specification = createSpecification(criteria);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // check for only quattra authentication
+        Boolean userHasOnlyOneAuthority = authentication.getAuthorities().size() == 1;
+        Boolean userHasQuattraAuthority = authentication.getAuthorities().contains(new SimpleGrantedAuthority(AuthoritiesConstants.QUATTRA));
+        Boolean needToFilterNigglesForUser = userHasOnlyOneAuthority && userHasQuattraAuthority;
+        if(needToFilterNigglesForUser ){
+            Specifications<Niggle> quattraAccessControlSpecifications = this.createQuattraSpecification();
+            specification = Specifications.where(specification).and(quattraAccessControlSpecifications);
+        }
+
         return niggleRepository.findAll(specification);
     }
 
@@ -113,5 +143,24 @@ public class NiggleQueryService extends QueryService<Niggle> {
         }
         return specification;
     }
+
+    private  Specifications<Niggle> createQuattraSpecification(){
+
+        NiggleCriteria criteria = new NiggleCriteria();
+        MaintenanceContractor quattra = maintenanceContractorRepository.findOneByName(QUATTRA_NAME);
+        if(quattra != null){
+            LongFilter assignedContractorIdFilter = new LongFilter();
+            assignedContractorIdFilter.setEquals(quattra.getId());
+            criteria.setAssignedContractorId(assignedContractorIdFilter);
+        }
+        NiggleCriteria.StatusFilter statusFilter = new NiggleCriteria.StatusFilter();
+        List<Status> allowedStatusList = Arrays.asList(ALLOWED_STATUS);
+        statusFilter.setIn(allowedStatusList);
+
+        criteria.setStatus(statusFilter);
+        Specifications<Niggle> specification = createSpecification(criteria);
+        return specification;
+    }
+
 
 }

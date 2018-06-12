@@ -1,0 +1,22 @@
+branch-defaults:
+  staging:
+    environment: staging
+deploy:
+  artifact: target/fleet-management-0.0.1-SNAPSHOT.war.original
+environment-defaults:
+  staging:
+    branch: staging
+    repository: null
+global:
+  application_name: FleetManagement
+  default_ec2_keyname: aws-eb
+  default_platform: arn:aws:elasticbeanstalk:ap-southeast-2::platform/Tomcat 8 with
+    Java 8 running on 64bit Amazon Linux/3.0.0
+  default_region: ap-southeast-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application
