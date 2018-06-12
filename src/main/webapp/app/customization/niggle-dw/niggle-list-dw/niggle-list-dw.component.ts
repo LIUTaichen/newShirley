@@ -115,13 +115,12 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   applyFilter() {
-    console.log('applying filter');
-    let filterValue = this.filter;
-    console.log(this.filter);
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
-    this.dataSource.filter = filterValue;
+    if (this.dataSource) {
+      let filterValue = this.filter;
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource.filter = filterValue;
+    }
   }
 
   getDaysOpened(niggle: Niggle) {
