@@ -1,15 +1,37 @@
 <div class="mat-typography niggles-container">
     <h2 class="mat-h2 header">
-        <span>Plant Faults</span>
+        <span class="title">Plant Faults</span>
 
-        <button mat-raised-button color="primary" 
-        *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']"
-        class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Plant Fault</button>
+
+        <button mat-raised-button color="primary" *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" class="btn btn-primary float-right jh-create-entity create-niggle"
+            (click)="openDialog()">Create New Plant Fault</button>
+
+        <mat-form-field class="option float-right">
+            <mat-select [(value)]="statusOption" (change)="prepareDataDource()" placeholder="States" multiple>
+                <mat-option value="SUBMITTED">SUBMITTED</mat-option>
+                <mat-option value="OPEN">OPEN</mat-option>
+                <mat-option value="IN_PROGRESS">IN PROGRESS</mat-option>
+                <mat-option value="ON_HOLD">ON HOLD</mat-option>
+                <mat-option value="WINTER_WORK">WINTER WORK</mat-option>
+                <mat-option value="COMPLETED">COMPLETED</mat-option>
+                <mat-option value="TBR">TBR</mat-option>
+                <mat-option value="CLOSED">CLOSED</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="option float-right">
+            <mat-select [(value)]="ownerOption" (change)="prepareDataDource()" placeholder="Plant owner">
+                <mat-option value="ALL">All</mat-option>
+                <mat-option value="DEMPSEY">Dempsey Wood Civil</mat-option>
+                <mat-option value="OTHER">Other companies</mat-option>
+            </mat-select>
+        </mat-form-field>
+
     </h2>
     <div class="example-container mat-elevation-z8">
         <div class="example-header float-right">
             <mat-form-field>
-                <input matInput [(ngModel)]="filter"  placeholder="Filter the list by typing in here..." (keyup) ="applyFilter()">
+                <input matInput [(ngModel)]="filter" placeholder="Filter the list by typing in here..." (keyup)="applyFilter()">
             </mat-form-field>
         </div>
 
@@ -18,7 +40,7 @@
             <mat-table #table [dataSource]="dataSource" matSort matSortActive="lastModifiedDate" matSortDirection="desc">
 
                 <ng-container matColumnDef="plantNumber">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header > Plant # </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Plant # </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
                 </ng-container>
 
@@ -104,7 +126,7 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditDialog(row.id)" [class.selected-row]="idOfFocusedRow === row.id"
                     class="table-row" matRipple></mat-row>
-               
+
             </mat-table>
         </div>
     </div>

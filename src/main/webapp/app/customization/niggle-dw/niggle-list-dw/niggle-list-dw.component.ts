@@ -22,6 +22,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   plants: Plant[];
+  ownerOption = 'DEMPSEY';
+  statusOption = ['OPEN', 'IN_PROGRESS', 'ON_HOLD', 'COMPLETED'];
   filter = '';
   maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
@@ -42,6 +44,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     'lastModifiedDate'
   ];
   dataSource: MatTableDataSource<NiggleRow>;
+
   @ViewChild(MatSort) sort: MatSort;
 
   currentAccount: any;
@@ -83,14 +86,18 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     this.niggleService.query().subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
-        const rows = this.niggles.map(this.convertEntityToRow, this);
-        this.dataSource = new MatTableDataSource(rows);
-        this.dataSource.sort = this.sort;
+        this.prepareDataDource();
         this.applyFilter();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
   }
+
+  prepareDataDource() {
+    this.dataSource = new MatTableDataSource(this.niggles.filter( (niggle) => this.needToShow(niggle), this).map( (niggle) => this.convertEntityToRow(niggle), this));
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnInit() {
     this.loadAll();
     this.principal.identity().then((account) => {
@@ -218,5 +225,36 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     } else {
       return 0;
     }
+  }
+
+  needToShow(niggle: Niggle): Boolean {
+    const needToShowNiggleBasedOnOwner = this.needToShowNiggleBasedOnOwner(niggle);
+    const needToShowNiggleBasedOnStatus = this.needToShowNiggleBasedOnStatus(niggle);
+    return needToShowNiggleBasedOnOwner && needToShowNiggleBasedOnStatus;
+  }
+
+  needToShowNiggleBasedOnOwner(niggle: Niggle): Boolean {
+    if (this.ownerOption !== 'ALL') {
+      if (this.ownerOption === 'DEMPSEY') {
+        if (niggle.plant['owner']['company'] !== 'Dempsey Wood Civil') {
+          return false;
+        }
+      } else {
+        if (niggle.plant['owner']['company'] === 'Dempsey Wood Civil') {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  needToShowNiggleBasedOnStatus(niggle: Niggle): Boolean {
+    if (!this.statusOption || this.statusOption.length === 0) {
+      return false;
+    }
+    if (this.statusOption.includes(niggle.status.toString())) {
+      return true;
+    }
+    return false;
   }
 }
