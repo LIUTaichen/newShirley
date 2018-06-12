@@ -18,7 +18,7 @@
                     </span>
                 </a>
             </li>
-            <li *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW', 'ROLE_DW_READ_ONLY']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="/pf-dw" (click)="collapseNavbar()">
                     <span>
                         <i class="fa fa-wrench" aria-hidden="true"></i>

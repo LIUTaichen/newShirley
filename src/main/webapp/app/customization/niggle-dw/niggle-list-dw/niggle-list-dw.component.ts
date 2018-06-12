@@ -10,7 +10,6 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
 import { NiggleCreateDialogComponent } from './niggle-create-dialog/niggle-create-dialog.component';
 import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dialog.component';
-import { NiggleDeleteDialogDwComponent } from './niggle-delete-dialog-dw/niggle-delete-dialog-dw.component';
 import { PlantService } from '../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
 
@@ -30,22 +29,16 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     'orderNo',
     'quattraReference',
     'plantDescription',
-    // 'site',
     'location',
-    'locationUpdateTime',
     'description',
     'status',
     'contractor',
     'quattraComments',
-    'owner',
     'dateOpened',
     'daysOpened',
     'priorityOrder',
-    'createdBy',
-    'createdDate',
     'lastModifiedBy',
-    'lastModifiedDate',
-    'delete'
+    'lastModifiedDate'
   ];
   dataSource: MatTableDataSource<NiggleRow>;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,16 +58,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   loadAll() {
-    this.niggleService.query().subscribe(
-      (res: HttpResponse<Niggle[]>) => {
-        this.niggles = res.body;
-        const rows = this.niggles.map(this.convertEntityToRow, this);
-        this.dataSource = new MatTableDataSource(rows);
-        this.dataSource.sort = this.sort;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-
+    this.loadNiggles();
     this.plantService.query()
       .subscribe((res: HttpResponse<Plant[]>) => {
         const plants = res.body;
@@ -93,6 +77,18 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
         this.maintenanceContractors = res.body;
       }, (res: HttpErrorResponse) => this.onError(res.message));
   }
+
+  loadNiggles() {
+    this.niggleService.query().subscribe(
+      (res: HttpResponse<Niggle[]>) => {
+        this.niggles = res.body;
+        const rows = this.niggles.map(this.convertEntityToRow, this);
+        this.dataSource = new MatTableDataSource(rows);
+        this.dataSource.sort = this.sort;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
   ngOnInit() {
     this.loadAll();
     this.principal.identity().then((account) => {
@@ -109,7 +105,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     return item.id;
   }
   registerChangeInNiggles() {
-    this.eventSubscriber = this.eventManager.subscribe('niggleListModification', (response) => this.loadAll());
+    this.eventSubscriber = this.eventManager.subscribe('niggleListModification', (response) => this.loadNiggles());
   }
 
   private onError(error) {
@@ -147,19 +143,6 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDeleteDialog(id: number): void {
-    this.idOfFocusedRow = id;
-    const dialogRef = this.dialog.open(NiggleDeleteDialogDwComponent, {
-      panelClass: 'niggle-delete-panel',
-      data: { id }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      this.idOfFocusedRow = '';
-    });
-  }
-
   openEditDialog(id: number): void {
     this.idOfFocusedRow = id;
     const niggle: Niggle = this.niggles.find((niggleElement) => niggleElement.id === id);
@@ -169,6 +152,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       data: {
         niggle,
         plants: this.plants,
+        row: this.convertEntityToRow(niggle),
         maintenanceContractors: this.maintenanceContractors
       }
     });

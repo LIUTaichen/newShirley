@@ -7,7 +7,7 @@ export const niggleDwRoute: Routes = [
     path: 'pf-dw',
     component: NiggleListDwComponent,
     data: {
-      authorities: ['ROLE_DW'],
+      authorities: ['ROLE_DW', 'ROLE_DW_READ_ONLY'],
       pageTitle: 'fleetManagementApp.niggle.dw.home.title'
     },
     canActivate: [UserRouteAccessService]

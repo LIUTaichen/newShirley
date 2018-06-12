@@ -4,14 +4,15 @@ import { NiggleService } from '../../../../entities/niggle/niggle.service';
 import { Niggle } from '../../../../entities/niggle/niggle.model';
 import { Plant } from '../../../../entities/plant';
 import { MaintenanceContractor } from '../../../../entities/maintenance-contractor';
-
+import { NiggleDeleteDialogDwComponent } from '../niggle-delete-dialog-dw/niggle-delete-dialog-dw.component';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
-import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { NiggleRow } from '../niggle-row.model';
 
 @Component({
   selector: 'jhi-niggle-edit-dialog',
@@ -23,6 +24,7 @@ export class NiggleEditDialogComponent implements OnInit {
   niggle: Niggle;
   niggleForm: FormGroup;
   plants: Plant[];
+  niggleRow: NiggleRow;
   maintenanceContractors: MaintenanceContractor[];
   isSaving: boolean;
   filteredOptions: Observable<Plant[]>;
@@ -33,9 +35,11 @@ export class NiggleEditDialogComponent implements OnInit {
     private niggleService: NiggleService,
     public dialogRef: MatDialogRef<NiggleEditDialogComponent>,
     private eventManager: JhiEventManager,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.niggle = data.niggle;
     this.plants = data.plants;
+    this.niggleRow = data.row;
     this.maintenanceContractors = data.maintenanceContractors;
     this.createForm();
     this.filteredOptions = this.niggleForm.controls.plant.valueChanges
@@ -64,23 +68,9 @@ export class NiggleEditDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.plantService.query()
-    //   .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-    // this.maintenanceContractorService.query()
-    //   .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
-    //     this.maintenancecontractors = res.body;
-    //     this.niggleForm.patchValue({
-    //       contractor: this.maintenancecontractors[0]
-    //     });
-    //   }, (res: HttpErrorResponse) => this.onError(res.message));
+
   }
 
-  // private onError(error: any) {
-  //   this.jhiAlertService.error(error.message, null, null);
-  //   this.snackBar.open('Niggle update failed', 'Dismiss', {
-  //     duration: 3000
-  //   });
-  // }
   onSubmit() {
     this.isSaving = true;
     console.log('save!!');
@@ -173,4 +163,17 @@ export class NiggleEditDialogComponent implements OnInit {
 
     }
   }
+
+  openDeleteDialog(id: number): void {
+    this.dialogRef.close();
+    const dialogRef = this.dialog.open(NiggleDeleteDialogDwComponent, {
+      panelClass: 'niggle-delete-panel',
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
