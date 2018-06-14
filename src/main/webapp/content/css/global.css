@@ -282,3 +282,7 @@ jhi-niggle-list-dw , jhi-niggle-list-quattra {
     flex-direction :column;
     flex-grow:1;
 }
+
+.status.mat-select-panel{
+    max-height:400px;
+}

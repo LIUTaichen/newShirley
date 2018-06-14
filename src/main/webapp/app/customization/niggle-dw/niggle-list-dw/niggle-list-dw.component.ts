@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/debounceTime';
 import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/plant/plant.model';
 import { NiggleRow } from './niggle-row.model';
@@ -12,6 +13,7 @@ import { NiggleCreateDialogComponent } from './niggle-create-dialog/niggle-creat
 import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dialog.component';
 import { PlantService } from '../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
@@ -22,8 +24,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   niggles: Niggle[];
   plants: Plant[];
-  ownerOption = 'DEMPSEY';
-  statusOption = ['OPEN', 'IN_PROGRESS', 'ON_HOLD', 'COMPLETED'];
+  filterForm: FormGroup;
   filter = '';
   maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
@@ -58,6 +59,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private plantService: PlantService,
     private maintenanceContractorService: MaintenanceContractorService,
+    private fb: FormBuilder,
   ) {
   }
 
@@ -94,16 +96,27 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   prepareDataDource() {
-    this.dataSource = new MatTableDataSource(this.niggles.filter( (niggle) => this.needToShow(niggle), this).map( (niggle) => this.convertEntityToRow(niggle), this));
-    this.dataSource.sort = this.sort;
+    if (this.niggles) {
+      this.dataSource = new MatTableDataSource(this.niggles.filter((niggle) => this.needToShow(niggle), this).map((niggle) => this.convertEntityToRow(niggle), this));
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngOnInit() {
+    this.filterForm = this.fb.group({
+      owner: 'DEMPSEY',
+      status: new FormControl(['OPEN', 'IN_PROGRESS', 'ON_HOLD', 'COMPLETED'])
+    });
     this.loadAll();
     this.principal.identity().then((account) => {
       this.currentAccount = account;
     });
     this.registerChangeInNiggles();
+    this.filterForm.valueChanges
+      .debounceTime(500)
+      .subscribe((value) => {
+        this.prepareDataDource();
+      });
   }
 
   ngOnDestroy() {
@@ -234,8 +247,9 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   needToShowNiggleBasedOnOwner(niggle: Niggle): Boolean {
-    if (this.ownerOption !== 'ALL') {
-      if (this.ownerOption === 'DEMPSEY') {
+    const ownerOption = this.filterForm.value.owner;
+    if (ownerOption !== 'ALL') {
+      if (ownerOption === 'DEMPSEY') {
         if (niggle.plant['owner']['company'] !== 'Dempsey Wood Civil') {
           return false;
         }
@@ -249,10 +263,11 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   needToShowNiggleBasedOnStatus(niggle: Niggle): Boolean {
-    if (!this.statusOption || this.statusOption.length === 0) {
+    const statusOption = this.filterForm.value.status;
+    if (!statusOption || statusOption.length === 0) {
       return false;
     }
-    if (this.statusOption.includes(niggle.status.toString())) {
+    if (statusOption.includes(niggle.status.toString())) {
       return true;
     }
     return false;

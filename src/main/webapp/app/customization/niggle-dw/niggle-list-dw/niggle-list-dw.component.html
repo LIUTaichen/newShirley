@@ -1,31 +1,30 @@
 <div class="mat-typography niggles-container">
     <h2 class="mat-h2 header">
-        <span class="title">Plant Faults</span>
 
-
-        <button mat-raised-button color="primary" *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" class="btn btn-primary float-right jh-create-entity create-niggle"
-            (click)="openDialog()">Create New Plant Fault</button>
-
-        <mat-form-field class="option float-right">
-            <mat-select [(value)]="statusOption" (change)="prepareDataDource()" placeholder="States" multiple>
-                <mat-option value="SUBMITTED">SUBMITTED</mat-option>
-                <mat-option value="OPEN">OPEN</mat-option>
-                <mat-option value="IN_PROGRESS">IN PROGRESS</mat-option>
-                <mat-option value="ON_HOLD">ON HOLD</mat-option>
-                <mat-option value="WINTER_WORK">WINTER WORK</mat-option>
-                <mat-option value="COMPLETED">COMPLETED</mat-option>
-                <mat-option value="TBR">TBR</mat-option>
-                <mat-option value="CLOSED">CLOSED</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="option float-right">
-            <mat-select [(value)]="ownerOption" (change)="prepareDataDource()" placeholder="Plant owner">
-                <mat-option value="ALL">All</mat-option>
-                <mat-option value="DEMPSEY">Dempsey Wood Civil</mat-option>
-                <mat-option value="OTHER">Other companies</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <form [formGroup]="filterForm">
+            <span class="title">Plant Faults</span>
+            <button mat-raised-button color="primary" type="button" *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" class="btn btn-primary float-right jh-create-entity create-niggle"
+                (click)="openDialog()">Create New Plant Fault</button>
+            <mat-form-field class="option float-right">
+                <mat-select formControlName="status" placeholder="States" multiple panelClass="status">
+                    <mat-option value="SUBMITTED">SUBMITTED</mat-option>
+                    <mat-option value="OPEN">OPEN</mat-option>
+                    <mat-option value="IN_PROGRESS">IN PROGRESS</mat-option>
+                    <mat-option value="ON_HOLD">ON HOLD</mat-option>
+                    <mat-option value="WINTER_WORK">WINTER WORK</mat-option>
+                    <mat-option value="COMPLETED">COMPLETED</mat-option>
+                    <mat-option value="TBR">TBR</mat-option>
+                    <mat-option value="CLOSED">CLOSED</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="option float-right">
+                <mat-select formControlName="owner" placeholder="Plant owner">
+                    <mat-option value="ALL">All</mat-option>
+                    <mat-option value="DEMPSEY">Dempsey Wood Civil</mat-option>
+                    <mat-option value="OTHER">Other companies</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
 
     </h2>
     <div class="example-container mat-elevation-z8">
