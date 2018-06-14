@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Niggle } from '../../../entities/niggle';
 
 @Component({
   selector: 'jhi-open-report',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OpenReportComponent implements OnInit {
 
+  @Input() niggles: Niggle[];
+  displayedColumns = ['weekending', 'total', 'closed', 'opened', 'ageOfOldest'];
+  dataSource = ELEMENT_DATA;
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
+export interface Element {
+  weekending: Date;
+  total: number;
+  closed: number;
+  opened: number;
+  ageOfOldest: string;
+}
+
+const ELEMENT_DATA: Element[] = [
+  {weekending: new Date('2018-06-11'), total: 189, closed: 40 , opened: 20, ageOfOldest: '215 days'},
+  {weekending: new Date('2018-06-04'), total: 189, closed: 40 , opened: 20, ageOfOldest: '215 days'},
+  {weekending: new Date('2018-05-28'), total: 189, closed: 40 , opened: 20, ageOfOldest: '215 days'},
+];
