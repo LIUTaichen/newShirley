@@ -20,8 +20,11 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
   templateUrl: './niggle-list-dw.component.html',
   styleUrls: ['./niggle-list-dw.component.css']
 })
-export class NiggleListDwComponent implements OnInit, OnDestroy {
 
+export class NiggleListDwComponent implements OnInit, OnDestroy {
+  readonly niggleListLocalStorageKey = 'niggle.list.dw';
+  readonly plantListLocalStorageKey = 'plant.list.dw';
+  readonly filterFormValueLocalStorageKey = 'filter.dw';
   niggles: Niggle[];
   plants: Plant[];
   filterForm: FormGroup;
@@ -77,6 +80,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
             return 0;
           }
         });
+        localStorage.setItem(this.plantListLocalStorageKey, JSON.stringify(this.plants));
       }, (res: HttpErrorResponse) => this.onError(res.message));
     this.maintenanceContractorService.query()
       .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
@@ -90,6 +94,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
         this.niggles = res.body;
         this.prepareDataDource();
         this.applyFilter();
+        localStorage.setItem(this.niggleListLocalStorageKey, JSON.stringify(this.niggles));
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -103,10 +108,22 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let localFilter = JSON.parse(localStorage.getItem(this.filterFormValueLocalStorageKey), this.dateReviver);
+    this.niggles = JSON.parse(localStorage.getItem(this.niggleListLocalStorageKey), this.dateReviver);
+    this.plants = JSON.parse(localStorage.getItem(this.plantListLocalStorageKey), this.dateReviver);
+    if (!localFilter) {
+      localFilter = {
+        owner: 'DEMPSEY',
+        status: ['OPEN', 'IN_PROGRESS', 'ON_HOLD']
+      };
+      localStorage.setItem(this.filterFormValueLocalStorageKey, JSON.stringify(localFilter));
+    }
     this.filterForm = this.fb.group({
-      owner: 'DEMPSEY',
-      status: new FormControl(['OPEN', 'IN_PROGRESS', 'ON_HOLD', 'COMPLETED'])
+      owner: localFilter['owner'],
+      status: new FormControl(localFilter.status)
     });
+
+    this.prepareDataDource();
     this.loadAll();
     this.principal.identity().then((account) => {
       this.currentAccount = account;
@@ -115,6 +132,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     this.filterForm.valueChanges
       .debounceTime(500)
       .subscribe((value) => {
+        localStorage.setItem(this.filterFormValueLocalStorageKey, JSON.stringify(value));
         this.prepareDataDource();
       });
   }
@@ -271,5 +289,17 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
+  }
+
+  dateReviver(key, value) {
+    let a;
+    if (typeof value === 'string') {
+      a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+      if (a) {
+        return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+          +a[5], +a[6]));
+      }
+    }
+    return value;
   }
 }
