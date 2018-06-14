@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Niggle } from '../../../entities/niggle';
+import { NiggleUtilService } from '../../niggle-util.service';
 
 @Component({
   selector: 'jhi-over-due-report',
@@ -10,12 +11,65 @@ export class OverDueReportComponent implements OnInit {
 
   @Input() niggles: Niggle[];
   displayedColumns = ['priority', 'total', 'overdue', 'percentage'];
-  dataSource = ELEMENT_DATA;
+  dataSource;
 
-  constructor() { }
+  constructor(private niggleUtilService: NiggleUtilService) { }
 
   ngOnInit() {
+    const stats: Stats = this.compute();
+    this.dataSource = this.constructDataSource(stats);
+  }
 
+  compute(): Stats {
+    let highOpen = 0;
+    let highOverDue = 0;
+    let mediumOpen = 0;
+    let mediumOverDue = 0;
+    let lowOpen = 0;
+    let lowOverDue = 0;
+    this.niggles.map((niggle) => {
+      if (niggle.status.toString() !== 'OPEN') {
+        return;
+      }
+      if (niggle.priority.toString() === 'HIGH') {
+        highOpen++;
+        if (this.niggleUtilService.isOverDue(niggle)) {
+          highOverDue++;
+        }
+      }
+      if (niggle.priority.toString() === 'MEDIUM') {
+        mediumOpen++;
+        if (this.niggleUtilService.isOverDue(niggle)) {
+          mediumOverDue++;
+        }
+      }
+      if (niggle.priority.toString() === 'LOW') {
+        lowOpen++;
+        if (this.niggleUtilService.isOverDue(niggle)) {
+          lowOverDue++;
+        }
+      }
+    });
+
+    return {
+      highOpen,
+      highOverDue,
+      mediumOpen,
+      mediumOverDue,
+      lowOpen,
+      lowOverDue
+    };
+  }
+
+  constructDataSource(stats: Stats) {
+    const totalOpen = stats.highOpen + stats.mediumOpen + stats.lowOpen;
+    const totalOverDue = stats.highOverDue + stats.mediumOverDue + stats.lowOverDue;
+    return [
+      { priority: 'HIGH', total: stats.highOpen, overdue: stats.highOverDue, percentage: stats.highOverDue / stats.highOpen },
+      { priority: 'MEDIUM', total: stats.mediumOpen, overdue: stats.mediumOverDue, percentage: stats.mediumOverDue / stats.mediumOpen },
+      { priority: 'LOW', total: stats.lowOpen, overdue: stats.lowOverDue, percentage: stats.lowOverDue / stats.lowOpen },
+      { priority: 'TOTAL', total: totalOpen, overdue: totalOverDue, percentage: totalOverDue / totalOpen },
+    ]
   }
 
 }
@@ -26,9 +80,18 @@ export interface Element {
   percentage: number;
 }
 
+export interface Stats {
+  highOpen: number;
+  highOverDue: number;
+  mediumOpen: number;
+  mediumOverDue: number;
+  lowOpen: number;
+  lowOverDue: number;
+}
+
 const ELEMENT_DATA: Element[] = [
-  {priority: 'HIGH', total: 80 , overdue: 65, percentage: 0.81},
-  {priority: 'MEDIUM', total: 78 , overdue: 46, percentage: 0.59},
-  {priority: 'LOW', total: 30 , overdue: 13, percentage: 0.43},
-  {priority: 'TOTAL', total: 189 , overdue: 121, percentage: 0.64},
+  { priority: 'HIGH', total: 80, overdue: 65, percentage: 0.81 },
+  { priority: 'MEDIUM', total: 78, overdue: 46, percentage: 0.59 },
+  { priority: 'LOW', total: 30, overdue: 13, percentage: 0.43 },
+  { priority: 'TOTAL', total: 189, overdue: 121, percentage: 0.64 },
 ];

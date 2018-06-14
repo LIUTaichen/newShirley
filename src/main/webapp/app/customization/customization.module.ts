@@ -9,6 +9,7 @@ import { NiggleDwModule } from './niggle-dw/niggle-dw.module';
 import { NiggleQuattraModule } from './niggle-quattra/niggle-quattra.module';
 import { PlantNumberValidatorDirective } from './plant-number-validator/plant-number-validator.directive';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { NiggleUtilService } from './niggle-util.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
   ],
   providers: [
     NiggleService,
-    PlantService
+    PlantService,
+    NiggleUtilService
 ],
 })
 export class CustomizationModule { }

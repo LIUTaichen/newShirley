@@ -1,4 +1,7 @@
 <div class="reports">
-<jhi-open-report [niggles] = "niggles"></jhi-open-report>
-<jhi-over-due-report></jhi-over-due-report>
+    <div *ngIf="niggles" class="reports">
+        <jhi-open-report [niggles]="niggles"></jhi-open-report>
+        <jhi-over-due-report [niggles]="niggles"></jhi-over-due-report>
+    </div>
+
 </div>

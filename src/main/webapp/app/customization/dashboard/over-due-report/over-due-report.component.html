@@ -19,7 +19,7 @@
             </ng-container>
             <ng-container matColumnDef="percentage">
                 <mat-header-cell *matHeaderCellDef> Percentage Overdue </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.percentage | percent}} </mat-cell>
+                <mat-cell *matCellDef="let element" class="text-danger"> {{element.percentage | percent}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
