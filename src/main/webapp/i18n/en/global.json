@@ -44,6 +44,11 @@
                 "entity-audit": "Entity Audit",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
+            "dashboard": {
+                "home": {
+                    "title": "Dashboard"
+                }
+            },
             "language": "Language"
         },
         "form": {
