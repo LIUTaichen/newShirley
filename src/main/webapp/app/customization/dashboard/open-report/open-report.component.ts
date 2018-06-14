@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Niggle } from '../../../entities/niggle';
+import * as moment from 'moment';
+import { NiggleUtilService } from '../../niggle-util.service';
 
 @Component({
   selector: 'jhi-open-report',
@@ -12,10 +14,10 @@ export class OpenReportComponent implements OnInit {
   displayedColumns = ['weekending', 'total', 'closed', 'opened', 'ageOfOldest'];
   dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor(private niggleUtilService: NiggleUtilService) { }
 
   ngOnInit() {
-
+    console.log(this.niggleUtilService.getDateOfEndOfCurrentWeek());
   }
 
 }

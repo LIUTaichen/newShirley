@@ -69,7 +69,7 @@ export class OverDueReportComponent implements OnInit {
       { priority: 'MEDIUM', total: stats.mediumOpen, overdue: stats.mediumOverDue, percentage: stats.mediumOverDue / stats.mediumOpen },
       { priority: 'LOW', total: stats.lowOpen, overdue: stats.lowOverDue, percentage: stats.lowOverDue / stats.lowOpen },
       { priority: 'TOTAL', total: totalOpen, overdue: totalOverDue, percentage: totalOverDue / totalOpen },
-    ]
+    ];
   }
 
 }

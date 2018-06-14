@@ -36,4 +36,16 @@ export class NiggleUtilService {
     return false;
   }
 
+  getDateOfEndOfCurrentWeek(): Date {
+    const currentMoment = moment(new Date());
+    let daysToAdd = 2 - currentMoment.weekday();
+    if (daysToAdd < 0) {
+      // add 7 days if current date falls on tuesday to Saturday
+      daysToAdd += 7;
+    }
+    const dateOfNextTuesday = currentMoment.add(daysToAdd, 'days');
+    const dateOfBeginingOfNextTuesday = dateOfNextTuesday.startOf('day').toDate();
+    return dateOfBeginingOfNextTuesday;
+  }
+
 }

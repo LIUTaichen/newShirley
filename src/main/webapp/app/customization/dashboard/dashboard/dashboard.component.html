@@ -1,7 +1,10 @@
 <div class="reports">
+    <div *ngIf="!niggles" class="reports progress-spinner">
+        <h2>Crunching reports...</h2>
+        <mat-spinner></mat-spinner>
+    </div>
     <div *ngIf="niggles" class="reports">
         <jhi-open-report [niggles]="niggles"></jhi-open-report>
         <jhi-over-due-report [niggles]="niggles"></jhi-over-due-report>
     </div>
-
 </div>
