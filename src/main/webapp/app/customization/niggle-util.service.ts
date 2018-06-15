@@ -48,4 +48,19 @@ export class NiggleUtilService {
     return dateOfBeginingOfNextTuesday;
   }
 
+  isOpenAtDate(niggle: Niggle, date: Date) {
+    if (!niggle.dateOpened) {
+      return false;
+    }
+    if (!niggle.dateClosed) {
+      return true;
+    }
+
+    if (niggle.dateOpened < date && niggle.dateClosed > date) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
