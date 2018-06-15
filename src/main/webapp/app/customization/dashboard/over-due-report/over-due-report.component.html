@@ -1,0 +1,29 @@
+<mat-card class="container">
+    <mat-card-header>
+        <mat-card-title>Overdue Plant Faults Report</mat-card-title>
+        <mat-card-subtitle><p>Statistics on the timely completion of plant faults</p>
+        <p>Open faults do not include faults with status of IN_PROGRESS, ON_HOLD and COMPLETED)</p></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="priority">
+                <mat-header-cell *matHeaderCellDef> Priority </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.priority}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef> Number of Open Faults </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="overdue">
+                <mat-header-cell *matHeaderCellDef> Number of Overdue Faults </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.overdue}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="percentage">
+                <mat-header-cell *matHeaderCellDef> Percentage Overdue </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="text-danger"> {{element.percentage | percent}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>

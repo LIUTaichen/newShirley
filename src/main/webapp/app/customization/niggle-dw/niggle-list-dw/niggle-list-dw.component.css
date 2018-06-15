@@ -23,15 +23,6 @@
     overflow: auto;
 }
 
-/* .mat-column-daysOpened,  .mat-column-state,  .mat-column-createdBy,  .mat-column-editedBy{
-    flex: 0 0 50px;
-  }  */
-
-/* .mat-column-daysOpened,
-.mat-column-delete {
-    flex: 0 0 100px;
-} */
-
 .mat-cell {
     font-size: 12px;
     padding: 10px;
@@ -118,4 +109,15 @@
 
 .mat-cell.mat-column-daysOpened {
     text-align : center
+}
+
+.option {
+    max-width: 200px;
+    font-size:16px;
+    margin-right: 24px
+   }
+
+.header {
+    display:block;
+    
 }

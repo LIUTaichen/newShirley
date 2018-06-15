@@ -277,8 +277,12 @@ html {
     margin-top: 0px;
 }
 
-jhi-niggle-list-dw , jhi-niggle-list-quattra {
+jhi-niggle-list-dw , jhi-niggle-list-quattra, jhi-dashboard {
     display:flex;
     flex-direction :column;
     flex-grow:1;
+}
+
+.status.mat-select-panel{
+    max-height:400px;
 }
