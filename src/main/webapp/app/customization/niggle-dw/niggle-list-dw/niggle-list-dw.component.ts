@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/debounceTime';
 import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/plant/plant.model';
 import { NiggleRow } from './niggle-row.model';
@@ -12,16 +13,22 @@ import { NiggleCreateDialogComponent } from './niggle-create-dialog/niggle-creat
 import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dialog.component';
 import { PlantService } from '../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
   templateUrl: './niggle-list-dw.component.html',
   styleUrls: ['./niggle-list-dw.component.css']
 })
-export class NiggleListDwComponent implements OnInit, OnDestroy {
 
+export class NiggleListDwComponent implements OnInit, OnDestroy {
+  readonly niggleListLocalStorageKey = 'niggle.list.dw';
+  readonly plantListLocalStorageKey = 'plant.list.dw';
+  readonly filterFormValueLocalStorageKey = 'filter.dw';
   niggles: Niggle[];
   plants: Plant[];
+  filterForm: FormGroup;
+  filter = '';
   maintenanceContractors: MaintenanceContractor[];
   idOfFocusedRow;
   displayedColumns = [
@@ -41,6 +48,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     'lastModifiedDate'
   ];
   dataSource: MatTableDataSource<NiggleRow>;
+
   @ViewChild(MatSort) sort: MatSort;
 
   currentAccount: any;
@@ -54,6 +62,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private plantService: PlantService,
     private maintenanceContractorService: MaintenanceContractorService,
+    private fb: FormBuilder,
   ) {
   }
 
@@ -71,6 +80,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
             return 0;
           }
         });
+        localStorage.setItem(this.plantListLocalStorageKey, JSON.stringify(this.plants));
       }, (res: HttpErrorResponse) => this.onError(res.message));
     this.maintenanceContractorService.query()
       .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
@@ -82,19 +92,49 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     this.niggleService.query().subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
-        const rows = this.niggles.map(this.convertEntityToRow, this);
-        this.dataSource = new MatTableDataSource(rows);
-        this.dataSource.sort = this.sort;
+        this.prepareDataDource();
+        this.applyFilter();
+        localStorage.setItem(this.niggleListLocalStorageKey, JSON.stringify(this.niggles));
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
   }
+
+  prepareDataDource() {
+    if (this.niggles) {
+      this.dataSource = new MatTableDataSource(this.niggles.filter((niggle) => this.needToShow(niggle), this).map((niggle) => this.convertEntityToRow(niggle), this));
+      this.dataSource.sort = this.sort;
+    }
+  }
+
   ngOnInit() {
+    let localFilter = JSON.parse(localStorage.getItem(this.filterFormValueLocalStorageKey), this.dateReviver);
+    this.niggles = JSON.parse(localStorage.getItem(this.niggleListLocalStorageKey), this.dateReviver);
+    this.plants = JSON.parse(localStorage.getItem(this.plantListLocalStorageKey), this.dateReviver);
+    if (!localFilter) {
+      localFilter = {
+        owner: 'DEMPSEY',
+        status: ['OPEN', 'IN_PROGRESS', 'ON_HOLD']
+      };
+      localStorage.setItem(this.filterFormValueLocalStorageKey, JSON.stringify(localFilter));
+    }
+    this.filterForm = this.fb.group({
+      owner: localFilter['owner'],
+      status: new FormControl(localFilter.status)
+    });
+
+    this.prepareDataDource();
     this.loadAll();
     this.principal.identity().then((account) => {
       this.currentAccount = account;
     });
     this.registerChangeInNiggles();
+    this.filterForm.valueChanges
+      .debounceTime(500)
+      .subscribe((value) => {
+        localStorage.setItem(this.filterFormValueLocalStorageKey, JSON.stringify(value));
+        this.prepareDataDource();
+      });
   }
 
   ngOnDestroy() {
@@ -112,10 +152,13 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     this.jhiAlertService.error(error.message, null, null);
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+  applyFilter() {
+    if (this.dataSource) {
+      let filterValue = this.filter;
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource.filter = filterValue;
+    }
   }
 
   getDaysOpened(niggle: Niggle) {
@@ -213,5 +256,50 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     } else {
       return 0;
     }
+  }
+
+  needToShow(niggle: Niggle): Boolean {
+    const needToShowNiggleBasedOnOwner = this.needToShowNiggleBasedOnOwner(niggle);
+    const needToShowNiggleBasedOnStatus = this.needToShowNiggleBasedOnStatus(niggle);
+    return needToShowNiggleBasedOnOwner && needToShowNiggleBasedOnStatus;
+  }
+
+  needToShowNiggleBasedOnOwner(niggle: Niggle): Boolean {
+    const ownerOption = this.filterForm.value.owner;
+    if (ownerOption !== 'ALL') {
+      if (ownerOption === 'DEMPSEY') {
+        if (niggle.plant['owner']['company'] !== 'Dempsey Wood Civil') {
+          return false;
+        }
+      } else {
+        if (niggle.plant['owner']['company'] === 'Dempsey Wood Civil') {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  needToShowNiggleBasedOnStatus(niggle: Niggle): Boolean {
+    const statusOption = this.filterForm.value.status;
+    if (!statusOption || statusOption.length === 0) {
+      return false;
+    }
+    if (statusOption.includes(niggle.status.toString())) {
+      return true;
+    }
+    return false;
+  }
+
+  dateReviver(key, value) {
+    let a;
+    if (typeof value === 'string') {
+      a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+      if (a) {
+        return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+          +a[5], +a[6]));
+      }
+    }
+    return value;
   }
 }

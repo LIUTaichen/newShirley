@@ -1,0 +1,35 @@
+<mat-card class="container">
+    <mat-card-header>
+        <mat-card-title>Weekly Open Plant Faults Report</mat-card-title>
+        <mat-card-subtitle>
+            <p>Count of plant faults and weekly activities</p>
+            <p>Open Faults include all faults with status of OPEN, IN_PROGRESS, ON_HOLD and COMPLETED. Oldest open fault is the oldest plant fault with no date closed or date closed after the end of the week.</p>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="weekending">
+                <mat-header-cell *matHeaderCellDef> Week Ending On </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.weekending | date:'dd-MM-yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef> Total Open Faults</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="closed">
+                <mat-header-cell *matHeaderCellDef> Closed </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.closed}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="opened">
+                <mat-header-cell *matHeaderCellDef> Opened </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.opened }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ageOfOldest">
+                <mat-header-cell *matHeaderCellDef> Age of oldest open fault  </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.ageOfOldest}} days</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
