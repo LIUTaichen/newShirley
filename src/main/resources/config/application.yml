@@ -48,15 +48,6 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
-    mail:
-        host: smtp.gmail.com
-        port: 587
-        protocol: smtp
-        tls: true
-        properties.mail.smtp:
-            auth: true
-            starttls.enable: true
-            ssl.trust: smtp.gmail.com
 security:
     basic:
         enabled: false
@@ -103,7 +94,7 @@ jhipster:
         license:
         license-url:
     ribbon:
-        display-on-active-profiles: uat,dev
+        display-on-active-profiles: dev
 
 # ===================================================================
 # Application specific properties
@@ -115,11 +106,3 @@ jhipster:
 # ===================================================================
 
 application:
-    blackhawk-api:
-        username: ${APPLICATION_BLACKHAWKAPI_USERNAME}
-        password: ${APPLICATION_BLACKHAWKAPI_PASSWORD}
-        applicationId: 279EEA55-9497-4DC5-887E-EF61DA455E56
-        companyId: 2971
-        url:
-            root: https://webapi.blackhawktracking.com/api
-            login: /Login
