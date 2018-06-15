@@ -88,10 +88,3 @@ export interface Stats {
   lowOpen: number;
   lowOverDue: number;
 }
-
-const ELEMENT_DATA: Element[] = [
-  { priority: 'HIGH', total: 80, overdue: 65, percentage: 0.81 },
-  { priority: 'MEDIUM', total: 78, overdue: 46, percentage: 0.59 },
-  { priority: 'LOW', total: 30, overdue: 13, percentage: 0.43 },
-  { priority: 'TOTAL', total: 189, overdue: 121, percentage: 0.64 },
-];

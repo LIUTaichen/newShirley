@@ -11,7 +11,7 @@ import { NiggleUtilService } from '../../niggle-util.service';
 export class OpenReportComponent implements OnInit {
 
   @Input() niggles: Niggle[];
-  displayedColumns = ['weekending', 'total', 'closed', 'opened', 'ageOfOldest'];
+  displayedColumns = ['weekending',  'closed', 'opened'];
   dataSource = new Array<Element>();
   weeks: Date[] = new Array<Date>();
 
@@ -73,9 +73,3 @@ export interface Element {
   opened: number;
   ageOfOldest: number;
 }
-
-const ELEMENT_DATA: Element[] = [
-  { weekending: new Date('2018-06-11'), total: 189, closed: 40, opened: 20, ageOfOldest: 215 },
-  { weekending: new Date('2018-06-04'), total: 189, closed: 40, opened: 20, ageOfOldest: 215 },
-  { weekending: new Date('2018-05-28'), total: 189, closed: 40, opened: 20, ageOfOldest: 215 },
-];

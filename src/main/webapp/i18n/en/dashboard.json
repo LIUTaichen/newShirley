@@ -1,0 +1,9 @@
+{
+    "fleetManagementApp": {
+        "dashboard": {
+            "home": {
+                "title": "Dashboard"
+            }
+        }
+    }
+}

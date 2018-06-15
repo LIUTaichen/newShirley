@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NiggleService } from '../../../entities/niggle/niggle.service';
-import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
-import { Plant } from '../../../entities/plant/plant.model';
+import { Niggle } from '../../../entities/niggle/niggle.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs/Subscription';
