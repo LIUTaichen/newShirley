@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.dempseywood"
     },
-    "jhipsterVersion": "4.14.3",
+    "jhipsterVersion": "4.14.1",
     "baseName": "FleetManagement",
     "packageName": "com.dempseywood",
     "packageFolder": "com/dempseywood",
@@ -22,7 +22,7 @@
     "enableSwaggerCodegen": false,
     "jwtSecretKey": "3150b84dde5a0ec063d4a29aa74fc48809fad6ef",
     "clientFramework": "angularX",
-    "useSass": true,
+    "useSass": false,
     "clientPackageManager": "npm",
     "applicationType": "monolith",
     "testFrameworks": [],

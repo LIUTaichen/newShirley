@@ -8,7 +8,6 @@
         "outDir": "target/www/app",
         "assets": [
             "content",
-            "i18n",
             "favicon.ico"
         ],
         "index": "index.html",
@@ -19,8 +18,8 @@
         "prefix": "jhi",
         "mobile": false,
         "styles": [
-            "content/scss/vendor.scss",
-            "content/scss/global.scss"
+            "content/css/vendor.css",
+            "content/css/global.css"
         ],
         "scripts": []
     }],
@@ -29,6 +28,9 @@
         },
         {
             "project": "../../../tsconfig-aot.json"
+        },
+        {
+            "exclude": "**/node_modules/**/*"
         }
     ],
     "test": {
@@ -37,10 +39,10 @@
         }
     },
     "defaults": {
-        "styleExt": "scss",
+        "styleExt": "css",
         "prefixInterfaces": false,
         "component" : {
-            "inlineStyle" : true,
+            "inlineStyle" : false,
             "inlineTemplate": false,
             "spec": false
         },
