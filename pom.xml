@@ -29,10 +29,10 @@
         <profile.swagger />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>0.1.8</jhipster-dependencies.version>
+        <jhipster-dependencies.version>0.1.11</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>1.5.10.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.12.RELEASE</spring-boot.version>
         <!-- The hibernate version should match the one managed by
         https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <hibernate.version>5.2.12.Final</hibernate.version>
@@ -298,7 +298,7 @@
             <artifactId>spring-security-data</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
-
+        
         <!-- https://mvnrepository.com/artifact/com.vividsolutions/jts -->
         <dependency>
             <groupId>com.vividsolutions</groupId>
@@ -771,6 +771,15 @@
                                 </goals>
                                 <configuration>
                                     <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm rebuild node-sass</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>rebuild node-sass</arguments>
                                 </configuration>
                             </execution>
                             <execution>
