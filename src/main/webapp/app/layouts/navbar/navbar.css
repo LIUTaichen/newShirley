@@ -62,6 +62,7 @@ Navbar
 .navbar-title {
     display: inline-block;
     vertical-align: middle;
+    font-weight: 400;
 }
 
 /* ==========================================================================
