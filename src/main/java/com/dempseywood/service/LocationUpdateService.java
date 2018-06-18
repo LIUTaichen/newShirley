@@ -113,7 +113,7 @@ public class LocationUpdateService {
         return map;
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 2)
+
     public void updatePlantLocation(){
         log.info("starting to update plant location");
         VehicleDTO[] vehicles = getVehicles();
