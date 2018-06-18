@@ -1,9 +1,11 @@
 package com.dempseywood.service;
+import com.dempseywood.config.ApplicationProperties;
 import com.dempseywood.config.Constants;
 
 import com.dempseywood.FleetManagementApp;
-import com.dempseywood.domain.User;
+import com.dempseywood.domain.*;
 import io.github.jhipster.config.JHipsterProperties;
+import javafx.application.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,13 +50,16 @@ public class MailServiceIntTest {
     @Captor
     private ArgumentCaptor messageCaptor;
 
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
     private MailService mailService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, applicationProperties);
     }
 
     @Test
@@ -182,6 +187,29 @@ public class MailServiceIntTest {
     public void testSendEmailWithException() throws Exception {
         doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
         mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+    }
+
+    @Test
+    public void testSendOnHoldNotificationMail() throws Exception {
+        Niggle niggle = new Niggle();
+        Plant plant = new Plant();
+        plant.setFleetId("E23");
+        plant.setDescription("20ton excavator");
+        PurchaseOrder po = new PurchaseOrder();
+        po.setOrderNumber("DW123");
+        MaintenanceContractor mc = new MaintenanceContractor();
+        mc.setName("Quattra");
+        niggle.setPlant(plant);
+        niggle.setPurchaseOrder(po);
+        niggle.setAssignedContractor(mc);
+        mailService.sendOnHoldNotificationMail(niggle, "john");
+
+        verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
+        MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(applicationProperties.getNotification().getOnHold().getTo());
+        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
+        assertThat(message.getContent().toString()).isNotEmpty();
+        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
     }
 
 }

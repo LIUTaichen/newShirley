@@ -1,5 +1,7 @@
 package com.dempseywood.service;
 
+import com.dempseywood.config.ApplicationProperties;
+import com.dempseywood.domain.Niggle;
 import com.dempseywood.domain.User;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -11,6 +13,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -30,6 +34,8 @@ public class MailService {
 
     private static final String USER = "user";
 
+    private static final String NIGGLE = "niggle";
+
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
@@ -40,13 +46,17 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
+    private final ApplicationProperties applicationProperties;
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine) {
+                       MessageSource messageSource, SpringTemplateEngine templateEngine,
+                       ApplicationProperties applicationProperties) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.applicationProperties = applicationProperties;
     }
 
     @Async
@@ -101,5 +111,23 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendOnHoldNotificationMail(Niggle niggle, String username) {
+        String email = applicationProperties.getNotification().getOnHold().getTo();
+        log.debug("Sending on hold notification email to '{}'", email);
+        sendNiggleEmailFromTemplate(email, niggle,"onHoldNotificationEmail", "email.onhold.title", username);
+    }
+
+    private void sendNiggleEmailFromTemplate(String email,Niggle niggle, String onHoldNotificationEmail, String titleKey, String username) {
+        Locale locale = Locale.getDefault();
+        Context context = new Context();
+        context.setVariable(NIGGLE, niggle);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        context.setVariable(USER, username);
+        String content = templateEngine.process(onHoldNotificationEmail, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(email, subject, content, false, true);
     }
 }

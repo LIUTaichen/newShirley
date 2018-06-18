@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.onhold.tile}">A Plant Fault Is Put On Hold</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<p th:text="#{email.onhold.greeting}">
+    Hi Fleet team,
+</p>
+<p th:text="#{email.onhold.summary(${niggle?.assignedContractor?.name}, ${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')} )}">
+    Please be notified that a plant fault is put on hold by the assigned contractor Quattra at 12:01 18/06/2018.
+</p>
+<table>
+    <tr>
+        <td th:text="#{email.onhold.plant}">Plant</td>
+        <td th:text="${niggle?.plant?.fleetId} +' - '+ ${niggle?.plant?.description}">E20 – 2010 Hitachi ZX240 -3S/N</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.purchaseOrder}">Purchase Oder Number</td>
+        <td th:text="${niggle?.purchaseOrder?.orderNumber}">DW458</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.quattraJobNumber}">Quattra Job Number</td>
+        <td th:text="${niggle?.quattraReference}">A6277</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.repairNeeded}">Repair Needed</td>
+        <td th:text="${niggle?.description}">Hydraulics are over full</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.dateOpened}">Date Opened</td>
+        <td th:text="${niggle?.dateOpened}">14/06/2018</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.quattraComments}">Quattra comments</td>
+        <td th:text="${niggle?.quattraComments}">Parts on order from Japan</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.putOnHoldBy}">Put on hold by</td>
+        <td th:text="${user}">Willy Pienaar</td>
+    </tr>
+</table>
+<p>
+    <span th:text="#{email.onhold.salutation}">Regards, </span>
+    <br/>
+    <em th:text="#{email.onhold.signature}">Fleet Management System</em>
+</p>
+
+<p>*** This is an automatically generated email, please do not reply ***</p>
+</body>
+</html>

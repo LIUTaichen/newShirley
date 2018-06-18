@@ -2,11 +2,14 @@ package com.dempseywood.service;
 
 import com.dempseywood.domain.Niggle;
 import com.dempseywood.domain.PurchaseOrder;
+import com.dempseywood.domain.User;
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.repository.NiggleRepository;
 import com.dempseywood.repository.PurchaseOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +30,13 @@ public class NiggleService {
 
     private final PurchaseOrderRepository purchaseOrderRepository;
 
+    private final MailService mailService;
 
-
-    public NiggleService(NiggleRepository niggleRepository, PurchaseOrderRepository purchaseOrderRepository) {
+    public NiggleService(NiggleRepository niggleRepository, PurchaseOrderRepository purchaseOrderRepository,
+                         MailService mailService) {
         this.niggleRepository = niggleRepository;
         this.purchaseOrderRepository = purchaseOrderRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -53,6 +58,17 @@ public class NiggleService {
         if(Status.CLOSED == niggle.getStatus() && niggle.getDateClosed() == null){
             log.debug("Niggle is being closed. Setting timestamp for dateClosed");
             niggle.setDateClosed(Instant.now());
+        }
+
+        if(Status.ON_HOLD == niggle.getStatus()){
+            Niggle dbNiggle = niggleRepository.findOne(niggle.getId());
+            if(Status.ON_HOLD != dbNiggle.getStatus()){
+                log.debug("Niggle is being put on hold. Sending notification email");
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                authentication.getName();
+                String username = authentication.getName();
+                mailService.sendOnHoldNotificationMail( niggle, username);
+            }
         }
         return niggleRepository.save(niggle);
     }

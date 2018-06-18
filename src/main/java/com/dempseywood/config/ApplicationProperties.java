@@ -106,4 +106,28 @@ public class ApplicationProperties {
             }
         }
     }
+
+    private final Notification notification = new Notification();
+    public Notification getNotification(){
+        return notification;
+    }
+    public static class Notification{
+
+        private final OnHold onHold = new OnHold();
+
+        public OnHold getOnHold(){
+            return onHold;
+        }
+        public static class OnHold {
+            private String to = "jason.liu@dempseywood.co.nz";
+
+            public String getTo() {
+                return to;
+            }
+
+            public void setTo(String to) {
+                this.to = to;
+            }
+        }
+    }
 }
