@@ -109,7 +109,8 @@ entity Niggle{
     quattraComments String maxlength(1024),
 	invoiceNo String,
     dateOpened Instant,
-    dateClosed Instant
+    dateClosed Instant,
+    eta Instant
 }
 
 enum Priority{
