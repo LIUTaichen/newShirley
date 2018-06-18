@@ -19,8 +19,6 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatProgressSpinnerModule,
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
