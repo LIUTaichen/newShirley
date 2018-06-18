@@ -35,6 +35,8 @@ export class NigglePopupService {
                             .transform(niggle.dateOpened, 'yyyy-MM-ddTHH:mm:ss');
                         niggle.dateClosed = this.datePipe
                             .transform(niggle.dateClosed, 'yyyy-MM-ddTHH:mm:ss');
+                        niggle.eta = this.datePipe
+                            .transform(niggle.eta, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.niggleModalRef(component, niggle);
                         resolve(this.ngbModalRef);
                     });

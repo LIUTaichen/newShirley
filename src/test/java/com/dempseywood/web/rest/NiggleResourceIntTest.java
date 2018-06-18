@@ -76,6 +76,9 @@ public class NiggleResourceIntTest {
     private static final Instant DEFAULT_DATE_CLOSED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_CLOSED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_ETA = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_ETA = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     @Autowired
     private NiggleRepository niggleRepository;
 
@@ -128,7 +131,8 @@ public class NiggleResourceIntTest {
             .quattraComments(DEFAULT_QUATTRA_COMMENTS)
             .invoiceNo(DEFAULT_INVOICE_NO)
             .dateOpened(DEFAULT_DATE_OPENED)
-            .dateClosed(DEFAULT_DATE_CLOSED);
+            .dateClosed(DEFAULT_DATE_CLOSED)
+            .eta(DEFAULT_ETA);
         return niggle;
     }
 
@@ -162,6 +166,7 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(DEFAULT_INVOICE_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(DEFAULT_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(DEFAULT_DATE_CLOSED);
+        assertThat(testNiggle.getEta()).isEqualTo(DEFAULT_ETA);
     }
 
     @Test
@@ -204,7 +209,8 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].quattraComments").value(hasItem(DEFAULT_QUATTRA_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
-            .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())));
+            .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())))
+            .andExpect(jsonPath("$.[*].eta").value(hasItem(DEFAULT_ETA.toString())));
     }
 
     @Test
@@ -227,7 +233,8 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.quattraComments").value(DEFAULT_QUATTRA_COMMENTS.toString()))
             .andExpect(jsonPath("$.invoiceNo").value(DEFAULT_INVOICE_NO.toString()))
             .andExpect(jsonPath("$.dateOpened").value(DEFAULT_DATE_OPENED.toString()))
-            .andExpect(jsonPath("$.dateClosed").value(DEFAULT_DATE_CLOSED.toString()));
+            .andExpect(jsonPath("$.dateClosed").value(DEFAULT_DATE_CLOSED.toString()))
+            .andExpect(jsonPath("$.eta").value(DEFAULT_ETA.toString()));
     }
 
     @Test
@@ -611,6 +618,48 @@ public class NiggleResourceIntTest {
     @Test
     @Transactional
     @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    public void getAllNigglesByEtaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where eta equals to DEFAULT_ETA
+        defaultNiggleShouldBeFound("eta.equals=" + DEFAULT_ETA);
+
+        // Get all the niggleList where eta equals to UPDATED_ETA
+        defaultNiggleShouldNotBeFound("eta.equals=" + UPDATED_ETA);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    public void getAllNigglesByEtaIsInShouldWork() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where eta in DEFAULT_ETA or UPDATED_ETA
+        defaultNiggleShouldBeFound("eta.in=" + DEFAULT_ETA + "," + UPDATED_ETA);
+
+        // Get all the niggleList where eta equals to UPDATED_ETA
+        defaultNiggleShouldNotBeFound("eta.in=" + UPDATED_ETA);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    public void getAllNigglesByEtaIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where eta is not null
+        defaultNiggleShouldBeFound("eta.specified=true");
+
+        // Get all the niggleList where eta is null
+        defaultNiggleShouldNotBeFound("eta.specified=false");
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllNigglesByPurchaseOrderIsEqualToSomething() throws Exception {
         // Initialize the database
         PurchaseOrder purchaseOrder = PurchaseOrderResourceIntTest.createEntity(em);
@@ -683,7 +732,8 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].quattraComments").value(hasItem(DEFAULT_QUATTRA_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
-            .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())));
+            .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())))
+            .andExpect(jsonPath("$.[*].eta").value(hasItem(DEFAULT_ETA.toString())));
     }
 
     /**
@@ -729,7 +779,8 @@ public class NiggleResourceIntTest {
             .quattraComments(UPDATED_QUATTRA_COMMENTS)
             .invoiceNo(UPDATED_INVOICE_NO)
             .dateOpened(UPDATED_DATE_OPENED)
-            .dateClosed(UPDATED_DATE_CLOSED);
+            .dateClosed(UPDATED_DATE_CLOSED)
+            .eta(UPDATED_ETA);
 
         restNiggleMockMvc.perform(put("/api/niggles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -749,6 +800,7 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(UPDATED_INVOICE_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(UPDATED_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(UPDATED_DATE_CLOSED);
+        assertThat(testNiggle.getEta()).isEqualTo(UPDATED_ETA);
     }
 
     @Test

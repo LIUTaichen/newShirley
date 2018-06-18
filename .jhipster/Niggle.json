@@ -72,6 +72,10 @@
         {
             "fieldName": "dateClosed",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "eta",
+            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20180422232215",

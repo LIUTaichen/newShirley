@@ -133,6 +133,14 @@
                 tableName="niggle"/>
     </changeSet>
 
+      <changeSet id="add column eta" author="jason">
+        <addColumn tableName="niggle">
+            <column name="eta" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+	</changeSet>
+
 
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
