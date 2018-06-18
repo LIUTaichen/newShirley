@@ -19,7 +19,11 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatProgressSpinnerModule,
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   imports: [
@@ -40,7 +44,8 @@ import {
     MatRippleModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMomentDateModule
   ],
   exports: [
     MatButtonModule,
@@ -60,7 +65,11 @@ import {
     MatRippleModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMomentDateModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-NZ'},
   ]
 })
 export class MaterialModule {}

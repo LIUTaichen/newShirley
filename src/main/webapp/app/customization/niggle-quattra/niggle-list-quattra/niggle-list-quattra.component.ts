@@ -56,12 +56,12 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
         const authorisedNiggles = this.niggles.filter((niggle) => this.isAuthorised(niggle)
-        , this);
+          , this);
 
         this.niggleRows = authorisedNiggles.map(this.convertEntityToRow, this);
-        this.whiteRows = authorisedNiggles.filter ( (niggle ) => this.isWhite(niggle)).map(this.convertEntityToRow, this);
-        this.yellowRows = authorisedNiggles.filter ( (niggle ) => this.isYellow(niggle)).map(this.convertEntityToRow, this);
-        this.completedRows = authorisedNiggles.filter ( (niggle ) => this.isCompleted(niggle)).map(this.convertEntityToRow, this);
+        this.whiteRows = authorisedNiggles.filter((niggle) => this.isWhite(niggle)).map(this.convertEntityToRow, this);
+        this.yellowRows = authorisedNiggles.filter((niggle) => this.isYellow(niggle)).map(this.convertEntityToRow, this);
+        this.completedRows = authorisedNiggles.filter((niggle) => this.isCompleted(niggle)).map(this.convertEntityToRow, this);
         this.updateDataSource();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
@@ -93,9 +93,11 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   applyFilter() {
     if (this.dataSource) {
       let filterValue = this.filter;
-      filterValue = filterValue.trim(); // Remove whitespace
-      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-      this.dataSource.filter = filterValue;
+      if (filterValue) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+      }
     }
   }
 
@@ -220,14 +222,14 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   isWhite(niggle: Niggle): Boolean {
     if (this.isCompleted(niggle)) {
       return false;
-    }else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'WHITE_FLEET') {
+    } else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'WHITE_FLEET') {
       return true;
     }
   }
   isYellow(niggle: Niggle): Boolean {
     if (this.isCompleted(niggle)) {
       return false;
-    }else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'YELLOW_FLEET') {
+    } else if (niggle.plant && niggle.plant['category'] && niggle.plant['category'].maintenanceGroup.toString() === 'YELLOW_FLEET') {
       return true;
     }
   }
@@ -239,7 +241,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   }
 
   isAuthorised(niggle: Niggle): Boolean {
-  if (!niggle.assignedContractor) {
+    if (!niggle.assignedContractor) {
       return false;
     }
     if (niggle.assignedContractor['name'] !== 'Quattra') {

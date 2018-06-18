@@ -1,15 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NiggleService } from '../../../../entities/niggle/niggle.service';
 import { Niggle } from '../../../../entities/niggle/niggle.model';
-import { Plant , PlantService} from '../../../../entities/plant';
+import { Plant, PlantService } from '../../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../../entities/maintenance-contractor';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { map } from 'rxjs/operators/map';
 
 @Component({
   selector: 'jhi-edit-dialog-quattra',
@@ -20,9 +22,9 @@ export class EditDialogQuattraComponent implements OnInit {
 
   niggle: Niggle;
   niggleForm: FormGroup;
-  plants: Plant[];
   maintenancecontractors: MaintenanceContractor[];
   isSaving: boolean;
+  matcher = new MyErrorStateMatcher();
 
   constructor(
     public snackBar: MatSnackBar,
@@ -30,38 +32,45 @@ export class EditDialogQuattraComponent implements OnInit {
     private jhiAlertService: JhiAlertService,
     private niggleService: NiggleService,
     private plantService: PlantService,
-    private maintenanceContractorService: MaintenanceContractorService,
     public dialogRef: MatDialogRef<EditDialogQuattraComponent>,
     private eventManager: JhiEventManager,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.niggle = data.niggle;
-    this.createForm();
-    this.setOriginalValue();
   }
 
   createForm() {
 
     this.niggleForm = this.fb.group({
-      description: [{value: '',  disabled: true}, Validators.required],
+      description: [{ value: '', disabled: true }, Validators.required],
       status: '',
-      plant: [{value: '',  disabled: true}, Validators.required],
+      plant: [{ value: '', disabled: true }, Validators.required],
       reference: '',
       comments: '',
       invoiceNo: '',
-      priority: {value: '', disabled: true}
+      priority: { value: '', disabled: true },
+      eta: ''
     });
   }
 
   ngOnInit() {
-    this.plantService.query()
-      .subscribe((res: HttpResponse<Plant[]>) => { this.plants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-    this.maintenanceContractorService.query()
-      .subscribe((res: HttpResponse<MaintenanceContractor[]>) => {
-        this.maintenancecontractors = res.body;
-        this.niggleForm.patchValue({
-          contractor: this.maintenancecontractors[0]
-        });
-      }, (res: HttpErrorResponse) => this.onError(res.message));
+    this.createForm();
+    this.niggleForm.controls.status.valueChanges.subscribe(
+      (val) => {
+        console.log('responding to status changes', val);
+        if (val === 'ON_HOLD') {
+          this.niggleForm.controls.comments.setValidators(Validators.required);
+          this.niggleForm.controls.eta.setValidators(Validators.required);
+          this.niggleForm.controls.comments.updateValueAndValidity();
+          this.niggleForm.controls.eta.updateValueAndValidity();
+        } else {
+          this.niggleForm.controls.comments.setValidators([]);
+          this.niggleForm.controls.eta.setValidators([]);
+          this.niggleForm.controls.comments.updateValueAndValidity();
+          this.niggleForm.controls.eta.updateValueAndValidity();
+        }
+      }
+    );
+    this.setOriginalValue();
   }
 
   private onError(error: any) {
@@ -89,6 +98,7 @@ export class EditDialogQuattraComponent implements OnInit {
     this.niggle.quattraReference = formModel.reference;
     this.niggle.invoiceNo = formModel.invoiceNo;
     this.niggle.quattraComments = formModel.comments;
+    this.niggle.eta = formModel.eta;
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Niggle>>) {
@@ -115,16 +125,24 @@ export class EditDialogQuattraComponent implements OnInit {
   setOriginalValue() {
     this.niggleForm.setValue({
       description: this.niggle.description,
-      plant: this.niggle.plant,
+      plant: this.niggle.plant['fleetId'],
       status: this.niggle.status,
       priority: this.niggle.priority,
       reference: this.niggle.quattraReference,
       comments: this.niggle.quattraComments,
-      invoiceNo: this.niggle.invoiceNo
+      invoiceNo: this.niggle.invoiceNo,
+      eta: this.niggle.eta
     });
   }
 
   compareObjects(o1: any, o2: any): boolean {
     return o1.id === o2.id;
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return (control && control.invalid );
   }
 }
