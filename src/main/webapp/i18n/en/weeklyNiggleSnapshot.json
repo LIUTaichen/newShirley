@@ -1,0 +1,25 @@
+
+{
+    "fleetManagementApp": {
+        "weeklyNiggleSnapshot" : {
+            "home": {
+                "title": "Weekly Niggle Snapshots",
+                "createLabel": "Create a new Weekly Niggle Snapshot",
+                "createOrEditLabel": "Create or edit a Weekly Niggle Snapshot"
+            },
+            "created": "A new Weekly Niggle Snapshot is created with identifier {{ param }}",
+            "updated": "A Weekly Niggle Snapshot is updated with identifier {{ param }}",
+            "deleted": "A Weekly Niggle Snapshot is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Weekly Niggle Snapshot {{ id }}?"
+            },
+            "detail": {
+                "title": "Weekly Niggle Snapshot"
+            },
+            "weekEndingOn": "Week Ending On",
+            "status": "Status",
+            "priority": "Priority",
+            "count": "Count"
+        }
+    }
+}
