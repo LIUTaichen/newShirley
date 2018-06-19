@@ -26,6 +26,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayOutputStream;
+import java.time.Instant;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -207,6 +209,35 @@ public class MailServiceIntTest {
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
         MimeMessage message = (MimeMessage) messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(applicationProperties.getNotification().getOnHold().getTo());
+        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
+        assertThat(message.getContent().toString()).isNotEmpty();
+        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+    }
+
+    @Test
+    public void testSendHighPriorityNotificationMail() throws Exception {
+        Niggle niggle = new Niggle();
+        Plant plant = new Plant();
+        Location location = new Location();
+        location.setAddress("84-86 Fred Taylor Drive, Westgate-Whenuapai, Site: 9485-84 Fred Taylor Drive");
+        plant.setFleetId("E23");
+        plant.setDescription("20ton excavator");
+        plant.setLocation(location);
+        PurchaseOrder po = new PurchaseOrder();
+        po.setOrderNumber("DW123");
+        MaintenanceContractor mc = new MaintenanceContractor();
+        mc.setName("Quattra");
+        niggle.setPlant(plant);
+        niggle.setPurchaseOrder(po);
+        niggle.setAssignedContractor(mc);
+        niggle.setDateOpened(Instant.now());
+        niggle.setDescription("boom cylinder leak and bucket cylinder leak at pipe line fittings");
+        niggle.setNote("Please send mechanic asap");
+        mailService.sendHighPriorityNotificationMail(niggle, "john");
+
+        verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
+        MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(applicationProperties.getNotification().getHighPriority().getTo());
         assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
         assertThat(message.getContent().toString()).isNotEmpty();
         assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");

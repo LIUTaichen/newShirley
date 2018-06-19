@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.highPriority.tile}">New High Priority Plant Fault Is Opened</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<p th:text="#{email.highPriority.greeting}">
+    Hi Quattra,
+</p>
+<p th:text="#{email.highPriority.summary(${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')} )}">
+    Please be notified that a high priority plant fault is opened at 12:01 18/06/2018.
+</p>
+<table>
+    <tr>
+        <td th:text="#{email.highPriority.plant}">Plant</td>
+        <td th:text="${niggle?.plant?.fleetId} +' - '+ ${niggle?.plant?.description}">E20 – 2010 Hitachi ZX240 -3S/N</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.highPriority.location}">Location</td>
+        <td th:text="${niggle?.plant?.location?.address}">DW458</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.highPriority.purchaseOrder}">Purchase Order Number</td>
+        <td th:text="${niggle?.purchaseOrder?.orderNumber}">DW458</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.highPriority.repairNeeded}">Repair Needed</td>
+        <td th:text="${niggle?.description}">Engine won't start</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.highPriority.dateOpened}">Date Opened</td>
+        <td th:text="${#dates.format(niggle?.dateOpened,'YYYY/MM/dd HH:mm')}">14/06/2018</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.highPriority.dwComments}">Additional notes</td>
+        <td th:text="${niggle?.note}">Please send mechanic as soon as possible</td>
+    </tr>
+</table>
+<p>
+    <span th:text="#{email.highPriority.salutation}">Regards, </span>
+    <br/>
+    <em th:text="#{email.highPriority.signature}">Fleet Management System</em>
+</p>
+
+<p>*** This is an automatically generated email, please do not reply ***</p>
+</body>
+</html>

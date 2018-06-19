@@ -120,14 +120,21 @@ public class MailService {
         sendNiggleEmailFromTemplate(email, niggle,"onHoldNotificationEmail", "email.onhold.title", username);
     }
 
-    private void sendNiggleEmailFromTemplate(String email,Niggle niggle, String onHoldNotificationEmail, String titleKey, String username) {
+    private void sendNiggleEmailFromTemplate(String email,Niggle niggle, String templateName, String titleKey, String username) {
         Locale locale = Locale.getDefault();
         Context context = new Context();
         context.setVariable(NIGGLE, niggle);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         context.setVariable(USER, username);
-        String content = templateEngine.process(onHoldNotificationEmail, context);
+        String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(email, subject, content, false, true);
+    }
+
+    @Async
+    public void sendHighPriorityNotificationMail(Niggle niggle, String username) {
+        String email = applicationProperties.getNotification().getHighPriority().getTo();
+        log.debug("Sending high priority notification email to '{}'", email);
+        sendNiggleEmailFromTemplate(email, niggle,"highPriorityFaultNotificationEmail", "email.highPriority.title", username);
     }
 }

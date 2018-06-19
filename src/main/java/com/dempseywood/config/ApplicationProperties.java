@@ -129,5 +129,21 @@ public class ApplicationProperties {
                 this.to = to;
             }
         }
+
+        private final HighPriority highPriority = new HighPriority();
+        public HighPriority getHighPriority(){
+            return highPriority;
+        }
+        public static class HighPriority {
+            private String to = "jason.liu@dempseywood.co.nz";
+
+            public String getTo() {
+                return to;
+            }
+
+            public void setTo(String to) {
+                this.to = to;
+            }
+        }
     }
 }
