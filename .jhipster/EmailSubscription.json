@@ -13,7 +13,7 @@
         },
         {
             "fieldName": "recipientType",
-            "fieldType": "RecepientType",
+            "fieldType": "RecipientType",
             "fieldValues": "TO,CC,BCC"
         }
     ],

@@ -156,7 +156,7 @@ entity WeeklyNiggleSnapshot{
 entity EmailSubscription {
     event Event,
     email String,
-    recipientType RecepientType
+    recipientType RecipientType
 }
 
 enum Event {
@@ -164,7 +164,7 @@ enum Event {
     HIGH_PRIORITY
 }
 
-enum RecepientType {
+enum RecipientType {
     TO,
     CC,
     BCC
