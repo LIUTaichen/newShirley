@@ -29,6 +29,7 @@ export class Niggle implements BaseEntity {
         public invoiceNo?: string,
         public dateOpened?: any,
         public dateClosed?: any,
+        public dateCompleted?: any,
         public eta?: any,
         public purchaseOrder?: BaseEntity,
         public plant?: BaseEntity,

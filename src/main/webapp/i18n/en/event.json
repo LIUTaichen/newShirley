@@ -1,0 +1,9 @@
+{
+    "fleetManagementApp": {
+        "Event" : {
+            "null": "",
+            "ON_HOLD": "ON_HOLD",
+            "HIGH_PRIORITY": "HIGH_PRIORITY"
+        }
+    }
+}

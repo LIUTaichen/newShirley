@@ -13,6 +13,7 @@ import { FleetManagementPlantLogModule } from './plant-log/plant-log.module';
 import { FleetManagementPurchaseOrderModule } from './purchase-order/purchase-order.module';
 import { FleetManagementLocationModule } from './location/location.module';
 import { FleetManagementWeeklyNiggleSnapshotModule } from './weekly-niggle-snapshot/weekly-niggle-snapshot.module';
+import { FleetManagementEmailSubscriptionModule } from './email-subscription/email-subscription.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -30,6 +31,7 @@ import { FleetManagementWeeklyNiggleSnapshotModule } from './weekly-niggle-snaps
         FleetManagementPurchaseOrderModule,
         FleetManagementLocationModule,
         FleetManagementWeeklyNiggleSnapshotModule,
+        FleetManagementEmailSubscriptionModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

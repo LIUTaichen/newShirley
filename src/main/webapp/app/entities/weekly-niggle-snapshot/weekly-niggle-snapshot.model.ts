@@ -24,6 +24,7 @@ export class WeeklyNiggleSnapshot implements BaseEntity {
         public status?: Status,
         public priority?: Priority,
         public count?: number,
+        public ageOfOldest?: number,
     ) {
     }
 }

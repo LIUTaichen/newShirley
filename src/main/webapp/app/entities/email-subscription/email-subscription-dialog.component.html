@@ -1,0 +1,45 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myEmailSubscriptionLabel" jhiTranslate="fleetManagementApp.emailSubscription.home.createOrEditLabel">Create or edit a Email Subscription</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!emailSubscription.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="emailSubscription.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.emailSubscription.event" for="field_event">Event</label>
+            <select class="form-control" name="event" [(ngModel)]="emailSubscription.event" id="field_event" >
+                <option value="ON_HOLD">{{'fleetManagementApp.Event.ON_HOLD' | translate}}</option>
+                <option value="HIGH_PRIORITY">{{'fleetManagementApp.Event.HIGH_PRIORITY' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.emailSubscription.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                [(ngModel)]="emailSubscription.email" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.emailSubscription.recipientType" for="field_recipientType">Recipient Type</label>
+            <select class="form-control" name="recipientType" [(ngModel)]="emailSubscription.recipientType" id="field_recipientType" >
+                <option value="TO">{{'fleetManagementApp.RecepientType.TO' | translate}}</option>
+                <option value="CC">{{'fleetManagementApp.RecepientType.CC' | translate}}</option>
+                <option value="BCC">{{'fleetManagementApp.RecepientType.BCC' | translate}}</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -67,6 +67,8 @@ export class NiggleService {
             .convertDateTimeFromServer(niggle.dateOpened);
         copy.dateClosed = this.dateUtils
             .convertDateTimeFromServer(niggle.dateClosed);
+        copy.dateCompleted = this.dateUtils
+            .convertDateTimeFromServer(niggle.dateCompleted);
         copy.eta = this.dateUtils
             .convertDateTimeFromServer(niggle.eta);
         return copy;
@@ -78,6 +80,13 @@ export class NiggleService {
     private convert(niggle: Niggle): Niggle {
         const copy: Niggle = Object.assign({}, niggle);
 
+        copy.dateOpened = this.dateUtils.toDate(niggle.dateOpened);
+
+        copy.dateClosed = this.dateUtils.toDate(niggle.dateClosed);
+
+        copy.dateCompleted = this.dateUtils.toDate(niggle.dateCompleted);
+
+        copy.eta = this.dateUtils.toDate(niggle.eta);
         return copy;
     }
 }

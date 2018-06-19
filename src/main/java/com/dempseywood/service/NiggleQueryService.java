@@ -131,6 +131,9 @@ public class NiggleQueryService extends QueryService<Niggle> {
             if (criteria.getDateClosed() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateClosed(), Niggle_.dateClosed));
             }
+            if (criteria.getDateCompleted() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDateCompleted(), Niggle_.dateCompleted));
+            }
             if (criteria.getEta() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getEta(), Niggle_.eta));
             }

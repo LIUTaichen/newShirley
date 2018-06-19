@@ -1,0 +1,10 @@
+{
+    "fleetManagementApp": {
+        "RecepientType" : {
+            "null": "",
+            "TO": "TO",
+            "CC": "CC",
+            "BCC": "BCC"
+        }
+    }
+}
