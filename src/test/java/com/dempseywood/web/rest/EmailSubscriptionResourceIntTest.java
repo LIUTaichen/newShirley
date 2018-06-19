@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.dempseywood.domain.enumeration.Event;
-import com.dempseywood.domain.enumeration.RecepientType;
+import com.dempseywood.domain.enumeration.RecipientType;
 /**
  * Test class for the EmailSubscriptionResource REST controller.
  *
@@ -46,8 +46,8 @@ public class EmailSubscriptionResourceIntTest {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final RecepientType DEFAULT_RECIPIENT_TYPE = RecepientType.TO;
-    private static final RecepientType UPDATED_RECIPIENT_TYPE = RecepientType.CC;
+    private static final RecipientType DEFAULT_RECIPIENT_TYPE = RecipientType.TO;
+    private static final RecipientType UPDATED_RECIPIENT_TYPE = RecipientType.CC;
 
     @Autowired
     private EmailSubscriptionRepository emailSubscriptionRepository;

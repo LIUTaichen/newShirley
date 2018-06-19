@@ -5,7 +5,7 @@ export const enum Event {
     'HIGH_PRIORITY'
 }
 
-export const enum RecepientType {
+export const enum RecipientType {
     'TO',
     'CC',
     'BCC'
@@ -16,7 +16,7 @@ export class EmailSubscription implements BaseEntity {
         public id?: number,
         public event?: Event,
         public email?: string,
-        public recipientType?: RecepientType,
+        public recipientType?: RecipientType,
     ) {
     }
 }

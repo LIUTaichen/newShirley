@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import com.dempseywood.domain.enumeration.Event;
 
-import com.dempseywood.domain.enumeration.RecepientType;
+import com.dempseywood.domain.enumeration.RecipientType;
 
 /**
  * A EmailSubscription.
@@ -32,7 +32,7 @@ public class EmailSubscription extends AbstractAuditingEntity implements Seriali
 
     @Enumerated(EnumType.STRING)
     @Column(name = "recipient_type")
-    private RecepientType recipientType;
+    private RecipientType recipientType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -69,16 +69,16 @@ public class EmailSubscription extends AbstractAuditingEntity implements Seriali
         this.email = email;
     }
 
-    public RecepientType getRecipientType() {
+    public RecipientType getRecipientType() {
         return recipientType;
     }
 
-    public EmailSubscription recipientType(RecepientType recipientType) {
+    public EmailSubscription recipientType(RecipientType recipientType) {
         this.recipientType = recipientType;
         return this;
     }
 
-    public void setRecipientType(RecepientType recipientType) {
+    public void setRecipientType(RecipientType recipientType) {
         this.recipientType = recipientType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
