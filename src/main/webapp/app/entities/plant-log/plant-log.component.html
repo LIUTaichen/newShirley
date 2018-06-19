@@ -1,0 +1,88 @@
+<div>
+    <h2>
+        <span jhiTranslate="fleetManagementApp.plantLog.home.title">Plant Logs</span>
+        <button class="btn btn-primary float-right jh-create-entity create-plant-log" [routerLink]="['/', { outlets: { popup: ['plant-log-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="fleetManagementApp.plantLog.home.createLabel">
+            Create new Plant Log
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="plantLogs">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.meterReading">Meter Reading</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.hubboReading">Hubbo Reading</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.serviceDueAt">Service Due At</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.rucDueAt">Ruc Due At</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.wofDueDate">Wof Due Date</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.cofDueDate">Cof Due Date</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.serviceDueDate">Service Due Date</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.plant">Plant</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.operator">Operator</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plantLog.site">Site</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let plantLog of plantLogs ;trackBy: trackId">
+                <td><a [routerLink]="['../plant-log', plantLog.id ]">{{plantLog.id}}</a></td>
+                <td>{{plantLog.meterReading}}</td>
+                <td>{{plantLog.hubboReading}}</td>
+                <td>{{plantLog.serviceDueAt}}</td>
+                <td>{{plantLog.rucDueAt}}</td>
+                <td>{{plantLog.wofDueDate | date:'medium'}}</td>
+                <td>{{plantLog.cofDueDate | date:'medium'}}</td>
+                <td>{{plantLog.serviceDueDate | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="plantLog.plant">
+                        <a [routerLink]="['../plant', plantLog.plant?.id ]" >{{plantLog.plant?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plantLog.operator">
+                        <a [routerLink]="['../people', plantLog.operator?.id ]" >{{plantLog.operator?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plantLog.site">
+                        <a [routerLink]="['../project', plantLog.site?.id ]" >{{plantLog.site?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../plant-log', plantLog.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'plant-log/'+ plantLog.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'plant-log/'+ plantLog.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

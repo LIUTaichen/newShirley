@@ -1,0 +1,21 @@
+
+{
+    "fleetManagementApp": {
+        "offHireRequest" : {
+            "home": {
+                "title": "Off Hire Requests",
+                "createLabel": "Create a new Off Hire Request",
+                "createOrEditLabel": "Create or edit a Off Hire Request"
+            },
+            "created": "A new Off Hire Request is created with identifier {{ param }}",
+            "updated": "A Off Hire Request is updated with identifier {{ param }}",
+            "deleted": "A Off Hire Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Off Hire Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Off Hire Request"
+            }
+        }
+    }
+}

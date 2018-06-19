@@ -1,0 +1,82 @@
+<div>
+    <h2>
+        <span jhiTranslate="fleetManagementApp.category.home.title">Categories</span>
+        <button class="btn btn-primary float-right jh-create-entity create-category" [routerLink]="['/', { outlets: { popup: ['category-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="fleetManagementApp.category.home.createLabel">
+            Create new Category
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="categories">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.category">Category</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.description">Description</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.type">Type</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.trackUsage">Track Usage</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.dailyRate">Daily Rate</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.loadCapacity">Load Capacity</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.hourlyRate">Hourly Rate</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.isEarchMovingPlant">Is Earch Moving Plant</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.isTrackedForInternalBilling">Is Tracked For Internal Billing</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.maintenanceGroup">Maintenance Group</span></th>
+            <th><span jhiTranslate="fleetManagementApp.category.competency">Competency</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let category of categories ;trackBy: trackId">
+                <td><a [routerLink]="['../category', category.id ]">{{category.id}}</a></td>
+                <td>{{category.category}}</td>
+                <td>{{category.description}}</td>
+                <td>{{category.type}}</td>
+                <td>{{category.trackUsage}}</td>
+                <td>{{category.dailyRate}}</td>
+                <td>{{category.loadCapacity}}</td>
+                <td>{{category.hourlyRate}}</td>
+                <td>{{category.isEarchMovingPlant}}</td>
+                <td>{{category.isTrackedForInternalBilling}}</td>
+                <td jhiTranslate="{{'fleetManagementApp.MaintenanceGroup.' + category.maintenanceGroup}}">{{category.maintenanceGroup}}</td>
+                <td>
+                    <div *ngIf="category.competency">
+                        <a [routerLink]="['../competency', category.competency?.id ]" >{{category.competency?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../category', category.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

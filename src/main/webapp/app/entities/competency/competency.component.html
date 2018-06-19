@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span jhiTranslate="fleetManagementApp.competency.home.title">Competencies</span>
+        <button class="btn btn-primary float-right jh-create-entity create-competency" [routerLink]="['/', { outlets: { popup: ['competency-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="fleetManagementApp.competency.home.createLabel">
+            Create new Competency
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="competencies">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.competency.competency">Competency</span></th>
+            <th><span jhiTranslate="fleetManagementApp.competency.grouping">Grouping</span></th>
+            <th><span jhiTranslate="fleetManagementApp.competency.sortOrder">Sort Order</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let competency of competencies ;trackBy: trackId">
+                <td><a [routerLink]="['../competency', competency.id ]">{{competency.id}}</a></td>
+                <td>{{competency.competency}}</td>
+                <td>{{competency.grouping}}</td>
+                <td>{{competency.sortOrder}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../competency', competency.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'competency/'+ competency.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'competency/'+ competency.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

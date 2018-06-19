@@ -1,0 +1,47 @@
+
+{
+    "fleetManagementApp": {
+        "plant" : {
+            "home": {
+                "title": "Plants",
+                "createLabel": "Create a new Plant",
+                "createOrEditLabel": "Create or edit a Plant"
+            },
+            "created": "A new Plant is created with identifier {{ param }}",
+            "updated": "A Plant is updated with identifier {{ param }}",
+            "deleted": "A Plant is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Plant {{ id }}?"
+            },
+            "detail": {
+                "title": "Plant"
+            },
+            "fleetId": "Fleet Id",
+            "name": "Name",
+            "notes": "Notes",
+            "purchaseDate": "Purchase Date",
+            "isActive": "Is Active",
+            "description": "Description",
+            "vin": "Vin",
+            "rego": "Rego",
+            "dateOfManufacture": "Date Of Manufacture",
+            "image": "Image",
+            "tankSize": "Tank Size",
+            "maintenanceDueAt": "Maintenance Due At",
+            "meterUnit": "Meter Unit",
+            "certificateDueDate": "Certificate Due Date",
+            "rucDueAtKm": "Ruc Due At Km",
+            "hubboReading": "Hubbo Reading",
+            "loadCapacity": "Load Capacity",
+            "hourlyRate": "Hourly Rate",
+            "registrationDueDate": "Registration Due Date",
+            "hireStatus": "Hire Status",
+            "gpsDeviceSerial": "Gps Device Serial",
+            "location": "Location",
+            "category": "Category",
+            "owner": "Owner",
+            "assignedContractor": "Assigned Contractor",
+            "project": "Project"
+        }
+    }
+}

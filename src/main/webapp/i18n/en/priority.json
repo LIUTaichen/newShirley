@@ -1,0 +1,10 @@
+{
+    "fleetManagementApp": {
+        "Priority" : {
+            "null": "",
+            "LOW": "LOW",
+            "MEDIUM": "MEDIUM",
+            "HIGH": "HIGH"
+        }
+    }
+}

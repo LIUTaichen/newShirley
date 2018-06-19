@@ -1,0 +1,9 @@
+{
+    "fleetManagementApp": {
+        "MeterUnit" : {
+            "null": "",
+            "KM": "KM",
+            "HOUR": "HOUR"
+        }
+    }
+}

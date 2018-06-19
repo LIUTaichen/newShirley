@@ -1,0 +1,22 @@
+
+{
+    "fleetManagementApp": {
+        "maintenanceContractor" : {
+            "home": {
+                "title": "Maintenance Contractors",
+                "createLabel": "Create a new Maintenance Contractor",
+                "createOrEditLabel": "Create or edit a Maintenance Contractor"
+            },
+            "created": "A new Maintenance Contractor is created with identifier {{ param }}",
+            "updated": "A Maintenance Contractor is updated with identifier {{ param }}",
+            "deleted": "A Maintenance Contractor is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Maintenance Contractor {{ id }}?"
+            },
+            "detail": {
+                "title": "Maintenance Contractor"
+            },
+            "name": "Name"
+        }
+    }
+}

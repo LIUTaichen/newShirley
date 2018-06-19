@@ -1,0 +1,61 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "competency",
+            "otherEntityName": "competency",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "category",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "trackUsage",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "dailyRate",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "loadCapacity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "hourlyRate",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "isEarchMovingPlant",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "isTrackedForInternalBilling",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "maintenanceGroup",
+            "fieldType": "MaintenanceGroup",
+            "fieldValues": "YELLOW_FLEET,WHITE_FLEET"
+        }
+    ],
+    "changelogDate": "20180422232209",
+    "entityTableName": "category",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "enableEntityAudit": true
+}

@@ -1,0 +1,31 @@
+
+{
+    "fleetManagementApp": {
+        "plantLog" : {
+            "home": {
+                "title": "Plant Logs",
+                "createLabel": "Create a new Plant Log",
+                "createOrEditLabel": "Create or edit a Plant Log"
+            },
+            "created": "A new Plant Log is created with identifier {{ param }}",
+            "updated": "A Plant Log is updated with identifier {{ param }}",
+            "deleted": "A Plant Log is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Plant Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Plant Log"
+            },
+            "meterReading": "Meter Reading",
+            "hubboReading": "Hubbo Reading",
+            "serviceDueAt": "Service Due At",
+            "rucDueAt": "Ruc Due At",
+            "wofDueDate": "Wof Due Date",
+            "cofDueDate": "Cof Due Date",
+            "serviceDueDate": "Service Due Date",
+            "plant": "Plant",
+            "operator": "Operator",
+            "site": "Site"
+        }
+    }
+}

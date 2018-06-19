@@ -1,0 +1,133 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "plant"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "owner",
+            "otherEntityName": "company",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "assignedContractor",
+            "otherEntityName": "maintenanceContractor",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "fleetId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "notes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "purchaseDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "isActive",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rego",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOfManufacture",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "tankSize",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "maintenanceDueAt",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "meterUnit",
+            "fieldType": "MeterUnit",
+            "fieldValues": "KM,HOUR"
+        },
+        {
+            "fieldName": "certificateDueDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "rucDueAtKm",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "hubboReading",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "loadCapacity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "hourlyRate",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "registrationDueDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "hireStatus",
+            "fieldType": "HireStatus",
+            "fieldValues": "ONHIRE,OFFHIRE"
+        },
+        {
+            "fieldName": "gpsDeviceSerial",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180422232207",
+    "entityTableName": "plant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "enableEntityAudit": true
+}
