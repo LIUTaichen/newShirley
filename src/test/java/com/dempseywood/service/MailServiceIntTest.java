@@ -5,7 +5,6 @@ import com.dempseywood.config.Constants;
 import com.dempseywood.FleetManagementApp;
 import com.dempseywood.domain.*;
 import io.github.jhipster.config.JHipsterProperties;
-import javafx.application.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -61,7 +59,7 @@ public class MailServiceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, applicationProperties);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, applicationProperties, emailSubscriptionRepository);
     }
 
     @Test

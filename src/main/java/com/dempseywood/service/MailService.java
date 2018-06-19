@@ -4,6 +4,7 @@ import com.dempseywood.config.ApplicationProperties;
 import com.dempseywood.domain.Niggle;
 import com.dempseywood.domain.User;
 
+import com.dempseywood.repository.EmailSubscriptionRepository;
 import io.github.jhipster.config.JHipsterProperties;
 
 import org.apache.commons.lang3.CharEncoding;
@@ -13,8 +14,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -48,15 +47,18 @@ public class MailService {
 
     private final ApplicationProperties applicationProperties;
 
+    private final EmailSubscriptionRepository emailSubscriptionRepository;
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
                        MessageSource messageSource, SpringTemplateEngine templateEngine,
-                       ApplicationProperties applicationProperties) {
+                       ApplicationProperties applicationProperties, EmailSubscriptionRepository emailSubscriptionRepository) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
         this.applicationProperties = applicationProperties;
+        this.emailSubscriptionRepository = emailSubscriptionRepository;
     }
 
     @Async
@@ -135,6 +137,38 @@ public class MailService {
     public void sendHighPriorityNotificationMail(Niggle niggle, String username) {
         String email = applicationProperties.getNotification().getHighPriority().getTo();
         log.debug("Sending high priority notification email to '{}'", email);
+
         sendNiggleEmailFromTemplate(email, niggle,"highPriorityFaultNotificationEmail", "email.highPriority.title", username);
+    }
+
+    @Async
+    public void sendNotificationEmail(String[] to, String[] cc, String[] bcc, String subject, String content, boolean isMultipart, boolean isHtml) {
+        log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
+            isMultipart, isHtml, to, subject, content);
+
+        // Prepare message using a Spring helper
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
+            message.setTo(to);
+            if(cc != null && cc.length > 0){
+                message.setCc(cc);
+            }
+            if(bcc != null && bcc.length > 0){
+                message.setBcc(bcc);
+            }
+
+            message.setFrom(jHipsterProperties.getMail().getFrom());
+            message.setSubject(subject);
+            message.setText(content, isHtml);
+            javaMailSender.send(mimeMessage);
+            log.debug("Sent email to User '{}'", to);
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.warn("Email could not be sent to user '{}'", to, e);
+            } else {
+                log.warn("Email could not be sent to user '{}': {}", to, e.getMessage());
+            }
+        }
     }
 }
