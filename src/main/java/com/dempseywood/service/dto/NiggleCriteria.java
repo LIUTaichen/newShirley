@@ -60,6 +60,8 @@ public class NiggleCriteria implements Serializable {
 
     private InstantFilter dateClosed;
 
+    private InstantFilter dateCompleted;
+
     private InstantFilter eta;
 
     private LongFilter purchaseOrderId;
@@ -151,6 +153,14 @@ public class NiggleCriteria implements Serializable {
         this.dateClosed = dateClosed;
     }
 
+    public InstantFilter getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(InstantFilter dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
     public InstantFilter getEta() {
         return eta;
     }
@@ -196,6 +206,7 @@ public class NiggleCriteria implements Serializable {
                 (invoiceNo != null ? "invoiceNo=" + invoiceNo + ", " : "") +
                 (dateOpened != null ? "dateOpened=" + dateOpened + ", " : "") +
                 (dateClosed != null ? "dateClosed=" + dateClosed + ", " : "") +
+                (dateCompleted != null ? "dateCompleted=" + dateCompleted + ", " : "") +
                 (eta != null ? "eta=" + eta + ", " : "") +
                 (purchaseOrderId != null ? "purchaseOrderId=" + purchaseOrderId + ", " : "") +
                 (plantId != null ? "plantId=" + plantId + ", " : "") +

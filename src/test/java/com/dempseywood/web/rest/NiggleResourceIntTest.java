@@ -75,6 +75,9 @@ public class NiggleResourceIntTest {
     private static final Instant DEFAULT_DATE_CLOSED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE_CLOSED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_DATE_COMPLETED = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_COMPLETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final Instant DEFAULT_ETA = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_ETA = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -131,6 +134,7 @@ public class NiggleResourceIntTest {
             .invoiceNo(DEFAULT_INVOICE_NO)
             .dateOpened(DEFAULT_DATE_OPENED)
             .dateClosed(DEFAULT_DATE_CLOSED)
+            .dateCompleted(DEFAULT_DATE_COMPLETED)
             .eta(DEFAULT_ETA);
         return niggle;
     }
@@ -164,6 +168,7 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(DEFAULT_INVOICE_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(DEFAULT_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(DEFAULT_DATE_CLOSED);
+        assertThat(testNiggle.getDateCompleted()).isEqualTo(DEFAULT_DATE_COMPLETED);
         assertThat(testNiggle.getEta()).isEqualTo(DEFAULT_ETA);
     }
 
@@ -206,6 +211,7 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
             .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())))
+            .andExpect(jsonPath("$.[*].dateCompleted").value(hasItem(DEFAULT_DATE_COMPLETED.toString())))
             .andExpect(jsonPath("$.[*].eta").value(hasItem(DEFAULT_ETA.toString())));
     }
 
@@ -229,6 +235,7 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.invoiceNo").value(DEFAULT_INVOICE_NO.toString()))
             .andExpect(jsonPath("$.dateOpened").value(DEFAULT_DATE_OPENED.toString()))
             .andExpect(jsonPath("$.dateClosed").value(DEFAULT_DATE_CLOSED.toString()))
+            .andExpect(jsonPath("$.dateCompleted").value(DEFAULT_DATE_COMPLETED.toString()))
             .andExpect(jsonPath("$.eta").value(DEFAULT_ETA.toString()));
     }
 
@@ -585,6 +592,45 @@ public class NiggleResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllNigglesByDateCompletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where dateCompleted equals to DEFAULT_DATE_COMPLETED
+        defaultNiggleShouldBeFound("dateCompleted.equals=" + DEFAULT_DATE_COMPLETED);
+
+        // Get all the niggleList where dateCompleted equals to UPDATED_DATE_COMPLETED
+        defaultNiggleShouldNotBeFound("dateCompleted.equals=" + UPDATED_DATE_COMPLETED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNigglesByDateCompletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where dateCompleted in DEFAULT_DATE_COMPLETED or UPDATED_DATE_COMPLETED
+        defaultNiggleShouldBeFound("dateCompleted.in=" + DEFAULT_DATE_COMPLETED + "," + UPDATED_DATE_COMPLETED);
+
+        // Get all the niggleList where dateCompleted equals to UPDATED_DATE_COMPLETED
+        defaultNiggleShouldNotBeFound("dateCompleted.in=" + UPDATED_DATE_COMPLETED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNigglesByDateCompletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        niggleRepository.saveAndFlush(niggle);
+
+        // Get all the niggleList where dateCompleted is not null
+        defaultNiggleShouldBeFound("dateCompleted.specified=true");
+
+        // Get all the niggleList where dateCompleted is null
+        defaultNiggleShouldNotBeFound("dateCompleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllNigglesByEtaIsEqualToSomething() throws Exception {
         // Initialize the database
         niggleRepository.saveAndFlush(niggle);
@@ -695,6 +741,7 @@ public class NiggleResourceIntTest {
             .andExpect(jsonPath("$.[*].invoiceNo").value(hasItem(DEFAULT_INVOICE_NO.toString())))
             .andExpect(jsonPath("$.[*].dateOpened").value(hasItem(DEFAULT_DATE_OPENED.toString())))
             .andExpect(jsonPath("$.[*].dateClosed").value(hasItem(DEFAULT_DATE_CLOSED.toString())))
+            .andExpect(jsonPath("$.[*].dateCompleted").value(hasItem(DEFAULT_DATE_COMPLETED.toString())))
             .andExpect(jsonPath("$.[*].eta").value(hasItem(DEFAULT_ETA.toString())));
     }
 
@@ -740,6 +787,7 @@ public class NiggleResourceIntTest {
             .invoiceNo(UPDATED_INVOICE_NO)
             .dateOpened(UPDATED_DATE_OPENED)
             .dateClosed(UPDATED_DATE_CLOSED)
+            .dateCompleted(UPDATED_DATE_COMPLETED)
             .eta(UPDATED_ETA);
 
         restNiggleMockMvc.perform(put("/api/niggles")
@@ -760,6 +808,7 @@ public class NiggleResourceIntTest {
         assertThat(testNiggle.getInvoiceNo()).isEqualTo(UPDATED_INVOICE_NO);
         assertThat(testNiggle.getDateOpened()).isEqualTo(UPDATED_DATE_OPENED);
         assertThat(testNiggle.getDateClosed()).isEqualTo(UPDATED_DATE_CLOSED);
+        assertThat(testNiggle.getDateCompleted()).isEqualTo(UPDATED_DATE_COMPLETED);
         assertThat(testNiggle.getEta()).isEqualTo(UPDATED_ETA);
     }
 

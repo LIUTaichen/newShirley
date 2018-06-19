@@ -110,6 +110,7 @@ entity Niggle{
 	invoiceNo String,
     dateOpened Instant,
     dateClosed Instant,
+    dateCompleted Instant,
     eta Instant
 }
 

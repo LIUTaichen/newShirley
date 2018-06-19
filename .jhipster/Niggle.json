@@ -74,6 +74,10 @@
             "fieldType": "Instant"
         },
         {
+            "fieldName": "dateCompleted",
+            "fieldType": "Instant"
+        },
+        {
             "fieldName": "eta",
             "fieldType": "Instant"
         }

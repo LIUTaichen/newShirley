@@ -26,6 +26,7 @@
             <th><span jhiTranslate="fleetManagementApp.niggle.invoiceNo">Invoice No</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.dateOpened">Date Opened</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.dateClosed">Date Closed</span></th>
+            <th><span jhiTranslate="fleetManagementApp.niggle.dateCompleted">Date Completed</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.eta">Eta</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.purchaseOrder">Purchase Order</span></th>
             <th><span jhiTranslate="fleetManagementApp.niggle.plant">Plant</span></th>
@@ -45,6 +46,7 @@
                 <td>{{niggle.invoiceNo}}</td>
                 <td>{{niggle.dateOpened | date:'medium'}}</td>
                 <td>{{niggle.dateClosed | date:'medium'}}</td>
+                <td>{{niggle.dateCompleted | date:'medium'}}</td>
                 <td>{{niggle.eta | date:'medium'}}</td>
                 <td>
                     <div *ngIf="niggle.purchaseOrder">

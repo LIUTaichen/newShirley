@@ -80,4 +80,13 @@
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+    <changeSet id="add-column-date-completed" author="jason">
+        <addColumn tableName="niggle">
+            <column name="date_completed" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+          <dropDefaultValue tableName="niggle" columnName="date_completed" columnDataType="datetime"/>
+    </changeSet>
+
 </databaseChangeLog>
