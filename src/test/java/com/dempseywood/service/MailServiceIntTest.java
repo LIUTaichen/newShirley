@@ -4,6 +4,7 @@ import com.dempseywood.config.Constants;
 
 import com.dempseywood.FleetManagementApp;
 import com.dempseywood.domain.*;
+import com.dempseywood.repository.EmailSubscriptionRepository;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import javax.mail.Address;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -52,6 +54,9 @@ public class MailServiceIntTest {
 
     @Autowired
     private ApplicationProperties applicationProperties;
+
+    @Autowired
+    private EmailSubscriptionRepository emailSubscriptionRepository;
 
     private MailService mailService;
 
@@ -240,6 +245,8 @@ public class MailServiceIntTest {
 
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
         MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        Address[] addresses = message.getAllRecipients();
+        String recipient = message.getAllRecipients()[0].toString();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(applicationProperties.getNotification().getHighPriority().getTo());
         assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
         assertThat(message.getContent().toString()).isNotEmpty();

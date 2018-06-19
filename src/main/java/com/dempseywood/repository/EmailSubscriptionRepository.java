@@ -17,5 +17,5 @@ import java.util.List;
 @Repository
 public interface EmailSubscriptionRepository extends JpaRepository<EmailSubscription, Long> {
     List<EmailSubscription> findAllByEvent(Event event);
-    List<EmailSubscription> findByEventAndRecepientType(Event event, RecipientType type);
+    List<EmailSubscription> findByEventAndRecipientType(Event event, RecipientType type);
 }

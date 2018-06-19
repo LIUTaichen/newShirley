@@ -136,6 +136,6 @@ jhipster:
 application:
     notification:
         onHold:
-            to: [jason.liu@dempseywood.co.nz, liu_taichen@hotmail.com]
+            to: jason.liu@dempseywood.co.nz
         highPriority:
             to: jason.liu@dempseywood.co.nz
