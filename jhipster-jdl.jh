@@ -148,7 +148,25 @@ entity WeeklyNiggleSnapshot{
     weekEndingOn LocalDate,
     status Status,
     priority Priority,
-    count Integer
+    count Integer,
+    ageOfOldest Integer
+}
+
+entity EmailSubscription {
+    event Event,
+    email String,
+    recipientType RecepientType
+}
+
+enum Event {
+    ON_HOLD,
+    HIGH_PRIORITY
+}
+
+enum RecepientType {
+    TO,
+    CC,
+    BCC
 }
 
 relationship ManyToOne {
@@ -174,6 +192,8 @@ enum MaintenanceGroup {
     YELLOW_FLEET,
     WHITE_FLEET
 }
+
+
 
 
 filter Niggle

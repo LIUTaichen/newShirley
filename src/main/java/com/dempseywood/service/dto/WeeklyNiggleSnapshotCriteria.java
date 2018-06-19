@@ -50,6 +50,8 @@ public class WeeklyNiggleSnapshotCriteria implements Serializable {
 
     private IntegerFilter count;
 
+    private IntegerFilter ageOfOldest;
+
     public WeeklyNiggleSnapshotCriteria() {
     }
 
@@ -93,6 +95,14 @@ public class WeeklyNiggleSnapshotCriteria implements Serializable {
         this.count = count;
     }
 
+    public IntegerFilter getAgeOfOldest() {
+        return ageOfOldest;
+    }
+
+    public void setAgeOfOldest(IntegerFilter ageOfOldest) {
+        this.ageOfOldest = ageOfOldest;
+    }
+
     @Override
     public String toString() {
         return "WeeklyNiggleSnapshotCriteria{" +
@@ -101,6 +111,7 @@ public class WeeklyNiggleSnapshotCriteria implements Serializable {
                 (status != null ? "status=" + status + ", " : "") +
                 (priority != null ? "priority=" + priority + ", " : "") +
                 (count != null ? "count=" + count + ", " : "") +
+                (ageOfOldest != null ? "ageOfOldest=" + ageOfOldest + ", " : "") +
             "}";
     }
 

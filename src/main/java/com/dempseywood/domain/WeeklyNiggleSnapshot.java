@@ -38,6 +38,9 @@ public class WeeklyNiggleSnapshot extends AbstractAuditingEntity implements Seri
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "age_of_oldest")
+    private Integer ageOfOldest;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -98,6 +101,19 @@ public class WeeklyNiggleSnapshot extends AbstractAuditingEntity implements Seri
     public void setCount(Integer count) {
         this.count = count;
     }
+
+    public Integer getAgeOfOldest() {
+        return ageOfOldest;
+    }
+
+    public WeeklyNiggleSnapshot ageOfOldest(Integer ageOfOldest) {
+        this.ageOfOldest = ageOfOldest;
+        return this;
+    }
+
+    public void setAgeOfOldest(Integer ageOfOldest) {
+        this.ageOfOldest = ageOfOldest;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -128,6 +144,7 @@ public class WeeklyNiggleSnapshot extends AbstractAuditingEntity implements Seri
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
             ", count=" + getCount() +
+            ", ageOfOldest=" + getAgeOfOldest() +
             "}";
     }
 }

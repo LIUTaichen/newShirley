@@ -86,6 +86,9 @@ public class WeeklyNiggleSnapshotQueryService extends QueryService<WeeklyNiggleS
             if (criteria.getCount() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCount(), WeeklyNiggleSnapshot_.count));
             }
+            if (criteria.getAgeOfOldest() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getAgeOfOldest(), WeeklyNiggleSnapshot_.ageOfOldest));
+            }
         }
         return specification;
     }

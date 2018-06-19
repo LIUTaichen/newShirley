@@ -20,6 +20,7 @@
                 "purchaseOrder": "Purchase Order",
                 "location": "Location",
                 "weeklyNiggleSnapshot": "Weekly Niggle Snapshot",
+                "emailSubscription": "Email Subscription",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

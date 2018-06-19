@@ -57,6 +57,9 @@ public class WeeklyNiggleSnapshotResourceIntTest {
     private static final Integer DEFAULT_COUNT = 1;
     private static final Integer UPDATED_COUNT = 2;
 
+    private static final Integer DEFAULT_AGE_OF_OLDEST = 1;
+    private static final Integer UPDATED_AGE_OF_OLDEST = 2;
+
     @Autowired
     private WeeklyNiggleSnapshotRepository weeklyNiggleSnapshotRepository;
 
@@ -104,7 +107,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
             .weekEndingOn(DEFAULT_WEEK_ENDING_ON)
             .status(DEFAULT_STATUS)
             .priority(DEFAULT_PRIORITY)
-            .count(DEFAULT_COUNT);
+            .count(DEFAULT_COUNT)
+            .ageOfOldest(DEFAULT_AGE_OF_OLDEST);
         return weeklyNiggleSnapshot;
     }
 
@@ -132,6 +136,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
         assertThat(testWeeklyNiggleSnapshot.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testWeeklyNiggleSnapshot.getPriority()).isEqualTo(DEFAULT_PRIORITY);
         assertThat(testWeeklyNiggleSnapshot.getCount()).isEqualTo(DEFAULT_COUNT);
+        assertThat(testWeeklyNiggleSnapshot.getAgeOfOldest()).isEqualTo(DEFAULT_AGE_OF_OLDEST);
     }
 
     @Test
@@ -167,7 +172,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
             .andExpect(jsonPath("$.[*].weekEndingOn").value(hasItem(DEFAULT_WEEK_ENDING_ON.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
-            .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT)));
+            .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT)))
+            .andExpect(jsonPath("$.[*].ageOfOldest").value(hasItem(DEFAULT_AGE_OF_OLDEST)));
     }
 
     @Test
@@ -184,7 +190,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
             .andExpect(jsonPath("$.weekEndingOn").value(DEFAULT_WEEK_ENDING_ON.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY.toString()))
-            .andExpect(jsonPath("$.count").value(DEFAULT_COUNT));
+            .andExpect(jsonPath("$.count").value(DEFAULT_COUNT))
+            .andExpect(jsonPath("$.ageOfOldest").value(DEFAULT_AGE_OF_OLDEST));
     }
 
     @Test
@@ -396,6 +403,72 @@ public class WeeklyNiggleSnapshotResourceIntTest {
         defaultWeeklyNiggleSnapshotShouldBeFound("count.lessThan=" + UPDATED_COUNT);
     }
 
+
+    @Test
+    @Transactional
+    public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsEqualToSomething() throws Exception {
+        // Initialize the database
+        weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest equals to DEFAULT_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldBeFound("ageOfOldest.equals=" + DEFAULT_AGE_OF_OLDEST);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest equals to UPDATED_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldNotBeFound("ageOfOldest.equals=" + UPDATED_AGE_OF_OLDEST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsInShouldWork() throws Exception {
+        // Initialize the database
+        weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest in DEFAULT_AGE_OF_OLDEST or UPDATED_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldBeFound("ageOfOldest.in=" + DEFAULT_AGE_OF_OLDEST + "," + UPDATED_AGE_OF_OLDEST);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest equals to UPDATED_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldNotBeFound("ageOfOldest.in=" + UPDATED_AGE_OF_OLDEST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest is not null
+        defaultWeeklyNiggleSnapshotShouldBeFound("ageOfOldest.specified=true");
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest is null
+        defaultWeeklyNiggleSnapshotShouldNotBeFound("ageOfOldest.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest greater than or equals to DEFAULT_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldBeFound("ageOfOldest.greaterOrEqualThan=" + DEFAULT_AGE_OF_OLDEST);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest greater than or equals to UPDATED_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldNotBeFound("ageOfOldest.greaterOrEqualThan=" + UPDATED_AGE_OF_OLDEST);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsLessThanSomething() throws Exception {
+        // Initialize the database
+        weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest less than or equals to DEFAULT_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldNotBeFound("ageOfOldest.lessThan=" + DEFAULT_AGE_OF_OLDEST);
+
+        // Get all the weeklyNiggleSnapshotList where ageOfOldest less than or equals to UPDATED_AGE_OF_OLDEST
+        defaultWeeklyNiggleSnapshotShouldBeFound("ageOfOldest.lessThan=" + UPDATED_AGE_OF_OLDEST);
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -407,7 +480,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
             .andExpect(jsonPath("$.[*].weekEndingOn").value(hasItem(DEFAULT_WEEK_ENDING_ON.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
-            .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT)));
+            .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT)))
+            .andExpect(jsonPath("$.[*].ageOfOldest").value(hasItem(DEFAULT_AGE_OF_OLDEST)));
     }
 
     /**
@@ -446,7 +520,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
             .weekEndingOn(UPDATED_WEEK_ENDING_ON)
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
-            .count(UPDATED_COUNT);
+            .count(UPDATED_COUNT)
+            .ageOfOldest(UPDATED_AGE_OF_OLDEST);
 
         restWeeklyNiggleSnapshotMockMvc.perform(put("/api/weekly-niggle-snapshots")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -461,6 +536,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
         assertThat(testWeeklyNiggleSnapshot.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testWeeklyNiggleSnapshot.getPriority()).isEqualTo(UPDATED_PRIORITY);
         assertThat(testWeeklyNiggleSnapshot.getCount()).isEqualTo(UPDATED_COUNT);
+        assertThat(testWeeklyNiggleSnapshot.getAgeOfOldest()).isEqualTo(UPDATED_AGE_OF_OLDEST);
     }
 
     @Test

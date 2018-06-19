@@ -15,26 +15,22 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity WeeklyNiggleSnapshot.
+        Added the entity EmailSubscription.
     -->
-    <changeSet id="20180619050305-1" author="jhipster">
-        <createTable tableName="weekly_niggle_snapshot">
+    <changeSet id="20180619221327-1" author="jhipster">
+        <createTable tableName="email_subscription">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="week_ending_on" type="date">
+            <column name="event" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="status" type="varchar(255)">
+            <column name="email" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="priority" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="count" type="integer">
+            <column name="recipient_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -44,8 +40,8 @@
     </changeSet>
     
     <!-- Added the entity audit columns -->
-    <changeSet id="20180619050305-audit-1" author="jhipster-entity-audit">
-        <addColumn tableName="weekly_niggle_snapshot">
+    <changeSet id="20180619221327-audit-1" author="jhipster-entity-audit">
+        <addColumn tableName="email_subscription">
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -57,12 +53,4 @@
         </addColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
-
-    <changeSet id="add-column-age-of-oldest" author="jason">
-        <addColumn tableName="weekly_niggle_snapshot">
-            <column name="age_of_oldest" type="integer">
-                <constraints nullable="true" />
-            </column>
-        </addColumn>
-    </changeSet>
 </databaseChangeLog>

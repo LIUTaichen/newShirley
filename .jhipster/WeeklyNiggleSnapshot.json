@@ -19,6 +19,10 @@
         {
             "fieldName": "count",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "ageOfOldest",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20180619050305",
