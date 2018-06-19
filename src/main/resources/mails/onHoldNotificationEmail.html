@@ -31,7 +31,11 @@
     </tr>
     <tr>
         <td th:text="#{email.onhold.dateOpened}">Date Opened</td>
-        <td th:text="${niggle?.dateOpened}">14/06/2018</td>
+        <td th:text="${niggle?.dateOpened != null} ? ${#dates.format(niggle?.dateOpened,'YYYY/MM/dd HH:mm')} : ''">14/06/2018</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.eta}">ETA</td>
+        <td th:text="${niggle?.eta != null} ? ${#dates.format(niggle?.eta,'YYYY/MM/dd HH:mm')} : ''">14/06/2018</td>
     </tr>
     <tr>
         <td th:text="#{email.onhold.quattraComments}">Quattra comments</td>
