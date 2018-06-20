@@ -12,7 +12,6 @@ import { FleetManagementNiggleModule } from './niggle/niggle.module';
 import { FleetManagementPlantLogModule } from './plant-log/plant-log.module';
 import { FleetManagementPurchaseOrderModule } from './purchase-order/purchase-order.module';
 import { FleetManagementLocationModule } from './location/location.module';
-import { FleetManagementWeeklyNiggleSnapshotModule } from './weekly-niggle-snapshot/weekly-niggle-snapshot.module';
 import { FleetManagementEmailSubscriptionModule } from './email-subscription/email-subscription.module';
 import { FleetManagementNiggleSnapshotModule } from './niggle-snapshot/niggle-snapshot.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */

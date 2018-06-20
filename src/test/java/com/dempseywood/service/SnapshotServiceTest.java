@@ -2,11 +2,11 @@ package com.dempseywood.service;
 
 import com.dempseywood.FleetManagementApp;
 import com.dempseywood.domain.Niggle;
-import com.dempseywood.domain.WeeklyNiggleSnapshot;
+import com.dempseywood.domain.NiggleSnapshot;
 import com.dempseywood.domain.enumeration.Priority;
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.repository.NiggleRepository;
-import com.dempseywood.repository.WeeklyNiggleSnapshotRepository;
+import com.dempseywood.repository.NiggleSnapshotRepository;
 import com.dempseywood.web.rest.NiggleResourceIntTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,35 +14,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.access.method.P;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalField;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FleetManagementApp.class)
 @Transactional
-public class WeeklySnapshotServiceTest {
+public class SnapshotServiceTest {
 
-    private final Logger log = LoggerFactory.getLogger(WeeklySnapshotServiceTest.class);
+    private final Logger log = LoggerFactory.getLogger(SnapshotServiceTest.class);
 
     @Autowired
-    private WeeklySnapshotService snapshotService;
+    private SnapshotService snapshotService;
     @Autowired
     private NiggleRepository niggleRepository;
 
     @Autowired
-    private WeeklyNiggleSnapshotRepository weeklyNiggleSnapshotRepository;
+    private NiggleSnapshotRepository niggleSnapshotRepository;
 
 
     @Autowired
@@ -82,10 +78,10 @@ public class WeeklySnapshotServiceTest {
         openHighNiggle.setDateCompleted(null);
         openHighNiggle.setDateClosed(null);
         niggleRepository.save(openHighNiggle);
-        List<WeeklyNiggleSnapshot> snapshots  = snapshotService.generateSnapshots();
+        List<NiggleSnapshot> snapshots  = snapshotService.generateSnapshots();
         assertThat(snapshots).isNotEmpty();
 
-        for(WeeklyNiggleSnapshot snapshot : snapshots){
+        for(NiggleSnapshot snapshot : snapshots){
             switch (snapshot.getStatus()) {
                 case OPEN:
                 case IN_PROGRESS:

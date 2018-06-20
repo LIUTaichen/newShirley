@@ -1,29 +1,26 @@
 package com.dempseywood.service;
 
 import com.dempseywood.domain.Niggle;
-import com.dempseywood.domain.WeeklyNiggleSnapshot;
+import com.dempseywood.domain.NiggleSnapshot;
 import com.dempseywood.domain.enumeration.Priority;
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.repository.NiggleRepository;
-import com.dempseywood.repository.WeeklyNiggleSnapshotRepository;
+import com.dempseywood.repository.NiggleSnapshotRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.time.*;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class WeeklySnapshotService {
+public class SnapshotService {
 
-    private final WeeklyNiggleSnapshotRepository weeklyNiggleSnapshotRepository;
+    private final NiggleSnapshotRepository NiggleSnapshotRepository;
     private final NiggleRepository niggleRepository;
 
 
-    public WeeklySnapshotService(WeeklyNiggleSnapshotRepository weeklyNiggleSnapshotRepository, NiggleRepository niggleRepository) {
-        this.weeklyNiggleSnapshotRepository = weeklyNiggleSnapshotRepository;
+    public SnapshotService(NiggleSnapshotRepository NiggleSnapshotRepository, NiggleRepository niggleRepository) {
+        this.NiggleSnapshotRepository = NiggleSnapshotRepository;
         this.niggleRepository = niggleRepository;
     }
 
@@ -32,15 +29,15 @@ public class WeeklySnapshotService {
         return localDate;
     }
 
-    public List<WeeklyNiggleSnapshot> generateSnapshots(){
-        List<WeeklyNiggleSnapshot> snapshots = new ArrayList<WeeklyNiggleSnapshot>();
+    public List<NiggleSnapshot> generateSnapshots(){
+        List<NiggleSnapshot> snapshots = new ArrayList<NiggleSnapshot>();
         LocalDate weekEndingOn = this.getWeekEndingOn();
 
         for(Status status: Status.values()){
             for(Priority priority : Priority.values()){
                 List<Niggle> niggles = niggleRepository.findByStatusAndPriority(status,priority);
-                WeeklyNiggleSnapshot snapshot = new WeeklyNiggleSnapshot();
-                snapshot.setWeekEndingOn(weekEndingOn);
+                NiggleSnapshot snapshot = new NiggleSnapshot();
+                snapshot.setDate(weekEndingOn);
                 snapshot.setStatus(status);
                 snapshot.setPriority(priority);
                 snapshot.setCount(niggles.size());
@@ -76,8 +73,8 @@ public class WeeklySnapshotService {
         return 0;
     }
     public void takeSnapshot(){
-        List<WeeklyNiggleSnapshot> snapshots  = this.generateSnapshots();
-        weeklyNiggleSnapshotRepository.save(snapshots);
+        List<NiggleSnapshot> snapshots  = this.generateSnapshots();
+        NiggleSnapshotRepository.save(snapshots);
     }
 
 }

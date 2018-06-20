@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 public class JobScheduler {
 
     private final LocationUpdateService locationUpdateService;
-    private final WeeklySnapshotService weeklySnapshotService;
+    private final SnapshotService snapshotService;
 
-    public JobScheduler(LocationUpdateService locationUpdateService, WeeklySnapshotService weeklySnapshotService) {
+    public JobScheduler(LocationUpdateService locationUpdateService, SnapshotService snapshotService) {
         this.locationUpdateService = locationUpdateService;
-        this.weeklySnapshotService = weeklySnapshotService;
+        this.snapshotService = snapshotService;
     }
 
     @Scheduled(fixedRate = 1000 * 60 * 2)
@@ -23,6 +23,6 @@ public class JobScheduler {
 
     @Scheduled(cron="0 0 1 * * *", zone="NZ")
     private void takeSnapshot(){
-        weeklySnapshotService.takeSnapshot();
+        snapshotService.takeSnapshot();
     }
 }

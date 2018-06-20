@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.domain.enumeration.Priority;
+
 /**
  * Test class for the NiggleSnapshotResource REST controller.
  *
@@ -98,7 +100,7 @@ public class NiggleSnapshotResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -119,6 +121,7 @@ public class NiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void createNiggleSnapshot() throws Exception {
         int databaseSizeBeforeCreate = niggleSnapshotRepository.findAll().size();
 
