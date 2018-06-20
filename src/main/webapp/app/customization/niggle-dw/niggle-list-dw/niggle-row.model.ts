@@ -1,4 +1,4 @@
-import { Status, Priority, Niggle} from '../../../entities/niggle/niggle.model';
+import { Niggle} from '../../../entities/niggle/niggle.model';
 
 export class NiggleRow extends Niggle {
     constructor(

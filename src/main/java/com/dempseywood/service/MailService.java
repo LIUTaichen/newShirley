@@ -22,6 +22,9 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import javax.mail.internet.MimeMessage;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.stream.Collector;
 
@@ -40,6 +43,8 @@ public class MailService {
     private static final String NIGGLE = "niggle";
 
     private static final String BASE_URL = "baseUrl";
+
+    private static final String FORMATTER = "formatter";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -132,6 +137,11 @@ public class MailService {
         context.setVariable(NIGGLE, niggle);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         context.setVariable(USER, username);
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDateTime( FormatStyle.MEDIUM )
+                .withLocale( Locale.ENGLISH )
+                .withZone( ZoneId.of("NZ") );
+        context.setVariable(FORMATTER, formatter);
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         //String[] to =

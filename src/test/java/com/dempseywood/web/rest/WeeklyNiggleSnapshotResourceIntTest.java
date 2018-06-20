@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.dempseywood.domain.enumeration.Status;
 import com.dempseywood.domain.enumeration.Priority;
+
 /**
  * Test class for the WeeklyNiggleSnapshotResource REST controller.
  *
@@ -98,7 +100,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -119,6 +121,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void createWeeklyNiggleSnapshot() throws Exception {
         int databaseSizeBeforeCreate = weeklyNiggleSnapshotRepository.findAll().size();
 
@@ -141,6 +144,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void createWeeklyNiggleSnapshotWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = weeklyNiggleSnapshotRepository.findAll().size();
 
@@ -159,7 +163,8 @@ public class WeeklyNiggleSnapshotResourceIntTest {
     }
 
     @Test
-    @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+
     public void getAllWeeklyNiggleSnapshots() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -178,6 +183,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getWeeklyNiggleSnapshot() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -196,6 +202,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByWeekEndingOnIsEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -209,6 +216,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByWeekEndingOnIsInShouldWork() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -222,6 +230,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByWeekEndingOnIsNullOrNotNull() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -235,6 +244,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByWeekEndingOnIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -248,6 +258,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByWeekEndingOnIsLessThanSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -262,6 +273,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByStatusIsEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -275,6 +287,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByStatusIsInShouldWork() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -288,6 +301,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByStatusIsNullOrNotNull() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -301,6 +315,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByPriorityIsEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -314,6 +329,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByPriorityIsInShouldWork() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -327,6 +343,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByPriorityIsNullOrNotNull() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -340,6 +357,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByCountIsEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -353,6 +371,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByCountIsInShouldWork() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -366,6 +385,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByCountIsNullOrNotNull() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -379,6 +399,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByCountIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -392,6 +413,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByCountIsLessThanSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -406,6 +428,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -419,6 +442,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsInShouldWork() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -432,6 +456,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsNullOrNotNull() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -445,6 +470,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -458,6 +484,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getAllWeeklyNiggleSnapshotsByAgeOfOldestIsLessThanSomething() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotRepository.saveAndFlush(weeklyNiggleSnapshot);
@@ -498,6 +525,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void getNonExistingWeeklyNiggleSnapshot() throws Exception {
         // Get the weeklyNiggleSnapshot
         restWeeklyNiggleSnapshotMockMvc.perform(get("/api/weekly-niggle-snapshots/{id}", Long.MAX_VALUE))
@@ -506,6 +534,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void updateWeeklyNiggleSnapshot() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotService.save(weeklyNiggleSnapshot);
@@ -541,6 +570,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void updateNonExistingWeeklyNiggleSnapshot() throws Exception {
         int databaseSizeBeforeUpdate = weeklyNiggleSnapshotRepository.findAll().size();
 
@@ -559,6 +589,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void deleteWeeklyNiggleSnapshot() throws Exception {
         // Initialize the database
         weeklyNiggleSnapshotService.save(weeklyNiggleSnapshot);
@@ -577,6 +608,7 @@ public class WeeklyNiggleSnapshotResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(WeeklyNiggleSnapshot.class);
         WeeklyNiggleSnapshot weeklyNiggleSnapshot1 = new WeeklyNiggleSnapshot();

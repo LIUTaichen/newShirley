@@ -11,6 +11,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -48,6 +49,7 @@ public class WeeklyNiggleSnapshotResource {
      */
     @PostMapping("/weekly-niggle-snapshots")
     @Timed
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<WeeklyNiggleSnapshot> createWeeklyNiggleSnapshot(@RequestBody WeeklyNiggleSnapshot weeklyNiggleSnapshot) throws URISyntaxException {
         log.debug("REST request to save WeeklyNiggleSnapshot : {}", weeklyNiggleSnapshot);
         if (weeklyNiggleSnapshot.getId() != null) {
@@ -70,6 +72,7 @@ public class WeeklyNiggleSnapshotResource {
      */
     @PutMapping("/weekly-niggle-snapshots")
     @Timed
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<WeeklyNiggleSnapshot> updateWeeklyNiggleSnapshot(@RequestBody WeeklyNiggleSnapshot weeklyNiggleSnapshot) throws URISyntaxException {
         log.debug("REST request to update WeeklyNiggleSnapshot : {}", weeklyNiggleSnapshot);
         if (weeklyNiggleSnapshot.getId() == null) {
@@ -117,6 +120,7 @@ public class WeeklyNiggleSnapshotResource {
      */
     @DeleteMapping("/weekly-niggle-snapshots/{id}")
     @Timed
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> deleteWeeklyNiggleSnapshot(@PathVariable Long id) {
         log.debug("REST request to delete WeeklyNiggleSnapshot : {}", id);
         weeklyNiggleSnapshotService.delete(id);
