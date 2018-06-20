@@ -1,0 +1,42 @@
+
+<div *ngIf="niggleSnapshot">
+    <h2><span jhiTranslate="fleetManagementApp.niggleSnapshot.detail.title">Niggle Snapshot</span> {{niggleSnapshot.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.niggleSnapshot.date">Date</span></dt>
+        <dd>
+            <span>{{niggleSnapshot.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.niggleSnapshot.status">Status</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.Status.' + niggleSnapshot.status}}">{{niggleSnapshot.status}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.niggleSnapshot.priority">Priority</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.Priority.' + niggleSnapshot.priority}}">{{niggleSnapshot.priority}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.niggleSnapshot.count">Count</span></dt>
+        <dd>
+            <span>{{niggleSnapshot.count}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.niggleSnapshot.ageOfOldest">Age Of Oldest</span></dt>
+        <dd>
+            <span>{{niggleSnapshot.ageOfOldest}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'niggle-snapshot/'+ niggleSnapshot.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

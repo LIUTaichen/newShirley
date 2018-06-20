@@ -145,8 +145,8 @@ entity PurchaseOrder{
     orderNumber String
 }
 
-entity WeeklyNiggleSnapshot{
-    weekEndingOn LocalDate,
+entity NiggleSnapshot{
+    date LocalDate,
     status Status,
     priority Priority,
     count Integer,
@@ -199,5 +199,5 @@ enum MaintenanceGroup {
 
 filter Niggle
 filter Plant
-filter WeeklyNiggleSnapshot
+filter NiggleSnapshot
 
