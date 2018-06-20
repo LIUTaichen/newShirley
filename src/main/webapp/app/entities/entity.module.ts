@@ -14,6 +14,7 @@ import { FleetManagementPurchaseOrderModule } from './purchase-order/purchase-or
 import { FleetManagementLocationModule } from './location/location.module';
 import { FleetManagementWeeklyNiggleSnapshotModule } from './weekly-niggle-snapshot/weekly-niggle-snapshot.module';
 import { FleetManagementEmailSubscriptionModule } from './email-subscription/email-subscription.module';
+import { FleetManagementNiggleSnapshotModule } from './niggle-snapshot/niggle-snapshot.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -32,6 +33,7 @@ import { FleetManagementEmailSubscriptionModule } from './email-subscription/ema
         FleetManagementLocationModule,
         FleetManagementWeeklyNiggleSnapshotModule,
         FleetManagementEmailSubscriptionModule,
+        FleetManagementNiggleSnapshotModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

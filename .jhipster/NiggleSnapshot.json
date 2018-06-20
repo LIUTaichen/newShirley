@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "SUBMITTED,OPEN,WINTER_WORK,IN_PROGRESS,ON_HOLD,COMPLETED,CLOSED,TBR"
+        },
+        {
+            "fieldName": "priority",
+            "fieldType": "Priority",
+            "fieldValues": "LOW,MEDIUM,HIGH"
+        },
+        {
+            "fieldName": "count",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "ageOfOldest",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180620213222",
+    "entityTableName": "niggle_snapshot",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "enableEntityAudit": true
+}

@@ -21,6 +21,7 @@
                 "location": "Location",
                 "weeklyNiggleSnapshot": "Weekly Niggle Snapshot",
                 "emailSubscription": "Email Subscription",
+                "niggleSnapshot": "Niggle Snapshot",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
