@@ -98,3 +98,7 @@
 .footer-count{
   padding: 10px;
 }
+
+.mat-column-description {
+  flex: 5;
+}
