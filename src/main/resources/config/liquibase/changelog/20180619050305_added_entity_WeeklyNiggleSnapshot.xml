@@ -40,9 +40,9 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
-    
+
     <!-- Added the entity audit columns -->
     <changeSet id="20180619050305-audit-1" author="jhipster-entity-audit">
         <addColumn tableName="weekly_niggle_snapshot">
@@ -64,5 +64,9 @@
                 <constraints nullable="true" />
             </column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="drop-weekly-snapshot" author="jason">
+        <dropTable  tableName="weekly_niggle_snapshot"/>
     </changeSet>
 </databaseChangeLog>

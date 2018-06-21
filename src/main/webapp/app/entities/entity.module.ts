@@ -30,7 +30,6 @@ import { FleetManagementNiggleSnapshotModule } from './niggle-snapshot/niggle-sn
         FleetManagementPlantLogModule,
         FleetManagementPurchaseOrderModule,
         FleetManagementLocationModule,
-        FleetManagementWeeklyNiggleSnapshotModule,
         FleetManagementEmailSubscriptionModule,
         FleetManagementNiggleSnapshotModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */

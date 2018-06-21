@@ -8,6 +8,7 @@ import com.dempseywood.repository.NiggleRepository;
 import com.dempseywood.repository.NiggleSnapshotRepository;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,8 @@ public class SnapshotService {
         }
         return 0;
     }
+
+    @PostConstruct
     public void takeSnapshot(){
         List<NiggleSnapshot> snapshots  = this.generateSnapshots();
         NiggleSnapshotRepository.save(snapshots);
