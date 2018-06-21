@@ -38,7 +38,7 @@ export class NiggleUtilService {
 
   getDateOfEndOfCurrentWeek(): Date {
     const currentMoment = moment(new Date());
-    let daysToAdd = 2 - currentMoment.weekday();
+    let daysToAdd = 1 - currentMoment.weekday();
     if (daysToAdd < 0) {
       // add 7 days if current date falls on tuesday to Saturday
       daysToAdd += 7;
@@ -60,6 +60,15 @@ export class NiggleUtilService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  isCountedAsOpen(niggle: Niggle) {
+    if (!niggle.dateOpened) {
+      return false;
+    }
+    if (niggle.status.toString() === 'OPEN' || niggle.status.toString() === 'IN_PROGRESS' || niggle.status.toString() === 'ON_HOLD') {
+      return true;
     }
   }
 
