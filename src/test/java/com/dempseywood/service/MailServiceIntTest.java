@@ -4,8 +4,8 @@ import com.dempseywood.config.Constants;
 
 import com.dempseywood.FleetManagementApp;
 import com.dempseywood.domain.*;
+import com.dempseywood.repository.EmailSubscriptionRepository;
 import io.github.jhipster.config.JHipsterProperties;
-import javafx.application.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +21,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import javax.mail.Address;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -55,13 +55,16 @@ public class MailServiceIntTest {
     @Autowired
     private ApplicationProperties applicationProperties;
 
+    @Autowired
+    private EmailSubscriptionRepository emailSubscriptionRepository;
+
     private MailService mailService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, applicationProperties);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, applicationProperties, emailSubscriptionRepository);
     }
 
     @Test
@@ -204,6 +207,11 @@ public class MailServiceIntTest {
         niggle.setPlant(plant);
         niggle.setPurchaseOrder(po);
         niggle.setAssignedContractor(mc);
+        niggle.setEta(Instant.now());
+        niggle.setDescription("Engine not starting");
+        niggle.setDateOpened(Instant.now());
+        niggle.setQuattraComments("waiting for parts from Japan");
+        niggle.setQuattraReference("A3332");
         mailService.sendOnHoldNotificationMail(niggle, "john");
 
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
@@ -237,6 +245,8 @@ public class MailServiceIntTest {
 
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
         MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        Address[] addresses = message.getAllRecipients();
+        String recipient = message.getAllRecipients()[0].toString();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(applicationProperties.getNotification().getHighPriority().getTo());
         assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
         assertThat(message.getContent().toString()).isNotEmpty();

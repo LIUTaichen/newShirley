@@ -1,0 +1,34 @@
+
+<div *ngIf="emailSubscription">
+    <h2><span jhiTranslate="fleetManagementApp.emailSubscription.detail.title">Email Subscription</span> {{emailSubscription.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.emailSubscription.event">Event</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.Event.' + emailSubscription.event}}">{{emailSubscription.event}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.emailSubscription.email">Email</span></dt>
+        <dd>
+            <span>{{emailSubscription.email}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.emailSubscription.recipientType">Recipient Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'fleetManagementApp.RecipientType.' + emailSubscription.recipientType}}">{{emailSubscription.recipientType}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'email-subscription/'+ emailSubscription.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

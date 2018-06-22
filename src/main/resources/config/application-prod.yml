@@ -127,3 +127,8 @@ jhipster:
 # ===================================================================
 
 application:
+    notification:
+        onHold:
+            to: ivan.nortje@dempseywood.co.nz
+        highPriority:
+            to: jason.liu@dempseywood.co.nz

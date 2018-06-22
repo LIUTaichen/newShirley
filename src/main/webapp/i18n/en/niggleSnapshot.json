@@ -1,0 +1,26 @@
+
+{
+    "fleetManagementApp": {
+        "niggleSnapshot" : {
+            "home": {
+                "title": "Niggle Snapshots",
+                "createLabel": "Create a new Niggle Snapshot",
+                "createOrEditLabel": "Create or edit a Niggle Snapshot"
+            },
+            "created": "A new Niggle Snapshot is created with identifier {{ param }}",
+            "updated": "A Niggle Snapshot is updated with identifier {{ param }}",
+            "deleted": "A Niggle Snapshot is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Niggle Snapshot {{ id }}?"
+            },
+            "detail": {
+                "title": "Niggle Snapshot"
+            },
+            "date": "Date",
+            "status": "Status",
+            "priority": "Priority",
+            "count": "Count",
+            "ageOfOldest": "Age Of Oldest"
+        }
+    }
+}
