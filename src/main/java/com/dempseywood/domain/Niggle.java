@@ -57,6 +57,9 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "date_closed")
     private Instant dateClosed;
 
+    @Column(name = "date_completed")
+    private Instant dateCompleted;
+
     @Column(name = "eta")
     private Instant eta;
 
@@ -196,6 +199,19 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
         this.dateClosed = dateClosed;
     }
 
+    public Instant getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public Niggle dateCompleted(Instant dateCompleted) {
+        this.dateCompleted = dateCompleted;
+        return this;
+    }
+
+    public void setDateCompleted(Instant dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
     public Instant getEta() {
         return eta;
     }
@@ -282,6 +298,7 @@ public class Niggle extends AbstractAuditingEntity implements Serializable {
             ", invoiceNo='" + getInvoiceNo() + "'" +
             ", dateOpened='" + getDateOpened() + "'" +
             ", dateClosed='" + getDateClosed() + "'" +
+            ", dateCompleted='" + getDateCompleted() + "'" +
             ", eta='" + getEta() + "'" +
             "}";
     }

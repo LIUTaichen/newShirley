@@ -110,6 +110,7 @@ entity Niggle{
 	invoiceNo String,
     dateOpened Instant,
     dateClosed Instant,
+    dateCompleted Instant,
     eta Instant
 }
 
@@ -144,6 +145,31 @@ entity PurchaseOrder{
     orderNumber String
 }
 
+entity NiggleSnapshot{
+    date LocalDate,
+    status Status,
+    priority Priority,
+    count Integer,
+    ageOfOldest Integer
+}
+
+entity EmailSubscription {
+    event Event,
+    email String,
+    recipientType RecipientType
+}
+
+enum Event {
+    ON_HOLD,
+    HIGH_PRIORITY
+}
+
+enum RecipientType {
+    TO,
+    CC,
+    BCC
+}
+
 relationship ManyToOne {
 	Plant{category} to Category,
     Plant{owner} to Company,
@@ -168,6 +194,10 @@ enum MaintenanceGroup {
     WHITE_FLEET
 }
 
+
+
+
 filter Niggle
 filter Plant
+filter NiggleSnapshot
 

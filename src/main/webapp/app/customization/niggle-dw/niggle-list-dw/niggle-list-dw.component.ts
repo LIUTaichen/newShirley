@@ -208,10 +208,11 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   convertEntityToRow(niggle: Niggle): NiggleRow {
     const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor, orderNo;
+    let fleetId, plantDesctiption, plantCategory, siteAndName, location, locationUpdateTime, owner, contractor, orderNo;
     if (niggle.plant) {
       const plant: Plant = niggle.plant;
       fleetId = plant.fleetId;
+      plantCategory = plant.category ? plant.category['category'] : '';
       plantDesctiption = plant.description;
       siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
       location = plant.location ? plant.location['address'] : '';
@@ -220,6 +221,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
     orderNo = niggle.purchaseOrder ? niggle.purchaseOrder['orderNumber'] : '';
+
     const priorityOrder: any = Priority[niggle.priority];
     const niggleRow: NiggleRow = {
       id: niggle.id,
@@ -232,10 +234,12 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       quattraReference: niggle.quattraReference,
       quattraComments: niggle.quattraComments,
       dateOpened: niggle.dateOpened,
+      dateCompleted: niggle.dateCompleted,
       dateUpdated: niggle.lastModifiedDate,
       dateClosed: niggle.dateClosed,
       plantNumber: fleetId,
       plantDescription: plantDesctiption,
+      plantCategory,
       site: siteAndName,
       location,
       locationUpdateTime,

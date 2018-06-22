@@ -25,6 +25,7 @@
             "invoiceNo": "Invoice No",
             "dateOpened": "Date Opened",
             "dateClosed": "Date Closed",
+            "dateCompleted": "Date Completed",
             "eta": "Eta",
             "purchaseOrder": "Purchase Order",
             "plant": "Plant",

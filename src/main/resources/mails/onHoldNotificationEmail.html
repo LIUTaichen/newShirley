@@ -9,7 +9,7 @@
 <p th:text="#{email.onhold.greeting}">
     Hi Fleet team,
 </p>
-<p th:text="#{email.onhold.summary(${niggle?.assignedContractor?.name}, ${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')} )}">
+<p th:text="#{email.onhold.summary(${niggle?.assignedContractor?.name}, ${#dates.createNowForTimeZone('NZ')}  )}">
     Please be notified that a plant fault is put on hold by the assigned contractor Quattra at 12:01 18/06/2018.
 </p>
 <table>
@@ -31,7 +31,11 @@
     </tr>
     <tr>
         <td th:text="#{email.onhold.dateOpened}">Date Opened</td>
-        <td th:text="${niggle?.dateOpened}">14/06/2018</td>
+        <td th:text="${niggle?.dateOpened != null} ? ${formatter.format(niggle?.dateOpened)} : ''">14/06/2018</td>
+    </tr>
+    <tr>
+        <td th:text="#{email.onhold.eta}">ETA</td>
+        <td th:text="${niggle?.eta != null} ? ${formatter.format(niggle?.eta)} : ''">14/06/2018</td>
     </tr>
     <tr>
         <td th:text="#{email.onhold.quattraComments}">Quattra comments</td>

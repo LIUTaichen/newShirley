@@ -15,19 +15,21 @@
                 {{option.fleetId }}
             </mat-option>
         </mat-autocomplete>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Plant description" value="{{niggleRow.plantDescription}}" disabled="true">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Plant category" value="{{niggleRow.plantCategory}}" disabled="true">
+            </mat-form-field>
+
+        </div>
         <mat-form-field>
             <textarea matInput placeholder="Repairs Needed" formControlName="description" matTextareaAutosize matAutosizeMinRows="2"
                 matAutosizeMaxRows="5" cdkFocusInitial></textarea>
         </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Created by" value="{{niggleRow.createdBy}}" disabled="true">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Created at" value="{{niggleRow.createdDate | date:'medium'}}" disabled="true">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Location updated at" value="{{niggleRow.locationUpdateTime | date:'medium'}}" disabled="true">
-        </mat-form-field>
+
         <mat-form-field>
             <mat-select placeholder="Priority" formControlName="priority">
                 <mat-option value="LOW">LOW</mat-option>
@@ -57,6 +59,27 @@
         <mat-form-field>
             <textarea matInput placeholder="Additional Note" formControlName="note"></textarea>
         </mat-form-field>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Created by" value="{{niggleRow.createdBy}}" disabled="true">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Created at" value="{{niggleRow.createdDate | date:'medium'}}" disabled="true">
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <input matInput placeholder="Location updated at" value="{{niggleRow.locationUpdateTime | date:'medium'}}" disabled="true">
+        </mat-form-field>
+        <div>
+            <mat-form-field *ngIf="niggleRow.dateCompleted">
+                <input matInput placeholder="Completed at" value="{{niggleRow.dateCompleted | date:'medium'}}" disabled="true">
+            </mat-form-field>
+            <mat-form-field *ngIf="niggleRow.eta">
+                <input matInput placeholder="Completed at" value="{{niggleRow.dateCompleted | date:'medium'}}" disabled="true">
+            </mat-form-field>
+        </div>
+
         <mat-dialog-actions class="action">
             <button *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_DW']" mat-raised-button type="submit" color="primary" [disabled]="!niggleForm.valid || isSaving">SAVE</button>
             <button mat-button type="button" (click)="onCancel()">Cancel</button>
