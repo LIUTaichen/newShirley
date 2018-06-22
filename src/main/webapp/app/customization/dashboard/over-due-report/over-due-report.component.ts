@@ -27,10 +27,18 @@ export class OverDueReportComponent implements OnInit {
     let mediumOverDue = 0;
     let lowOpen = 0;
     let lowOverDue = 0;
-    this.niggles.map((niggle) => {
-      if (niggle.status.toString() !== 'OPEN') {
-        return;
+    this.niggles.filter((niggle) => {
+      if (!niggle.status) {
+        return false;
       }
+      if (!niggle.priority) {
+        return false;
+      }
+      if (niggle.status.toString() !== 'OPEN' && niggle.status.toString() !== 'IN_PROGRESS' && niggle.status.toString() !== 'ON_HOLD') {
+        return false;
+      }
+      return true;
+    }).map((niggle) => {
       if (niggle.priority.toString() === 'HIGH') {
         highOpen++;
         if (this.niggleUtilService.isOverDue(niggle)) {

@@ -18,7 +18,7 @@ export class NiggleUtilService {
     if (!niggle.priority || !niggle.dateOpened) {
       return false;
     }
-    if (niggle.status.toString() !== 'OPEN') {
+    if (niggle.status.toString() !== 'OPEN' && niggle.status.toString() !== 'IN_PROGRESS' && niggle.status.toString() !== 'ON_HOLD') {
       return false;
     }
     const currentMoment = moment(new Date());
