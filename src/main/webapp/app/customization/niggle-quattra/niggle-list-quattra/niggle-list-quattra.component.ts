@@ -42,6 +42,9 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   completedRows: NiggleRow[] = new Array<NiggleRow>();
   // allowedStatus: Status[] = [Status.OPEN, Status.ON_HOLD, Status.IN_PROGRESS, Status.COMPLETED];
   allowedStatus: string[] = ['OPEN', 'ON_HOLD', 'IN_PROGRESS', 'COMPLETED'];
+  queryParams: any =  {
+    'status.in' : this.allowedStatus
+  };
 
   constructor(
     private niggleService: NiggleService,
@@ -52,7 +55,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   ) { }
 
   loadAll() {
-    this.niggleService.query().subscribe(
+    this.niggleService.query(this.queryParams).subscribe(
       (res: HttpResponse<Niggle[]>) => {
         this.niggles = res.body;
         const authorisedNiggles = this.niggles.filter((niggle) => this.isAuthorised(niggle)

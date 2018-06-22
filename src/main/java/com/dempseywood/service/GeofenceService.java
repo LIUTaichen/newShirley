@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Profile("prod")
 public class GeofenceService {
 
     private BlackhawkSessionIdService blackhawkSessionIdService;

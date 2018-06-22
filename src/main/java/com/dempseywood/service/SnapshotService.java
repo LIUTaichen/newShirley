@@ -74,7 +74,6 @@ public class SnapshotService {
         return 0;
     }
 
-    @PostConstruct
     public void takeSnapshot(){
         List<NiggleSnapshot> snapshots  = this.generateSnapshots();
         NiggleSnapshotRepository.save(snapshots);

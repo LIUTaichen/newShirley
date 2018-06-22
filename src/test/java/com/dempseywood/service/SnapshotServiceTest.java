@@ -50,7 +50,7 @@ public class SnapshotServiceTest {
         LocalDate localDate = snapshotService.getWeekEndingOn();
         log.info(localDate.toString());
         assertThat(localDate).isNotNull();
-
+        niggleSnapshotRepository.deleteAll();
     }
 
     @Test

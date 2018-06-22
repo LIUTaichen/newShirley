@@ -19,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 
 @Service
-@Profile("prod")
 public class BlackhawkSessionIdService {
 
     private final Logger log = LoggerFactory.getLogger(BlackhawkSessionIdService.class);

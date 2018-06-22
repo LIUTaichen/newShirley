@@ -102,7 +102,7 @@ export class OpenReportComponent implements OnInit {
     let dateOpenedOfOldsest = new Date();
     const startOfWeek = moment(week).add(-1, 'weeks').toDate();
     this.niggles.map((niggle) => {
-      if (this.niggleUtilService.isOpenAtDate(niggle, week)) {
+      if (this.niggleUtilService.isCountedAsOpen(niggle)) {
         totalOpen++;
       }
       if (niggle.dateClosed && niggle.dateClosed > startOfWeek && niggle.dateClosed < week) {

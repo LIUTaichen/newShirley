@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Profile("prod")
 public class LocationUpdateService {
 
     private BlackhawkSessionIdService blackhawkSessionIdService;
