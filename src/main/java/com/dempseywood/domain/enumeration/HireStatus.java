@@ -4,5 +4,5 @@ package com.dempseywood.domain.enumeration;
  * The HireStatus enumeration.
  */
 public enum HireStatus {
-    ONHIRE, OFFHIRE
+    ONHIRE, OFFHIRE, OFFBREAK, OFFSEASO
 }

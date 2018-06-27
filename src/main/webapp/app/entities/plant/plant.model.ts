@@ -7,7 +7,9 @@ export const enum MeterUnit {
 
 export const enum HireStatus {
     'ONHIRE',
-    'OFFHIRE'
+    'OFFHIRE',
+    'OFFBREAK',
+    'OFFSEASO'
 }
 
 export class Plant implements BaseEntity {

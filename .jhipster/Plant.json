@@ -116,7 +116,7 @@
         {
             "fieldName": "hireStatus",
             "fieldType": "HireStatus",
-            "fieldValues": "ONHIRE,OFFHIRE"
+            "fieldValues": "ONHIRE,OFFHIRE,OFFBREAK,OFFSEASO"
         },
         {
             "fieldName": "gpsDeviceSerial",
