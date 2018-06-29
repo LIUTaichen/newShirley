@@ -83,8 +83,8 @@ public class UserServiceIntTest {
 
     @Test
     @Transactional
-    public void assertThatResetKeyMustNotBeOlderThan24Hours() {
-        Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
+    public void assertThatResetKeyMustNotBeOlderThan30Days() {
+        Instant daysAgo = Instant.now().minus(31, ChronoUnit.DAYS);
         String resetKey = RandomUtil.generateResetKey();
         user.setActivated(true);
         user.setResetDate(daysAgo);
@@ -99,7 +99,7 @@ public class UserServiceIntTest {
     @Test
     @Transactional
     public void assertThatResetKeyMustBeValid() {
-        Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
+        Instant daysAgo = Instant.now().minus(31, ChronoUnit.DAYS);
         user.setActivated(true);
         user.setResetDate(daysAgo);
         user.setResetKey("1234");

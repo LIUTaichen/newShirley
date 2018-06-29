@@ -61,7 +61,7 @@ public class UserService {
        log.debug("Reset user password for reset key {}", key);
 
        return userRepository.findOneByResetKey(key)
-           .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+           .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400 * 30)))
            .map(user -> {
                 user.setPassword(passwordEncoder.encode(newPassword));
                 user.setResetKey(null);

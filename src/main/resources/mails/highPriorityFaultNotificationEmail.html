@@ -9,7 +9,7 @@
 <p th:text="#{email.highPriority.greeting}">
     Hi Quattra,
 </p>
-<p th:text="#{email.highPriority.summary(${#dates.createNowForTimeZone('NZ')} )}">e
+<p th:text="#{email.highPriority.summary(${niggle?.dateOpened != null} ? ${formatter.format(niggle?.dateOpened)} : '')}">e
     Please be notified that a high priority plant fault is opened at 12:01 18/06/2018.
 </p>
 <table>
