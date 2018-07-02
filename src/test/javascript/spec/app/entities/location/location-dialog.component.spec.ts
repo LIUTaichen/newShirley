@@ -9,6 +9,7 @@ import { FleetManagementTestModule } from '../../../test.module';
 import { LocationDialogComponent } from '../../../../../../main/webapp/app/entities/location/location-dialog.component';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location/location.service';
 import { Location } from '../../../../../../main/webapp/app/entities/location/location.model';
+import { ProjectService } from '../../../../../../main/webapp/app/entities/project';
 
 describe('Component Tests', () => {
 
@@ -24,6 +25,7 @@ describe('Component Tests', () => {
                 imports: [FleetManagementTestModule],
                 declarations: [LocationDialogComponent],
                 providers: [
+                    ProjectService,
                     LocationService
                 ]
             })

@@ -183,7 +183,7 @@ relationship ManyToOne {
     Category{competency} to Competency,
     PlantLog{operator} to People,
     PlantLog{site} to Project
-
+    Location {project} to Project
 }
 
 relationship OneToOne {

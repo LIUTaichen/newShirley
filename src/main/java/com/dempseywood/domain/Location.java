@@ -44,6 +44,9 @@ public class Location implements Serializable {
     @Column(name = "provider")
     private String provider;
 
+    @ManyToOne
+    private Project project;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -155,6 +158,19 @@ public class Location implements Serializable {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public Location project(Project project) {
+        this.project = project;
+        return this;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
