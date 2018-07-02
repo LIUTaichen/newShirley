@@ -26,6 +26,7 @@
     <include file="config/liquibase/changelog/20180422232209_added_entity_constraints_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180422232215_added_entity_constraints_Niggle.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180422232216_added_entity_constraints_PlantLog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180528050859_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="config/liquibase/changelog/data_import.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

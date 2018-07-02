@@ -55,6 +55,13 @@
                 [(ngModel)]="location.provider" />
         </div>
 
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.location.project" for="field_project">Project</label>
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="location.project" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="projectOption.id === location.project?.id ? location.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.id}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

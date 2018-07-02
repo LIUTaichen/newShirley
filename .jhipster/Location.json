@@ -1,6 +1,13 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "otherEntityField": "id"
+        }
+    ],
     "fields": [
         {
             "fieldName": "latitude",
@@ -41,5 +48,5 @@
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
-    "enableEntityAudit": false
+    "enableEntityAudit": true
 }

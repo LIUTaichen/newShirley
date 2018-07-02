@@ -59,5 +59,14 @@
         <dropDefaultValue tableName="location" columnName="jhi_timestamp" columnDataType="datetime"/>
         
     </changeSet>
+    
+    <changeSet id="add-relationship-project" author="jason">
+        <addColumn tableName="location">
+            <column name="project_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+    
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

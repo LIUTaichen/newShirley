@@ -23,7 +23,8 @@
             "direction": "Direction",
             "speed": "Speed",
             "timestamp": "Timestamp",
-            "provider": "Provider"
+            "provider": "Provider",
+            "project": "Project"
         }
     }
 }
