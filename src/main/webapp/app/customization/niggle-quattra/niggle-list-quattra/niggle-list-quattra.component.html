@@ -50,11 +50,12 @@
                 </ng-container>
                 <ng-container matColumnDef="site">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Site </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.site}}</mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.site}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Location </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.location}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle" (mousedown)="$event.stopPropagation()"
+                    (click)="$event.stopPropagation()"> {{niggle.location}} <a target="_blank" href="{{niggle.googleLink}}"><i class="material-icons">search</i></a></mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="locationUpdateTime">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Location Update Time </mat-header-cell>

@@ -42,8 +42,8 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
   completedRows: NiggleRow[] = new Array<NiggleRow>();
   // allowedStatus: Status[] = [Status.OPEN, Status.ON_HOLD, Status.IN_PROGRESS, Status.COMPLETED];
   allowedStatus: string[] = ['OPEN', 'ON_HOLD', 'IN_PROGRESS', 'COMPLETED'];
-  queryParams: any =  {
-    'status.in' : this.allowedStatus
+  queryParams: any = {
+    'status.in': this.allowedStatus
   };
 
   constructor(
@@ -114,15 +114,18 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
 
   convertEntityToRow(niggle: Niggle): NiggleRow {
     const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor, orderNo;
+    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor, orderNo, googleLink;
     if (niggle.plant) {
       const plant: Plant = niggle.plant;
       fleetId = plant.fleetId;
       plantDesctiption = plant.description;
       siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
-      location = plant.location ? plant.location['address'] : '';
-      locationUpdateTime = plant.location ? plant.location['timestamp'] : '';
       owner = plant.owner ? plant.owner['company'] : '';
+      if (plant.location) {
+        location = plant.location['address'];
+        locationUpdateTime = plant.location['timestamp'];
+        googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
+      }
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
     orderNo = niggle.purchaseOrder ? niggle.purchaseOrder['orderNumber'] : '';
@@ -148,6 +151,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       owner,
       contractor,
       daysOpened: niggleDaysOpened,
+      googleLink,
       createdBy: niggle.createdBy,
       createdDate: niggle.createdDate,
       lastModifiedBy: niggle.lastModifiedBy,
