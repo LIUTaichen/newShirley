@@ -10,6 +10,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { NiggleRow } from '../../../niggle-dw/niggle-list-dw/niggle-row.model';
 
 @Component({
   selector: 'jhi-edit-dialog-quattra',
@@ -19,6 +20,7 @@ import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 export class EditDialogQuattraComponent implements OnInit {
 
   niggle: Niggle;
+  niggleRow: NiggleRow;
   niggleForm: FormGroup;
   maintenancecontractors: MaintenanceContractor[];
   isSaving: boolean;
@@ -32,6 +34,7 @@ export class EditDialogQuattraComponent implements OnInit {
     private eventManager: JhiEventManager,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.niggle = data.niggle;
+    this.niggleRow = data.niggleRow;
   }
 
   createForm() {

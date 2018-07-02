@@ -15,15 +15,16 @@
                 {{option.fleetId }}
             </mat-option>
         </mat-autocomplete>
+        <mat-form-field>
+            <input matInput placeholder="Plant description" value="{{niggleRow.plantDescription}}" disabled="true">
+        </mat-form-field>
         <div>
-            <mat-form-field>
-                <input matInput placeholder="Plant description" value="{{niggleRow.plantDescription}}" disabled="true">
-            </mat-form-field>
-
             <mat-form-field>
                 <input matInput placeholder="Plant category" value="{{niggleRow.plantCategory}}" disabled="true">
             </mat-form-field>
-
+            <mat-form-field>
+                <input matInput placeholder="Plant Owner" value="{{niggleRow.owner}}" disabled="true">
+            </mat-form-field>
         </div>
         <mat-form-field>
             <textarea matInput placeholder="Repairs Needed" formControlName="description" matTextareaAutosize matAutosizeMinRows="2"
@@ -65,20 +66,20 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput placeholder="Created at" value="{{niggleRow.createdDate | date:'medium'}}" disabled="true">
+                <input matInput placeholder="Created at" value="{{niggleRow.createdDate | date:'dd/MM/yyyy HH:ss'}}" disabled="true">
             </mat-form-field>
         </div>
         <div>
             <mat-form-field *ngIf="niggleRow.locationUpdateTime">
-                <input matInput placeholder="Location updated at" value="{{niggleRow.locationUpdateTime | date:'medium'}}" disabled="true">
+                <input matInput placeholder="Location updated at" value="{{niggleRow.locationUpdateTime | date:'dd/MM/yyyy HH:ss'}}" disabled="true">
             </mat-form-field>
         </div>
         <div>
             <mat-form-field *ngIf="niggleRow.dateCompleted">
-                <input matInput placeholder="Completed at" value="{{niggleRow.dateCompleted | date:'MM/dd/yyyy'}}" disabled="true">
+                <input matInput placeholder="Completed at" value="{{niggleRow.dateCompleted | date:'mediumDate'}}" disabled="true">
             </mat-form-field>
             <mat-form-field *ngIf="niggleRow.eta">
-                <input matInput placeholder="ETA" value="{{niggleRow.eta | date:'MM/dd/yyyy'}}" disabled="true">
+                <input matInput placeholder="ETA" value="{{niggleRow.eta | date:'mediumDate'}}" disabled="true">
             </mat-form-field>
         </div>
 

@@ -8,6 +8,17 @@
             <textarea matInput placeholder="Repairs Needed" formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field>
+            <input matInput placeholder="Plant description" value="{{niggleRow.plantDescription}}" disabled="true">
+        </mat-form-field>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Plant category" value="{{niggleRow.plantCategory}}" disabled="true">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Plant Owner" value="{{niggleRow.owner}}" disabled="true">
+            </mat-form-field>
+        </div>
+        <mat-form-field>
             <mat-select placeholder="Priority" formControlName="priority">
                 <mat-option value="LOW">LOW</mat-option>
                 <mat-option value="MEDIUM">MEDIUM</mat-option>

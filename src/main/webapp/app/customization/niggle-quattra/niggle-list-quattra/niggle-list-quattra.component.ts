@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
-import { Plant } from '../../../entities/plant/plant.model';
+import { Niggle } from '../../../entities/niggle/niggle.model';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Principal } from '../../../shared';
 import { NiggleRow } from '../../niggle-dw/niggle-list-dw/niggle-row.model';
@@ -11,7 +10,7 @@ import { NiggleService } from '../../../entities/niggle/niggle.service';
 import { CreateDialogQuattraComponent } from './create-dialog-quattra/create-dialog-quattra.component';
 import { EditDialogQuattraComponent } from './edit-dialog-quattra/edit-dialog-quattra.component';
 import { DeleteDialogQuattraComponent } from './delete-dialog-quattra/delete-dialog-quattra.component';
-import { Project } from '../../../entities/project';
+import { NiggleUtilService } from '../../niggle-util.service';
 
 @Component({
   selector: 'jhi-niggle-list-quattra',
@@ -62,10 +61,10 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
         const authorisedNiggles = this.niggles.filter((niggle) => this.isAuthorised(niggle)
           , this);
 
-        this.niggleRows = authorisedNiggles.map(this.convertEntityToRow, this);
-        this.whiteRows = authorisedNiggles.filter((niggle) => this.isWhite(niggle)).map(this.convertEntityToRow, this);
-        this.yellowRows = authorisedNiggles.filter((niggle) => this.isYellow(niggle)).map(this.convertEntityToRow, this);
-        this.completedRows = authorisedNiggles.filter((niggle) => this.isCompleted(niggle)).map(this.convertEntityToRow, this);
+        this.niggleRows = authorisedNiggles.map(NiggleUtilService.convertEntityToRow, this);
+        this.whiteRows = authorisedNiggles.filter((niggle) => this.isWhite(niggle)).map(NiggleUtilService.convertEntityToRow);
+        this.yellowRows = authorisedNiggles.filter((niggle) => this.isYellow(niggle)).map(NiggleUtilService.convertEntityToRow);
+        this.completedRows = authorisedNiggles.filter((niggle) => this.isCompleted(niggle)).map(NiggleUtilService.convertEntityToRow);
         this.updateDataSource();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
@@ -105,70 +104,6 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDaysOpened(niggle: Niggle) {
-    if (niggle.dateOpened) {
-      return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    } else {
-      return null;
-    }
-  }
-
-  convertEntityToRow(niggle: Niggle): NiggleRow {
-    const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, siteAndName, location, locationUpdateTime, owner, contractor, orderNo, googleLink;
-    if (niggle.plant) {
-      const plant: Plant = niggle.plant;
-      fleetId = plant.fleetId;
-      plantDesctiption = plant.description;
-      siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
-      owner = plant.owner ? plant.owner['company'] : '';
-      if (plant.location) {
-        location = plant.location['address'];
-        if (!location && plant.location['project']) {
-          const project: Project = plant.location['project'];
-          location = project.jobNo + ' - ' + project.name;
-        }
-        locationUpdateTime = plant.location['timestamp'];
-        if (plant.location['latitude'] && plant.location['longitude']) {
-          googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
-        }
-
-      }
-    }
-    contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
-    orderNo = niggle.purchaseOrder ? niggle.purchaseOrder['orderNumber'] : '';
-    const priorityOrder: any = Priority[niggle.priority];
-    const niggleRow: NiggleRow = {
-      id: niggle.id,
-      description: niggle.description,
-      orderNo,
-      status: niggle.status,
-      note: niggle.note,
-      priority: niggle.priority,
-      priorityOrder,
-      quattraReference: niggle.quattraReference,
-      quattraComments: niggle.quattraComments,
-      dateOpened: niggle.dateOpened,
-      dateUpdated: niggle.lastModifiedDate,
-      dateClosed: niggle.dateClosed,
-      plantNumber: fleetId,
-      plantDescription: plantDesctiption,
-      site: siteAndName,
-      location,
-      locationUpdateTime,
-      owner,
-      contractor,
-      daysOpened: niggleDaysOpened,
-      googleLink,
-      eta: niggle.eta,
-      createdBy: niggle.createdBy,
-      createdDate: niggle.createdDate,
-      lastModifiedBy: niggle.lastModifiedBy,
-      lastModifiedDate: niggle.lastModifiedDate
-    };
-    return niggleRow;
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateDialogQuattraComponent, {
       width: '500px',
@@ -202,7 +137,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(EditDialogQuattraComponent, {
       width: '500px',
       panelClass: 'niggle-panel',
-      data: { niggle }
+      data: { niggle, niggleRow: NiggleUtilService.convertEntityToRow(niggle), }
     });
 
     dialogRef.afterClosed().subscribe((result) => {

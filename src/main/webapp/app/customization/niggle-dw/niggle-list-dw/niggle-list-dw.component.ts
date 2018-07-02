@@ -3,7 +3,7 @@ import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
-import { Niggle, Priority } from '../../../entities/niggle/niggle.model';
+import { Niggle } from '../../../entities/niggle/niggle.model';
 import { Plant } from '../../../entities/plant/plant.model';
 import { NiggleRow } from './niggle-row.model';
 import { NiggleService } from '../../../entities/niggle/niggle.service';
@@ -14,7 +14,7 @@ import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dial
 import { PlantService } from '../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Project } from '../../../entities/project';
+import { NiggleUtilService } from '../../niggle-util.service';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
@@ -103,7 +103,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   prepareDataDource() {
     if (this.niggles) {
-      this.dataSource = new MatTableDataSource(this.niggles.filter((niggle) => this.needToShow(niggle), this).map((niggle) => this.convertEntityToRow(niggle), this));
+      this.dataSource = new MatTableDataSource(this.niggles.filter((niggle) => this.needToShow(niggle), this).map((niggle) => NiggleUtilService.convertEntityToRow(niggle), this));
       this.dataSource.sort = this.sort;
     }
   }
@@ -162,14 +162,6 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDaysOpened(niggle: Niggle) {
-    if (niggle.dateOpened) {
-      return Math.floor(Math.abs(niggle.dateOpened.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    } else {
-      return null;
-    }
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(NiggleCreateDialogComponent, {
       width: '500px',
@@ -196,7 +188,7 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       data: {
         niggle,
         plants: this.plants,
-        row: this.convertEntityToRow(niggle),
+        row: NiggleUtilService.convertEntityToRow(niggle),
         maintenanceContractors: this.maintenanceContractors
       }
     });
@@ -205,67 +197,6 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       console.log('The dialog was closed');
       // this.animal = result;
     });
-  }
-
-  convertEntityToRow(niggle: Niggle): NiggleRow {
-    const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, plantCategory, siteAndName, location, locationUpdateTime, owner, contractor, orderNo, googleLink;
-    if (niggle.plant) {
-      const plant: Plant = niggle.plant;
-      fleetId = plant.fleetId;
-      plantCategory = plant.category ? plant.category['category'] : '';
-      plantDesctiption = plant.description;
-      siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
-      owner = plant.owner ? plant.owner['company'] : '';
-
-      if (plant.location) {
-        location = plant.location['address'];
-        if (!location && plant.location['project']) {
-          const project: Project = plant.location['project'];
-          location = project.jobNo + ' - ' + project.name;
-        }
-        locationUpdateTime = plant.location['timestamp'];
-        if (plant.location['latitude'] && plant.location['longitude']) {
-          googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
-        }
-
-      }
-    }
-    contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
-    orderNo = niggle.purchaseOrder ? niggle.purchaseOrder['orderNumber'] : '';
-
-    const priorityOrder: any = Priority[niggle.priority];
-    const niggleRow: NiggleRow = {
-      id: niggle.id,
-      description: niggle.description,
-      orderNo,
-      status: niggle.status,
-      note: niggle.note,
-      priority: niggle.priority,
-      priorityOrder,
-      quattraReference: niggle.quattraReference,
-      quattraComments: niggle.quattraComments,
-      dateOpened: niggle.dateOpened,
-      dateCompleted: niggle.dateCompleted,
-      dateUpdated: niggle.lastModifiedDate,
-      dateClosed: niggle.dateClosed,
-      plantNumber: fleetId,
-      plantDescription: plantDesctiption,
-      plantCategory,
-      site: siteAndName,
-      location,
-      locationUpdateTime,
-      owner,
-      googleLink,
-      eta: niggle.eta,
-      contractor,
-      daysOpened: niggleDaysOpened,
-      createdBy: niggle.createdBy,
-      createdDate: niggle.createdDate,
-      lastModifiedBy: niggle.lastModifiedBy,
-      lastModifiedDate: niggle.lastModifiedDate
-    };
-    return niggleRow;
   }
 
   getCount(): number {
