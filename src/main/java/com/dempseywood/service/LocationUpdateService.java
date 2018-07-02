@@ -3,17 +3,16 @@ package com.dempseywood.service;
 import com.dempseywood.config.ApplicationProperties;
 import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
-import com.dempseywood.repository.LocationRepository;
+import com.dempseywood.domain.Project;
 import com.dempseywood.repository.PlantRepository;
+import com.dempseywood.repository.ProjectRepository;
 import com.dempseywood.service.dto.GeofenceDTO;
 import com.dempseywood.service.dto.VehicleDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,18 +29,20 @@ public class LocationUpdateService {
     private PlantRepository plantRepository;
     private PlantService plantService;
     private GeofenceService geofenceService;
+    private ProjectRepository projectRepository;
     private final Logger log = LoggerFactory.getLogger(LocationUpdateService.class);
 
     public LocationUpdateService(BlackhawkSessionIdService blackhawkSessionIdService,
                                  ApplicationProperties props,
                                  PlantRepository plantRepository,
                                  PlantService plantService,
-                                 GeofenceService geofenceService) {
+                                 GeofenceService geofenceService, ProjectRepository projectRepository) {
         this.blackhawkSessionIdService = blackhawkSessionIdService;
         this.props = props;
         this.plantRepository = plantRepository;
         this.plantService = plantService;
         this.geofenceService = geofenceService;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -67,27 +68,24 @@ public class LocationUpdateService {
                 continue;
             }else{
                 VehicleDTO vehicle = vehiclesMap.get(plant.getGpsDeviceSerial());
+
                 if(plant.getLocation() == null){
                     Location location = new Location();
                     plant.setLocation(location);
                 }
-                if(plant.getLocation().getTimestamp() == null
-                     || vehicle.getLastValidGpsTime().isAfter(plant.getLocation().getTimestamp())){
-                    plant.getLocation().setTimestamp(vehicle.getLastValidGpsTime());
-                    plant.getLocation().setAddress(vehicle.getAddress());
+                Location location = plant.getLocation();
+                if(location.getTimestamp() == null
+                     || vehicle.getLastValidGpsTime().isAfter(location.getTimestamp())){
+                    location.setTimestamp(vehicle.getLastValidGpsTime());
+                    location.setAddress(vehicle.getAddress());
                     Double latitude = vehicle.getPoint().getLatitude();
                     Double longitude = vehicle.getPoint().getLongitude();
-                    plant.getLocation().setLatitude(latitude);
-                    plant.getLocation().setLongitude(longitude);
+                    location.setLatitude(latitude);
+                    location.setLongitude(longitude);
                     GeofenceDTO geofence = this.geofenceService.getContainingGeofence(latitude, longitude);
-                    if(geofence != null){
-                        String newAddress;
-                        if(plant.getLocation().getAddress().isEmpty()){
-                            newAddress = "Site: "  +geofence.getDescription();
-                        }else{
-                            newAddress = plant.getLocation().getAddress() +", Site: "  +geofence.getDescription();
-                        }
-                        plant.getLocation().setAddress(newAddress);
+                    if(geofence != null) {
+                        Project project = this.projectRepository.findOneByJobNo(geofence.getName());
+                        location.setProject(project);
                     }
                     plantsToUpdate.add(plant);
                 }
