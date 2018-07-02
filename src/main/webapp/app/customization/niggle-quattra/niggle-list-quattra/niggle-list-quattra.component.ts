@@ -11,6 +11,7 @@ import { NiggleService } from '../../../entities/niggle/niggle.service';
 import { CreateDialogQuattraComponent } from './create-dialog-quattra/create-dialog-quattra.component';
 import { EditDialogQuattraComponent } from './edit-dialog-quattra/edit-dialog-quattra.component';
 import { DeleteDialogQuattraComponent } from './delete-dialog-quattra/delete-dialog-quattra.component';
+import { Project } from '../../../entities/project';
 
 @Component({
   selector: 'jhi-niggle-list-quattra',
@@ -123,8 +124,15 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       owner = plant.owner ? plant.owner['company'] : '';
       if (plant.location) {
         location = plant.location['address'];
+        if (!location && plant.location['project']) {
+          const project: Project = plant.location['project'];
+          location = project.jobNo + ' - ' + project.name;
+        }
         locationUpdateTime = plant.location['timestamp'];
-        googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
+        if (plant.location['latitude'] && plant.location['longitude']) {
+          googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
+        }
+
       }
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
@@ -152,6 +160,7 @@ export class NiggleListQuattraComponent implements OnInit, OnDestroy {
       contractor,
       daysOpened: niggleDaysOpened,
       googleLink,
+      eta: niggle.eta,
       createdBy: niggle.createdBy,
       createdDate: niggle.createdDate,
       lastModifiedBy: niggle.lastModifiedBy,

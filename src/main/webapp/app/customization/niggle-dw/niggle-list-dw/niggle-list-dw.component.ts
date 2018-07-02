@@ -14,6 +14,7 @@ import { NiggleEditDialogComponent } from './niggle-edit-dialog/niggle-edit-dial
 import { PlantService } from '../../../entities/plant';
 import { MaintenanceContractor, MaintenanceContractorService } from '../../../entities/maintenance-contractor';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Project } from '../../../entities/project';
 
 @Component({
   selector: 'jhi-niggle-list-dw',
@@ -208,16 +209,27 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
 
   convertEntityToRow(niggle: Niggle): NiggleRow {
     const niggleDaysOpened = this.getDaysOpened(niggle);
-    let fleetId, plantDesctiption, plantCategory, siteAndName, location, locationUpdateTime, owner, contractor, orderNo;
+    let fleetId, plantDesctiption, plantCategory, siteAndName, location, locationUpdateTime, owner, contractor, orderNo, googleLink;
     if (niggle.plant) {
       const plant: Plant = niggle.plant;
       fleetId = plant.fleetId;
       plantCategory = plant.category ? plant.category['category'] : '';
       plantDesctiption = plant.description;
       siteAndName = plant.project ? plant.project['jobNumber'] + ' ' + plant.project['name'] : '';
-      location = plant.location ? plant.location['address'] : '';
-      locationUpdateTime = plant.location ? plant.location['timestamp'] : '';
       owner = plant.owner ? plant.owner['company'] : '';
+
+      if (plant.location) {
+        location = plant.location['address'];
+        if (!location && plant.location['project']) {
+          const project: Project = plant.location['project'];
+          location = project.jobNo + ' - ' + project.name;
+        }
+        locationUpdateTime = plant.location['timestamp'];
+        if (plant.location['latitude'] && plant.location['longitude']) {
+          googleLink = 'https://www.google.com/maps/search/?api=1&query=' + plant.location['latitude'] + ',' + plant.location['longitude'];
+        }
+
+      }
     }
     contractor = niggle.assignedContractor ? niggle.assignedContractor['name'] : '';
     orderNo = niggle.purchaseOrder ? niggle.purchaseOrder['orderNumber'] : '';
@@ -244,6 +256,8 @@ export class NiggleListDwComponent implements OnInit, OnDestroy {
       location,
       locationUpdateTime,
       owner,
+      googleLink,
+      eta: niggle.eta,
       contractor,
       daysOpened: niggleDaysOpened,
       createdBy: niggle.createdBy,
