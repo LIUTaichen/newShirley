@@ -21,7 +21,7 @@ export class NiggleUtilService {
 
       if (plant.location) {
         location = plant.location['address'];
-        if (!location && plant.location['project']) {
+        if (plant.location['project']) {
           const project: Project = plant.location['project'];
           location = project.jobNo + ' - ' + project.name;
         }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -112,7 +113,7 @@ public class LocationUpdateService {
         return map;
     }
 
-
+    //@Scheduled(fixedRate = 1000 * 60 * 2)
     public void updatePlantLocation(){
         log.info("starting to update plant location");
         VehicleDTO[] vehicles = getVehicles();
