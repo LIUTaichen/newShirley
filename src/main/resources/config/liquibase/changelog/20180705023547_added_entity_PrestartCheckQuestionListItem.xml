@@ -41,7 +41,7 @@
     
     <!-- Added the entity audit columns -->
     <changeSet id="20180705023547-audit-1" author="jhipster-entity-audit">
-        <addColumn tableName="prestart_check_question_list_item">
+        <addColumn tableName="question_list_item">
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>

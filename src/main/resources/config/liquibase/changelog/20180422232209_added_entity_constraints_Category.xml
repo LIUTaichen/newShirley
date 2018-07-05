@@ -16,11 +16,11 @@
 
     </changeSet>
     
-    <changeSet id="add-constraint-prestart-config" author="jason"
+    <changeSet id="add-constraint-prestart-config" author="jason">
          <addForeignKeyConstraint baseColumnNames="prestart_check_config_id"
                                  baseTableName="category"
                                  constraintName="fk_category_prestart_check_config_id"
                                  referencedColumnNames="id"
                                  referencedTableName="prestart_check_config"/>
-    </changeSet>>
+    </changeSet>
 </databaseChangeLog>
