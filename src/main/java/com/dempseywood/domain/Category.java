@@ -55,6 +55,9 @@ public class Category implements Serializable {
     @ManyToOne
     private Competency competency;
 
+    @ManyToOne
+    private PrestartCheckConfig prestartCheckConfig;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -205,6 +208,19 @@ public class Category implements Serializable {
 
     public void setCompetency(Competency competency) {
         this.competency = competency;
+    }
+
+    public PrestartCheckConfig getPrestartCheckConfig() {
+        return prestartCheckConfig;
+    }
+
+    public Category prestartCheckConfig(PrestartCheckConfig prestartCheckConfig) {
+        this.prestartCheckConfig = prestartCheckConfig;
+        return this;
+    }
+
+    public void setPrestartCheckConfig(PrestartCheckConfig prestartCheckConfig) {
+        this.prestartCheckConfig = prestartCheckConfig;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -15,6 +15,12 @@ import { FleetManagementLocationModule } from './location/location.module';
 import { FleetManagementWeeklyNiggleSnapshotModule } from './weekly-niggle-snapshot/weekly-niggle-snapshot.module';
 import { FleetManagementEmailSubscriptionModule } from './email-subscription/email-subscription.module';
 import { FleetManagementNiggleSnapshotModule } from './niggle-snapshot/niggle-snapshot.module';
+import { FleetManagementPrestartCheckModule } from './prestart-check/prestart-check.module';
+import { FleetManagementPrestartCheckResponseModule } from './prestart-check-response/prestart-check-response.module';
+import { FleetManagementPrestartCheckConfigModule } from './prestart-check-config/prestart-check-config.module';
+import { FleetManagementPrestartQuestionModule } from './prestart-question/prestart-question.module';
+import { FleetManagementPrestartQuestionOptionModule } from './prestart-question-option/prestart-question-option.module';
+import { FleetManagementPrestartCheckQuestionListItemModule } from './prestart-check-question-list-item/prestart-check-question-list-item.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -34,6 +40,12 @@ import { FleetManagementNiggleSnapshotModule } from './niggle-snapshot/niggle-sn
         FleetManagementWeeklyNiggleSnapshotModule,
         FleetManagementEmailSubscriptionModule,
         FleetManagementNiggleSnapshotModule,
+        FleetManagementPrestartCheckModule,
+        FleetManagementPrestartCheckResponseModule,
+        FleetManagementPrestartCheckConfigModule,
+        FleetManagementPrestartQuestionModule,
+        FleetManagementPrestartQuestionOptionModule,
+        FleetManagementPrestartCheckQuestionListItemModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

@@ -1,0 +1,25 @@
+
+{
+    "fleetManagementApp": {
+        "prestartQuestionOption" : {
+            "home": {
+                "title": "Prestart Question Options",
+                "createLabel": "Create a new Prestart Question Option",
+                "createOrEditLabel": "Create or edit a Prestart Question Option"
+            },
+            "created": "A new Prestart Question Option is created with identifier {{ param }}",
+            "updated": "A Prestart Question Option is updated with identifier {{ param }}",
+            "deleted": "A Prestart Question Option is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Prestart Question Option {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestart Question Option"
+            },
+            "body": "Body",
+            "isNormal": "Is Normal",
+            "isActive": "Is Active",
+            "question": "Question"
+        }
+    }
+}

@@ -10,6 +10,7 @@ import { CategoryDialogComponent } from '../../../../../../main/webapp/app/entit
 import { CategoryService } from '../../../../../../main/webapp/app/entities/category/category.service';
 import { Category } from '../../../../../../main/webapp/app/entities/category/category.model';
 import { CompetencyService } from '../../../../../../main/webapp/app/entities/competency';
+import { PrestartCheckConfigService } from '../../../../../../main/webapp/app/entities/prestart-check-config';
 
 describe('Component Tests', () => {
 
@@ -26,6 +27,7 @@ describe('Component Tests', () => {
                 declarations: [CategoryDialogComponent],
                 providers: [
                     CompetencyService,
+                    PrestartCheckConfigService,
                     CategoryService
                 ]
             })

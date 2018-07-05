@@ -50,6 +50,12 @@
                 <a [routerLink]="['/competency', category.competency?.id]">{{category.competency?.id}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="fleetManagementApp.category.prestartCheckConfig">Prestart Check Config</span></dt>
+        <dd>
+            <div *ngIf="category.prestartCheckConfig">
+                <a [routerLink]="['/prestart-check-config', category.prestartCheckConfig?.id]">{{category.prestartCheckConfig?.id}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

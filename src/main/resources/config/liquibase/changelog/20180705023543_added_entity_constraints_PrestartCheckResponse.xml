@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PrestartCheckResponse.
+    -->
+    <changeSet id="20180705023543-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="question_id"
+                                 baseTableName="prestart_check_response"
+                                 constraintName="fk_prestart_check_response_question_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_question"/>
+
+        <addForeignKeyConstraint baseColumnNames="response_id"
+                                 baseTableName="prestart_check_response"
+                                 constraintName="fk_prestart_check_response_response_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_question_option"/>
+
+        <addForeignKeyConstraint baseColumnNames="prestart_check_id"
+                                 baseTableName="prestart_check_response"
+                                 constraintName="fk_prestart_check_response_prestart_check_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_check"/>
+
+    </changeSet>
+</databaseChangeLog>

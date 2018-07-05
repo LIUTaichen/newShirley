@@ -1,0 +1,44 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPrestartCheckQuestionListItemLabel" jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.home.createOrEditLabel">Create or edit a Prestart Check Question List Item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!prestartCheckQuestionListItem.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="prestartCheckQuestionListItem.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.order" for="field_order">Order</label>
+            <input type="number" class="form-control" name="order" id="field_order"
+                [(ngModel)]="prestartCheckQuestionListItem.order" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.prestartCheckConfig" for="field_prestartCheckConfig">Prestart Check Config</label>
+            <select class="form-control" id="field_prestartCheckConfig" name="prestartCheckConfig" [(ngModel)]="prestartCheckQuestionListItem.prestartCheckConfig" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="prestartCheckConfigOption.id === prestartCheckQuestionListItem.prestartCheckConfig?.id ? prestartCheckQuestionListItem.prestartCheckConfig : prestartCheckConfigOption" *ngFor="let prestartCheckConfigOption of prestartcheckconfigs; trackBy: trackPrestartCheckConfigById">{{prestartCheckConfigOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.question" for="field_question">Question</label>
+            <select class="form-control" id="field_question" name="question" [(ngModel)]="prestartCheckQuestionListItem.question" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="prestartQuestionOption.id === prestartCheckQuestionListItem.question?.id ? prestartCheckQuestionListItem.question : prestartQuestionOption" *ngFor="let prestartQuestionOption of prestartquestions; trackBy: trackPrestartQuestionById">{{prestartQuestionOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

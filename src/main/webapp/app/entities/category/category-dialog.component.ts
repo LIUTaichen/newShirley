@@ -10,6 +10,7 @@ import { Category } from './category.model';
 import { CategoryPopupService } from './category-popup.service';
 import { CategoryService } from './category.service';
 import { Competency, CompetencyService } from '../competency';
+import { PrestartCheckConfig, PrestartCheckConfigService } from '../prestart-check-config';
 
 @Component({
     selector: 'jhi-category-dialog',
@@ -22,11 +23,14 @@ export class CategoryDialogComponent implements OnInit {
 
     competencies: Competency[];
 
+    prestartcheckconfigs: PrestartCheckConfig[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private categoryService: CategoryService,
         private competencyService: CompetencyService,
+        private prestartCheckConfigService: PrestartCheckConfigService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -35,6 +39,8 @@ export class CategoryDialogComponent implements OnInit {
         this.isSaving = false;
         this.competencyService.query()
             .subscribe((res: HttpResponse<Competency[]>) => { this.competencies = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.prestartCheckConfigService.query()
+            .subscribe((res: HttpResponse<PrestartCheckConfig[]>) => { this.prestartcheckconfigs = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -72,6 +78,10 @@ export class CategoryDialogComponent implements OnInit {
     }
 
     trackCompetencyById(index: number, item: Competency) {
+        return item.id;
+    }
+
+    trackPrestartCheckConfigById(index: number, item: PrestartCheckConfig) {
         return item.id;
     }
 }

@@ -1,0 +1,26 @@
+
+{
+    "fleetManagementApp": {
+        "prestartCheck" : {
+            "home": {
+                "title": "Prestart Checks",
+                "createLabel": "Create a new Prestart Check",
+                "createOrEditLabel": "Create or edit a Prestart Check"
+            },
+            "created": "A new Prestart Check is created with identifier {{ param }}",
+            "updated": "A Prestart Check is updated with identifier {{ param }}",
+            "deleted": "A Prestart Check is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Prestart Check {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestart Check"
+            },
+            "signature": "Signature",
+            "project": "Project",
+            "plant": "Plant",
+            "location": "Location",
+            "operator": "Operator"
+        }
+    }
+}

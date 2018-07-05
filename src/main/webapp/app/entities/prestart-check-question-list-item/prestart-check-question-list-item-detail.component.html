@@ -1,0 +1,38 @@
+
+<div *ngIf="prestartCheckQuestionListItem">
+    <h2><span jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.detail.title">Prestart Check Question List Item</span> {{prestartCheckQuestionListItem.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.order">Order</span></dt>
+        <dd>
+            <span>{{prestartCheckQuestionListItem.order}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.prestartCheckConfig">Prestart Check Config</span></dt>
+        <dd>
+            <div *ngIf="prestartCheckQuestionListItem.prestartCheckConfig">
+                <a [routerLink]="['/prestart-check-config', prestartCheckQuestionListItem.prestartCheckConfig?.id]">{{prestartCheckQuestionListItem.prestartCheckConfig?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheckQuestionListItem.question">Question</span></dt>
+        <dd>
+            <div *ngIf="prestartCheckQuestionListItem.question">
+                <a [routerLink]="['/prestart-question', prestartCheckQuestionListItem.question?.id]">{{prestartCheckQuestionListItem.question?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'prestart-check-question-list-item/'+ prestartCheckQuestionListItem.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

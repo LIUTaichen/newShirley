@@ -1,0 +1,24 @@
+
+{
+    "fleetManagementApp": {
+        "prestartCheckResponse" : {
+            "home": {
+                "title": "Prestart Check Responses",
+                "createLabel": "Create a new Prestart Check Response",
+                "createOrEditLabel": "Create or edit a Prestart Check Response"
+            },
+            "created": "A new Prestart Check Response is created with identifier {{ param }}",
+            "updated": "A Prestart Check Response is updated with identifier {{ param }}",
+            "deleted": "A Prestart Check Response is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Prestart Check Response {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestart Check Response"
+            },
+            "question": "Question",
+            "response": "Response",
+            "prestartCheck": "Prestart Check"
+        }
+    }
+}

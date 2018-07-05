@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span jhiTranslate="fleetManagementApp.prestartQuestionOption.home.title">Prestart Question Options</span>
+        <button class="btn btn-primary float-right jh-create-entity create-prestart-question-option" [routerLink]="['/', { outlets: { popup: ['prestart-question-option-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="fleetManagementApp.prestartQuestionOption.home.createLabel">
+            Create new Prestart Question Option
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="prestartQuestionOptions">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartQuestionOption.body">Body</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartQuestionOption.isNormal">Is Normal</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartQuestionOption.isActive">Is Active</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartQuestionOption.question">Question</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let prestartQuestionOption of prestartQuestionOptions ;trackBy: trackId">
+                <td><a [routerLink]="['../prestart-question-option', prestartQuestionOption.id ]">{{prestartQuestionOption.id}}</a></td>
+                <td>{{prestartQuestionOption.body}}</td>
+                <td>{{prestartQuestionOption.isNormal}}</td>
+                <td>{{prestartQuestionOption.isActive}}</td>
+                <td>
+                    <div *ngIf="prestartQuestionOption.question">
+                        <a [routerLink]="['../prestart-question', prestartQuestionOption.question?.id ]" >{{prestartQuestionOption.question?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../prestart-question-option', prestartQuestionOption.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'prestart-question-option/'+ prestartQuestionOption.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'prestart-question-option/'+ prestartQuestionOption.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

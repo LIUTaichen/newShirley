@@ -161,6 +161,32 @@ entity EmailSubscription {
     recipientType RecipientType
 }
 
+entity PrestartCheck {
+	signature Blob
+}
+
+entity PrestartCheckResponse {
+
+}
+
+entity PrestartCheckConfig {
+
+}
+
+entity PrestartQuestion {
+    body String
+}
+
+entity PrestartQuestionOption {
+    body String,
+    isNormal Boolean,
+    isActive Boolean
+}
+
+entity PrestartCheckQuestionListItem {
+	order Integer
+}
+
 enum Event {
     ON_HOLD,
     HIGH_PRIORITY
@@ -182,13 +208,29 @@ relationship ManyToOne {
     Niggle{ assignedContractor } to MaintenanceContractor,
     Category{competency} to Competency,
     PlantLog{operator} to People,
-    PlantLog{site} to Project
-    Location {project} to Project
+    PlantLog{site} to Project,
+    Location {project} to Project,
+    Category {prestartCheckConfig } to PrestartCheckConfig,
+    PrestartQuestionOption { question } to PrestartQuestion,
+    PrestartCheckResponse { question } to PrestartQuestion,
+    PrestartCheckResponse { response } to PrestartQuestionOption,
+    PrestartCheckResponse { prestartCheck } to PrestartCheck
+	PrestartCheckQuestionListItem { question } to PrestartQuestion
+    PrestartCheck { project } to Project,
+    PrestartCheck { plant } to Plant,
+    PrestartCheck { location } to Location,
+    PrestartCheck { operator } to People
 }
+
+
 
 relationship OneToOne {
     Niggle{purchaseOrder} to PurchaseOrder,
     Plant{location} to Location
+}
+
+relationship OneToMany {
+	PrestartCheckConfig { questionlist } to PrestartCheckQuestionListItem
 }
 
 enum MaintenanceGroup {
@@ -199,7 +241,14 @@ enum MaintenanceGroup {
 
 
 
+
 filter Niggle
 filter Plant
 filter NiggleSnapshot
+filter PrestartQuestion
+filter PrestartCheck
+filter PrestartQuestionOption
+filter PrestartCheckResponse
+filter PrestartCheckConfig
+filter PrestartCheckQuestionListItem
 

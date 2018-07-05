@@ -20,11 +20,21 @@
     <include file="config/liquibase/changelog/20180619050305_added_entity_WeeklyNiggleSnapshot.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180619221327_added_entity_EmailSubscription.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180620213222_added_entity_NiggleSnapshot.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023542_added_entity_PrestartCheck.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023543_added_entity_PrestartCheckResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023544_added_entity_PrestartCheckConfig.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023545_added_entity_PrestartQuestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023546_added_entity_PrestartQuestionOption.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023547_added_entity_PrestartCheckQuestionListItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180422232207_added_entity_constraints_Plant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180422232209_added_entity_constraints_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180422232215_added_entity_constraints_Niggle.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180422232216_added_entity_constraints_PlantLog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180528050859_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023542_added_entity_constraints_PrestartCheck.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023543_added_entity_constraints_PrestartCheckResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023546_added_entity_constraints_PrestartQuestionOption.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180705023547_added_entity_constraints_PrestartCheckQuestionListItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
