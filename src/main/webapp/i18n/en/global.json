@@ -22,6 +22,12 @@
                 "weeklyNiggleSnapshot": "Weekly Niggle Snapshot",
                 "emailSubscription": "Email Subscription",
                 "niggleSnapshot": "Niggle Snapshot",
+                "prestartCheck": "Prestart Check",
+                "prestartCheckResponse": "Prestart Check Response",
+                "prestartCheckConfig": "Prestart Check Config",
+                "prestartQuestion": "Prestart Question",
+                "prestartQuestionOption": "Prestart Question Option",
+                "prestartCheckQuestionListItem": "Prestart Check Question List Item",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

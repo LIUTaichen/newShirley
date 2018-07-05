@@ -1,0 +1,19 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "questionlist",
+            "otherEntityName": "prestartCheckQuestionListItem",
+            "otherEntityRelationshipName": "prestartCheckConfig"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180705023544",
+    "entityTableName": "prestart_check_config",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "enableEntityAudit": true
+}

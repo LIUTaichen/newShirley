@@ -64,6 +64,14 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+		
+		<changeSet id="prestart_check_config_id" author="jason">
+			<addColumn tableName="category">
+				<column name="prestart_check_config_id" type="bigint">
+					<constraints nullable="true" />
+				</column>
+			</addColumn>
+    </changeSet>
         
     </changeSet>
     

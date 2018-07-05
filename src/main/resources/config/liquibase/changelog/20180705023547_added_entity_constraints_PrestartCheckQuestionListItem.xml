@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PrestartCheckQuestionListItem.
+    -->
+    <changeSet id="20180705023547-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="prestart_check_config_id"
+                                 baseTableName="question_list_item"
+                                 constraintName="fk_prestart_check_question_list_item_prestart_check_config_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_check_config"/>
+
+        <addForeignKeyConstraint baseColumnNames="question_id"
+                                 baseTableName="question_list_item"
+                                 constraintName="fk_prestart_check_question_list_item_question_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_question"/>
+
+    </changeSet>
+</databaseChangeLog>

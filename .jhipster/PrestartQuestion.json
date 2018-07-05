@@ -1,0 +1,17 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "body",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180705023545",
+    "entityTableName": "prestart_question",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "enableEntityAudit": true
+}

@@ -19,6 +19,7 @@ export class Category implements BaseEntity {
         public isTrackedForInternalBilling?: boolean,
         public maintenanceGroup?: MaintenanceGroup,
         public competency?: BaseEntity,
+        public prestartCheckConfig?: BaseEntity,
     ) {
         this.trackUsage = false;
         this.isEarchMovingPlant = false;

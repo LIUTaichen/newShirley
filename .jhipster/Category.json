@@ -6,6 +6,12 @@
             "relationshipName": "competency",
             "otherEntityName": "competency",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "prestartCheckConfig",
+            "otherEntityName": "prestartCheckConfig",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -57,5 +63,5 @@
     "pagination": "no",
     "service": "no",
     "jpaMetamodelFiltering": false,
-    "enableEntityAudit": true
+    "enableEntityAudit": false
 }

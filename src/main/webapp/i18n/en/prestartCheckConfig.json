@@ -1,0 +1,22 @@
+
+{
+    "fleetManagementApp": {
+        "prestartCheckConfig" : {
+            "home": {
+                "title": "Prestart Check Configs",
+                "createLabel": "Create a new Prestart Check Config",
+                "createOrEditLabel": "Create or edit a Prestart Check Config"
+            },
+            "created": "A new Prestart Check Config is created with identifier {{ param }}",
+            "updated": "A Prestart Check Config is updated with identifier {{ param }}",
+            "deleted": "A Prestart Check Config is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Prestart Check Config {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestart Check Config"
+            },
+            "questionlist": "Questionlist"
+        }
+    }
+}

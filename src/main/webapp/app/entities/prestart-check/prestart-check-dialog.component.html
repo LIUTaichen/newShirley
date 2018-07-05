@@ -1,0 +1,71 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPrestartCheckLabel" jhiTranslate="fleetManagementApp.prestartCheck.home.createOrEditLabel">Create or edit a Prestart Check</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!prestartCheck.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="prestartCheck.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.signature" for="field_signature">Signature</label>
+            <div>
+                <div *ngIf="prestartCheck.signature" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(prestartCheck.signatureContentType, prestartCheck.signature)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{prestartCheck.signatureContentType}}, {{byteSize(prestartCheck.signature)}}</span>
+                    <button type="button" (click)="prestartCheck.signature=null;prestartCheck.signatureContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_signature" (change)="setFileData($event, prestartCheck, 'signature', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="signature" id="field_signature"
+                [(ngModel)]="prestartCheck.signature" />
+            <input type="hidden" class="form-control" name="signatureContentType" id="field_signatureContentType"
+                [(ngModel)]="prestartCheck.signatureContentType" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.project" for="field_project">Project</label>
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="prestartCheck.project" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="projectOption.id === prestartCheck.project?.id ? prestartCheck.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.plant" for="field_plant">Plant</label>
+            <select class="form-control" id="field_plant" name="plant" [(ngModel)]="prestartCheck.plant" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="plantOption.id === prestartCheck.plant?.id ? prestartCheck.plant : plantOption" *ngFor="let plantOption of plants; trackBy: trackPlantById">{{plantOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" [(ngModel)]="prestartCheck.location" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="locationOption.id === prestartCheck.location?.id ? prestartCheck.location : locationOption" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.operator" for="field_operator">Operator</label>
+            <select class="form-control" id="field_operator" name="operator" [(ngModel)]="prestartCheck.operator" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="peopleOption.id === prestartCheck.operator?.id ? prestartCheck.operator : peopleOption" *ngFor="let peopleOption of people; trackBy: trackPeopleById">{{peopleOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+
+<div *ngIf="prestartCheck">
+    <h2><span jhiTranslate="fleetManagementApp.prestartCheck.detail.title">Prestart Check</span> {{prestartCheck.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.signature">Signature</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.signature">
+                <a (click)="openFile(prestartCheck.signatureContentType, prestartCheck.signature)" jhiTranslate="entity.action.open">open</a>
+                {{prestartCheck.signatureContentType}}, {{byteSize(prestartCheck.signature)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.project">Project</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.project">
+                <a [routerLink]="['/project', prestartCheck.project?.id]">{{prestartCheck.project?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.plant">Plant</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.plant">
+                <a [routerLink]="['/plant', prestartCheck.plant?.id]">{{prestartCheck.plant?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.location">Location</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.location">
+                <a [routerLink]="['/location', prestartCheck.location?.id]">{{prestartCheck.location?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.operator">Operator</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.operator">
+                <a [routerLink]="['/people', prestartCheck.operator?.id]">{{prestartCheck.operator?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'prestart-check/'+ prestartCheck.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

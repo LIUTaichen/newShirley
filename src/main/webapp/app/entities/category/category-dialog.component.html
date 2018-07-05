@@ -72,6 +72,13 @@
                 <option [ngValue]="competencyOption.id === category.competency?.id ? category.competency : competencyOption" *ngFor="let competencyOption of competencies; trackBy: trackCompetencyById">{{competencyOption.id}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.category.prestartCheckConfig" for="field_prestartCheckConfig">Prestart Check Config</label>
+            <select class="form-control" id="field_prestartCheckConfig" name="prestartCheckConfig" [(ngModel)]="category.prestartCheckConfig" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="prestartCheckConfigOption.id === category.prestartCheckConfig?.id ? category.prestartCheckConfig : prestartCheckConfigOption" *ngFor="let prestartCheckConfigOption of prestartcheckconfigs; trackBy: trackPrestartCheckConfigById">{{prestartCheckConfigOption.id}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

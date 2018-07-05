@@ -1,0 +1,85 @@
+<div>
+    <h2>
+        <span jhiTranslate="fleetManagementApp.prestartCheck.home.title">Prestart Checks</span>
+        <button class="btn btn-primary float-right jh-create-entity create-prestart-check" [routerLink]="['/', { outlets: { popup: ['prestart-check-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="fleetManagementApp.prestartCheck.home.createLabel">
+            Create new Prestart Check
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="prestartChecks">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.signature">Signature</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.project">Project</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.plant">Plant</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.location">Location</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.operator">Operator</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let prestartCheck of prestartChecks ;trackBy: trackId">
+                <td><a [routerLink]="['../prestart-check', prestartCheck.id ]">{{prestartCheck.id}}</a></td>
+                <td>
+                    <a *ngIf="prestartCheck.signature" (click)="openFile(prestartCheck.signatureContentType, prestartCheck.signature)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="prestartCheck.signature">{{prestartCheck.signatureContentType}}, {{byteSize(prestartCheck.signature)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="prestartCheck.project">
+                        <a [routerLink]="['../project', prestartCheck.project?.id ]" >{{prestartCheck.project?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="prestartCheck.plant">
+                        <a [routerLink]="['../plant', prestartCheck.plant?.id ]" >{{prestartCheck.plant?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="prestartCheck.location">
+                        <a [routerLink]="['../location', prestartCheck.location?.id ]" >{{prestartCheck.location?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="prestartCheck.operator">
+                        <a [routerLink]="['../people', prestartCheck.operator?.id ]" >{{prestartCheck.operator?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../prestart-check', prestartCheck.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'prestart-check/'+ prestartCheck.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'prestart-check/'+ prestartCheck.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

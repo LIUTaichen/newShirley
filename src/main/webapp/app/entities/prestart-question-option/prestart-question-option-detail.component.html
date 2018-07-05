@@ -1,0 +1,40 @@
+
+<div *ngIf="prestartQuestionOption">
+    <h2><span jhiTranslate="fleetManagementApp.prestartQuestionOption.detail.title">Prestart Question Option</span> {{prestartQuestionOption.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.prestartQuestionOption.body">Body</span></dt>
+        <dd>
+            <span>{{prestartQuestionOption.body}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartQuestionOption.isNormal">Is Normal</span></dt>
+        <dd>
+            <span>{{prestartQuestionOption.isNormal}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartQuestionOption.isActive">Is Active</span></dt>
+        <dd>
+            <span>{{prestartQuestionOption.isActive}}</span>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartQuestionOption.question">Question</span></dt>
+        <dd>
+            <div *ngIf="prestartQuestionOption.question">
+                <a [routerLink]="['/prestart-question', prestartQuestionOption.question?.id]">{{prestartQuestionOption.question?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'prestart-question-option/'+ prestartQuestionOption.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

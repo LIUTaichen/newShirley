@@ -1,0 +1,24 @@
+
+{
+    "fleetManagementApp": {
+        "prestartCheckQuestionListItem" : {
+            "home": {
+                "title": "Prestart Check Question List Items",
+                "createLabel": "Create a new Prestart Check Question List Item",
+                "createOrEditLabel": "Create or edit a Prestart Check Question List Item"
+            },
+            "created": "A new Prestart Check Question List Item is created with identifier {{ param }}",
+            "updated": "A Prestart Check Question List Item is updated with identifier {{ param }}",
+            "deleted": "A Prestart Check Question List Item is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Prestart Check Question List Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Prestart Check Question List Item"
+            },
+            "order": "Order",
+            "prestartCheckConfig": "Prestart Check Config",
+            "question": "Question"
+        }
+    }
+}
