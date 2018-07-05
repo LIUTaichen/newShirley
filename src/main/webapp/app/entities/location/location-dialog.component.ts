@@ -4,11 +4,12 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Location } from './location.model';
 import { LocationPopupService } from './location-popup.service';
 import { LocationService } from './location.service';
+import { Project, ProjectService } from '../project';
 
 @Component({
     selector: 'jhi-location-dialog',
@@ -19,15 +20,21 @@ export class LocationDialogComponent implements OnInit {
     location: Location;
     isSaving: boolean;
 
+    projects: Project[];
+
     constructor(
         public activeModal: NgbActiveModal,
+        private jhiAlertService: JhiAlertService,
         private locationService: LocationService,
+        private projectService: ProjectService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.projectService.query()
+            .subscribe((res: HttpResponse<Project[]>) => { this.projects = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -58,6 +65,14 @@ export class LocationDialogComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackProjectById(index: number, item: Project) {
+        return item.id;
     }
 }
 

@@ -35,7 +35,9 @@ entity Location {
 
 enum HireStatus{
 	ONHIRE,
-    OFFHIRE
+    OFFHIRE,
+    OFFBREAK,
+    OFFSEASO
 }
 
 entity OffHireRequest {
@@ -181,7 +183,7 @@ relationship ManyToOne {
     Category{competency} to Competency,
     PlantLog{operator} to People,
     PlantLog{site} to Project
-
+    Location {project} to Project
 }
 
 relationship OneToOne {

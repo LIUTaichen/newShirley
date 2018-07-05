@@ -14,6 +14,8 @@ export class NiggleRow extends Niggle {
         public owner?: string,
         public contractor?: string,
         public daysOpened?: number,
+        public googleLink?: String,
+        public eta?: Date
     ) {
         super();
     }

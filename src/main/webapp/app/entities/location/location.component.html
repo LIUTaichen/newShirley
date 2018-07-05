@@ -25,6 +25,7 @@
             <th><span jhiTranslate="fleetManagementApp.location.speed">Speed</span></th>
             <th><span jhiTranslate="fleetManagementApp.location.timestamp">Timestamp</span></th>
             <th><span jhiTranslate="fleetManagementApp.location.provider">Provider</span></th>
+            <th><span jhiTranslate="fleetManagementApp.location.project">Project</span></th>
             <th></th>
             </tr>
             </thead>
@@ -39,6 +40,11 @@
                 <td>{{location.speed}}</td>
                 <td>{{location.timestamp | date:'medium'}}</td>
                 <td>{{location.provider}}</td>
+                <td>
+                    <div *ngIf="location.project">
+                        <a [routerLink]="['../project', location.project?.id ]" >{{location.project?.id}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

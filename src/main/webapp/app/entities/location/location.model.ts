@@ -11,6 +11,7 @@ export class Location implements BaseEntity {
         public speed?: number,
         public timestamp?: any,
         public provider?: string,
+        public project?: BaseEntity,
     ) {
     }
 }

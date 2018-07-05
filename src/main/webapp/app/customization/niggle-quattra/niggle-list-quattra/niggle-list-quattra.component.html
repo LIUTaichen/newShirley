@@ -2,8 +2,8 @@
     <h2 class="mat-h2 header">
         <span>Plant Faults</span>
         <button mat-raised-button color="primary" hidden class="btn btn-primary float-right jh-create-entity create-niggle" (click)="openDialog()">Create New Niggle</button>
-        <mat-form-field class="option float-right" >
-            <mat-select [(value)]="selectedOption" (change)="updateDataSource()" >
+        <mat-form-field class="option float-right">
+            <mat-select [(value)]="selectedOption" (change)="updateDataSource()">
                 <mat-option value="ALL">All plant faults</mat-option>
                 <mat-option value="WHITE">White fleet</mat-option>
                 <mat-option value="YELLOW">Yellow fleet</mat-option>
@@ -17,7 +17,7 @@
 
         <div class="example-header">
             <mat-form-field>
-                <input matInput [(ngModel)]="filter"  placeholder="Filter the list by typing in here..." (change) ="applyFilter()">
+                <input matInput [(ngModel)]="filter" placeholder="Filter the list by typing in here..." (change)="applyFilter()">
             </mat-form-field>
         </div>
         <div class="table-container">
@@ -33,7 +33,7 @@
                     <mat-cell *matCellDef="let niggle"> {{niggle.plantNumber}} </mat-cell>
                 </ng-container>
 
-                
+
                 <ng-container matColumnDef="orderNo">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Purchase Order </mat-header-cell>
                     <mat-cell *matCellDef="let niggle"> {{niggle.orderNo}} </mat-cell>
@@ -50,11 +50,13 @@
                 </ng-container>
                 <ng-container matColumnDef="site">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Site </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.site}}</mat-cell>
+                    <mat-cell *matCellDef="let niggle"> {{niggle.site}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Plant Location </mat-header-cell>
-                    <mat-cell *matCellDef="let niggle"> {{niggle.location}} </mat-cell>
+                    <mat-cell *matCellDef="let niggle" (mousedown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+                        <a *ngIf="niggle.googleLink" target="_blank" href="{{niggle.googleLink}}">{{niggle.location}}</a>
+                    </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="locationUpdateTime">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Location Update Time </mat-header-cell>

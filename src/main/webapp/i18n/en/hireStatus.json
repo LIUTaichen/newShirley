@@ -3,7 +3,9 @@
         "HireStatus" : {
             "null": "",
             "ONHIRE": "ONHIRE",
-            "OFFHIRE": "OFFHIRE"
+            "OFFHIRE": "OFFHIRE",
+            "OFFBREAK": "OFFBREAK",
+            "OFFSEASO": "OFFSEASO"
         }
     }
 }

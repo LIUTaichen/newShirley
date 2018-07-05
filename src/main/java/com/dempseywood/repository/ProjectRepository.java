@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
+    Project findOneByJobNo(String jobNo);
 }
