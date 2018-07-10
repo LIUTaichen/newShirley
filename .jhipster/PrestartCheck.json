@@ -10,6 +10,12 @@
             "otherEntityRelationshipName": "prestartCheck"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "responses",
+            "otherEntityName": "prestartCheckResponse",
+            "otherEntityRelationshipName": "prestartCheck"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "project",
             "otherEntityName": "project",

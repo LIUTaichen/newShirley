@@ -5,6 +5,10 @@
         {
             "fieldName": "body",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "isLockOutRequired",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20180705023545",

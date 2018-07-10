@@ -4,6 +4,7 @@ import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.PrestartCheck;
 import com.dempseywood.domain.PlantLog;
+import com.dempseywood.domain.PrestartCheckResponse;
 import com.dempseywood.domain.Project;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.domain.Location;
@@ -190,6 +191,25 @@ public class PrestartCheckResourceIntTest {
 
         // Get all the prestartCheckList where plantLog equals to plantLogId + 1
         defaultPrestartCheckShouldNotBeFound("plantLogId.equals=" + (plantLogId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPrestartChecksByResponsesIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PrestartCheckResponse responses = PrestartCheckResponseResourceIntTest.createEntity(em);
+        em.persist(responses);
+        em.flush();
+        prestartCheck.addResponses(responses);
+        prestartCheckRepository.saveAndFlush(prestartCheck);
+        Long responsesId = responses.getId();
+
+        // Get all the prestartCheckList where responses equals to responsesId
+        defaultPrestartCheckShouldBeFound("responsesId.equals=" + responsesId);
+
+        // Get all the prestartCheckList where responses equals to responsesId + 1
+        defaultPrestartCheckShouldNotBeFound("responsesId.equals=" + (responsesId + 1));
     }
 
 

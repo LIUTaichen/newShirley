@@ -3,9 +3,9 @@ package com.dempseywood.web.rest;
 import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.PrestartCheckResponse;
+import com.dempseywood.domain.PrestartCheck;
 import com.dempseywood.domain.PrestartQuestion;
 import com.dempseywood.domain.PrestartQuestionOption;
-import com.dempseywood.domain.PrestartCheck;
 import com.dempseywood.repository.PrestartCheckResponseRepository;
 import com.dempseywood.service.PrestartCheckResponseService;
 import com.dempseywood.web.rest.errors.ExceptionTranslator;
@@ -160,6 +160,25 @@ public class PrestartCheckResponseResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllPrestartCheckResponsesByPrestartCheckIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PrestartCheck prestartCheck = PrestartCheckResourceIntTest.createEntity(em);
+        em.persist(prestartCheck);
+        em.flush();
+        prestartCheckResponse.setPrestartCheck(prestartCheck);
+        prestartCheckResponseRepository.saveAndFlush(prestartCheckResponse);
+        Long prestartCheckId = prestartCheck.getId();
+
+        // Get all the prestartCheckResponseList where prestartCheck equals to prestartCheckId
+        defaultPrestartCheckResponseShouldBeFound("prestartCheckId.equals=" + prestartCheckId);
+
+        // Get all the prestartCheckResponseList where prestartCheck equals to prestartCheckId + 1
+        defaultPrestartCheckResponseShouldNotBeFound("prestartCheckId.equals=" + (prestartCheckId + 1));
+    }
+
+
+    @Test
+    @Transactional
     public void getAllPrestartCheckResponsesByQuestionIsEqualToSomething() throws Exception {
         // Initialize the database
         PrestartQuestion question = PrestartQuestionResourceIntTest.createEntity(em);
@@ -193,25 +212,6 @@ public class PrestartCheckResponseResourceIntTest {
 
         // Get all the prestartCheckResponseList where response equals to responseId + 1
         defaultPrestartCheckResponseShouldNotBeFound("responseId.equals=" + (responseId + 1));
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllPrestartCheckResponsesByPrestartCheckIsEqualToSomething() throws Exception {
-        // Initialize the database
-        PrestartCheck prestartCheck = PrestartCheckResourceIntTest.createEntity(em);
-        em.persist(prestartCheck);
-        em.flush();
-        prestartCheckResponse.setPrestartCheck(prestartCheck);
-        prestartCheckResponseRepository.saveAndFlush(prestartCheckResponse);
-        Long prestartCheckId = prestartCheck.getId();
-
-        // Get all the prestartCheckResponseList where prestartCheck equals to prestartCheckId
-        defaultPrestartCheckResponseShouldBeFound("prestartCheckId.equals=" + prestartCheckId);
-
-        // Get all the prestartCheckResponseList where prestartCheck equals to prestartCheckId + 1
-        defaultPrestartCheckResponseShouldNotBeFound("prestartCheckId.equals=" + (prestartCheckId + 1));
     }
 
     /**

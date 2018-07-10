@@ -44,6 +44,9 @@ public class PrestartQuestionResourceIntTest {
     private static final String DEFAULT_BODY = "AAAAAAAAAA";
     private static final String UPDATED_BODY = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_LOCK_OUT_REQUIRED = false;
+    private static final Boolean UPDATED_IS_LOCK_OUT_REQUIRED = true;
+
     @Autowired
     private PrestartQuestionRepository prestartQuestionRepository;
 
@@ -88,7 +91,8 @@ public class PrestartQuestionResourceIntTest {
      */
     public static PrestartQuestion createEntity(EntityManager em) {
         PrestartQuestion prestartQuestion = new PrestartQuestion()
-            .body(DEFAULT_BODY);
+            .body(DEFAULT_BODY)
+            .isLockOutRequired(DEFAULT_IS_LOCK_OUT_REQUIRED);
         return prestartQuestion;
     }
 
@@ -113,6 +117,7 @@ public class PrestartQuestionResourceIntTest {
         assertThat(prestartQuestionList).hasSize(databaseSizeBeforeCreate + 1);
         PrestartQuestion testPrestartQuestion = prestartQuestionList.get(prestartQuestionList.size() - 1);
         assertThat(testPrestartQuestion.getBody()).isEqualTo(DEFAULT_BODY);
+        assertThat(testPrestartQuestion.isIsLockOutRequired()).isEqualTo(DEFAULT_IS_LOCK_OUT_REQUIRED);
     }
 
     @Test
@@ -145,7 +150,8 @@ public class PrestartQuestionResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestartQuestion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY.toString())));
+            .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY.toString())))
+            .andExpect(jsonPath("$.[*].isLockOutRequired").value(hasItem(DEFAULT_IS_LOCK_OUT_REQUIRED.booleanValue())));
     }
 
     @Test
@@ -159,7 +165,8 @@ public class PrestartQuestionResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(prestartQuestion.getId().intValue()))
-            .andExpect(jsonPath("$.body").value(DEFAULT_BODY.toString()));
+            .andExpect(jsonPath("$.body").value(DEFAULT_BODY.toString()))
+            .andExpect(jsonPath("$.isLockOutRequired").value(DEFAULT_IS_LOCK_OUT_REQUIRED.booleanValue()));
     }
 
     @Test
@@ -200,6 +207,45 @@ public class PrestartQuestionResourceIntTest {
         // Get all the prestartQuestionList where body is null
         defaultPrestartQuestionShouldNotBeFound("body.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllPrestartQuestionsByIsLockOutRequiredIsEqualToSomething() throws Exception {
+        // Initialize the database
+        prestartQuestionRepository.saveAndFlush(prestartQuestion);
+
+        // Get all the prestartQuestionList where isLockOutRequired equals to DEFAULT_IS_LOCK_OUT_REQUIRED
+        defaultPrestartQuestionShouldBeFound("isLockOutRequired.equals=" + DEFAULT_IS_LOCK_OUT_REQUIRED);
+
+        // Get all the prestartQuestionList where isLockOutRequired equals to UPDATED_IS_LOCK_OUT_REQUIRED
+        defaultPrestartQuestionShouldNotBeFound("isLockOutRequired.equals=" + UPDATED_IS_LOCK_OUT_REQUIRED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrestartQuestionsByIsLockOutRequiredIsInShouldWork() throws Exception {
+        // Initialize the database
+        prestartQuestionRepository.saveAndFlush(prestartQuestion);
+
+        // Get all the prestartQuestionList where isLockOutRequired in DEFAULT_IS_LOCK_OUT_REQUIRED or UPDATED_IS_LOCK_OUT_REQUIRED
+        defaultPrestartQuestionShouldBeFound("isLockOutRequired.in=" + DEFAULT_IS_LOCK_OUT_REQUIRED + "," + UPDATED_IS_LOCK_OUT_REQUIRED);
+
+        // Get all the prestartQuestionList where isLockOutRequired equals to UPDATED_IS_LOCK_OUT_REQUIRED
+        defaultPrestartQuestionShouldNotBeFound("isLockOutRequired.in=" + UPDATED_IS_LOCK_OUT_REQUIRED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrestartQuestionsByIsLockOutRequiredIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        prestartQuestionRepository.saveAndFlush(prestartQuestion);
+
+        // Get all the prestartQuestionList where isLockOutRequired is not null
+        defaultPrestartQuestionShouldBeFound("isLockOutRequired.specified=true");
+
+        // Get all the prestartQuestionList where isLockOutRequired is null
+        defaultPrestartQuestionShouldNotBeFound("isLockOutRequired.specified=false");
+    }
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -208,7 +254,8 @@ public class PrestartQuestionResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestartQuestion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY.toString())));
+            .andExpect(jsonPath("$.[*].body").value(hasItem(DEFAULT_BODY.toString())))
+            .andExpect(jsonPath("$.[*].isLockOutRequired").value(hasItem(DEFAULT_IS_LOCK_OUT_REQUIRED.booleanValue())));
     }
 
     /**
@@ -244,7 +291,8 @@ public class PrestartQuestionResourceIntTest {
         // Disconnect from session so that the updates on updatedPrestartQuestion are not directly saved in db
         em.detach(updatedPrestartQuestion);
         updatedPrestartQuestion
-            .body(UPDATED_BODY);
+            .body(UPDATED_BODY)
+            .isLockOutRequired(UPDATED_IS_LOCK_OUT_REQUIRED);
 
         restPrestartQuestionMockMvc.perform(put("/api/prestart-questions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -256,6 +304,7 @@ public class PrestartQuestionResourceIntTest {
         assertThat(prestartQuestionList).hasSize(databaseSizeBeforeUpdate);
         PrestartQuestion testPrestartQuestion = prestartQuestionList.get(prestartQuestionList.size() - 1);
         assertThat(testPrestartQuestion.getBody()).isEqualTo(UPDATED_BODY);
+        assertThat(testPrestartQuestion.isIsLockOutRequired()).isEqualTo(UPDATED_IS_LOCK_OUT_REQUIRED);
     }
 
     @Test

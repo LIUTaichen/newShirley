@@ -17,15 +17,20 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck">Prestart Check</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheckResponse.question">Question</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheckResponse.response">Response</span></th>
-            <th><span jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck">Prestart Check</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let prestartCheckResponse of prestartCheckResponses ;trackBy: trackId">
                 <td><a [routerLink]="['../prestart-check-response', prestartCheckResponse.id ]">{{prestartCheckResponse.id}}</a></td>
+                <td>
+                    <div *ngIf="prestartCheckResponse.prestartCheck">
+                        <a [routerLink]="['../prestart-check', prestartCheckResponse.prestartCheck?.id ]" >{{prestartCheckResponse.prestartCheck?.id}}</a>
+                    </div>
+                </td>
                 <td>
                     <div *ngIf="prestartCheckResponse.question">
                         <a [routerLink]="['../prestart-question', prestartCheckResponse.question?.id ]" >{{prestartCheckResponse.question?.id}}</a>
@@ -34,11 +39,6 @@
                 <td>
                     <div *ngIf="prestartCheckResponse.response">
                         <a [routerLink]="['../prestart-question-option', prestartCheckResponse.response?.id ]" >{{prestartCheckResponse.response?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="prestartCheckResponse.prestartCheck">
-                        <a [routerLink]="['../prestart-check', prestartCheckResponse.prestartCheck?.id ]" >{{prestartCheckResponse.prestartCheck?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

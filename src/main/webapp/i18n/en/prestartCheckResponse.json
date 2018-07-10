@@ -16,9 +16,9 @@
             "detail": {
                 "title": "Prestart Check Response"
             },
+            "prestartCheck": "Prestart Check",
             "question": "Question",
-            "response": "Response",
-            "prestartCheck": "Prestart Check"
+            "response": "Response"
         }
     }
 }

@@ -20,13 +20,13 @@ public class PrestartCheckResponse extends AbstractAuditingEntity implements Ser
     private Long id;
 
     @ManyToOne
+    private PrestartCheck prestartCheck;
+
+    @ManyToOne
     private PrestartQuestion question;
 
     @ManyToOne
     private PrestartQuestionOption response;
-
-    @ManyToOne
-    private PrestartCheck prestartCheck;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -35,6 +35,19 @@ public class PrestartCheckResponse extends AbstractAuditingEntity implements Ser
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PrestartCheck getPrestartCheck() {
+        return prestartCheck;
+    }
+
+    public PrestartCheckResponse prestartCheck(PrestartCheck prestartCheck) {
+        this.prestartCheck = prestartCheck;
+        return this;
+    }
+
+    public void setPrestartCheck(PrestartCheck prestartCheck) {
+        this.prestartCheck = prestartCheck;
     }
 
     public PrestartQuestion getQuestion() {
@@ -61,19 +74,6 @@ public class PrestartCheckResponse extends AbstractAuditingEntity implements Ser
 
     public void setResponse(PrestartQuestionOption prestartQuestionOption) {
         this.response = prestartQuestionOption;
-    }
-
-    public PrestartCheck getPrestartCheck() {
-        return prestartCheck;
-    }
-
-    public PrestartCheckResponse prestartCheck(PrestartCheck prestartCheck) {
-        this.prestartCheck = prestartCheck;
-        return this;
-    }
-
-    public void setPrestartCheck(PrestartCheck prestartCheck) {
-        this.prestartCheck = prestartCheck;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

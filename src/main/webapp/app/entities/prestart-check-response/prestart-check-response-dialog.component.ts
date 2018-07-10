@@ -9,9 +9,9 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { PrestartCheckResponse } from './prestart-check-response.model';
 import { PrestartCheckResponsePopupService } from './prestart-check-response-popup.service';
 import { PrestartCheckResponseService } from './prestart-check-response.service';
+import { PrestartCheck, PrestartCheckService } from '../prestart-check';
 import { PrestartQuestion, PrestartQuestionService } from '../prestart-question';
 import { PrestartQuestionOption, PrestartQuestionOptionService } from '../prestart-question-option';
-import { PrestartCheck, PrestartCheckService } from '../prestart-check';
 
 @Component({
     selector: 'jhi-prestart-check-response-dialog',
@@ -22,31 +22,31 @@ export class PrestartCheckResponseDialogComponent implements OnInit {
     prestartCheckResponse: PrestartCheckResponse;
     isSaving: boolean;
 
+    prestartchecks: PrestartCheck[];
+
     prestartquestions: PrestartQuestion[];
 
     prestartquestionoptions: PrestartQuestionOption[];
-
-    prestartchecks: PrestartCheck[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private prestartCheckResponseService: PrestartCheckResponseService,
+        private prestartCheckService: PrestartCheckService,
         private prestartQuestionService: PrestartQuestionService,
         private prestartQuestionOptionService: PrestartQuestionOptionService,
-        private prestartCheckService: PrestartCheckService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.prestartCheckService.query()
+            .subscribe((res: HttpResponse<PrestartCheck[]>) => { this.prestartchecks = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.prestartQuestionService.query()
             .subscribe((res: HttpResponse<PrestartQuestion[]>) => { this.prestartquestions = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.prestartQuestionOptionService.query()
             .subscribe((res: HttpResponse<PrestartQuestionOption[]>) => { this.prestartquestionoptions = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.prestartCheckService.query()
-            .subscribe((res: HttpResponse<PrestartCheck[]>) => { this.prestartchecks = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -83,15 +83,15 @@ export class PrestartCheckResponseDialogComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
+    trackPrestartCheckById(index: number, item: PrestartCheck) {
+        return item.id;
+    }
+
     trackPrestartQuestionById(index: number, item: PrestartQuestion) {
         return item.id;
     }
 
     trackPrestartQuestionOptionById(index: number, item: PrestartQuestionOption) {
-        return item.id;
-    }
-
-    trackPrestartCheckById(index: number, item: PrestartCheck) {
         return item.id;
     }
 }

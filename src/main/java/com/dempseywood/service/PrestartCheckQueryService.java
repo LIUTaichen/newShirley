@@ -75,6 +75,9 @@ public class PrestartCheckQueryService extends QueryService<PrestartCheck> {
             if (criteria.getPlantLogId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getPlantLogId(), PrestartCheck_.plantLog, PlantLog_.id));
             }
+            if (criteria.getResponsesId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getResponsesId(), PrestartCheck_.responses, PrestartCheckResponse_.id));
+            }
             if (criteria.getProjectId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getProjectId(), PrestartCheck_.project, Project_.id));
             }

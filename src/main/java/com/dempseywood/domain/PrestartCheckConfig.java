@@ -22,6 +22,9 @@ public class PrestartCheckConfig extends AbstractAuditingEntity implements Seria
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToMany(mappedBy = "prestartCheckConfig")
     @JsonIgnore
     private Set<PrestartCheckQuestionListItem> questionlists = new HashSet<>();
@@ -33,6 +36,19 @@ public class PrestartCheckConfig extends AbstractAuditingEntity implements Seria
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public PrestartCheckConfig name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<PrestartCheckQuestionListItem> getQuestionlists() {
@@ -85,6 +101,7 @@ public class PrestartCheckConfig extends AbstractAuditingEntity implements Seria
     public String toString() {
         return "PrestartCheckConfig{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

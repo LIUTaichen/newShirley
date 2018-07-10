@@ -171,11 +171,12 @@ entity PrestartCheckResponse {
 }
 
 entity PrestartCheckConfig {
-
+    name String
 }
 
 entity PrestartQuestion {
-    body String
+    body String,
+    isLockOutRequired Boolean
 }
 
 entity PrestartQuestionOption {
@@ -215,7 +216,6 @@ relationship ManyToOne {
     PrestartQuestionOption { question } to PrestartQuestion,
     PrestartCheckResponse { question } to PrestartQuestion,
     PrestartCheckResponse { response } to PrestartQuestionOption,
-    PrestartCheckResponse { prestartCheck } to PrestartCheck,
 	PrestartCheckQuestionListItem { question } to PrestartQuestion,
     PrestartCheck { project } to Project,
     PrestartCheck { plant } to Plant,
@@ -232,7 +232,8 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
-	PrestartCheckConfig { questionlist } to PrestartCheckQuestionListItem
+	PrestartCheckConfig { questionlist } to PrestartCheckQuestionListItem,
+    PrestartCheck { responses } to PrestartCheckResponse
 }
 
 enum MaintenanceGroup {

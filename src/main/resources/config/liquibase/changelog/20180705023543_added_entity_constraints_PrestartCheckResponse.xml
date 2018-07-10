@@ -8,6 +8,12 @@
     -->
     <changeSet id="20180705023543-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="prestart_check_id"
+                                 baseTableName="prestart_check_response"
+                                 constraintName="fk_prestart_check_response_prestart_check_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prestart_check"/>
+
         <addForeignKeyConstraint baseColumnNames="question_id"
                                  baseTableName="prestart_check_response"
                                  constraintName="fk_prestart_check_response_question_id"
@@ -19,12 +25,6 @@
                                  constraintName="fk_prestart_check_response_response_id"
                                  referencedColumnNames="id"
                                  referencedTableName="prestart_question_option"/>
-
-        <addForeignKeyConstraint baseColumnNames="prestart_check_id"
-                                 baseTableName="prestart_check_response"
-                                 constraintName="fk_prestart_check_response_prestart_check_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="prestart_check"/>
 
     </changeSet>
 </databaseChangeLog>

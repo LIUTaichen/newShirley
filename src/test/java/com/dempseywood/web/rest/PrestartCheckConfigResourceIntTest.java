@@ -42,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = FleetManagementApp.class)
 public class PrestartCheckConfigResourceIntTest {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     @Autowired
     private PrestartCheckConfigRepository prestartCheckConfigRepository;
 
@@ -85,7 +88,8 @@ public class PrestartCheckConfigResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static PrestartCheckConfig createEntity(EntityManager em) {
-        PrestartCheckConfig prestartCheckConfig = new PrestartCheckConfig();
+        PrestartCheckConfig prestartCheckConfig = new PrestartCheckConfig()
+            .name(DEFAULT_NAME);
         return prestartCheckConfig;
     }
 
@@ -109,6 +113,7 @@ public class PrestartCheckConfigResourceIntTest {
         List<PrestartCheckConfig> prestartCheckConfigList = prestartCheckConfigRepository.findAll();
         assertThat(prestartCheckConfigList).hasSize(databaseSizeBeforeCreate + 1);
         PrestartCheckConfig testPrestartCheckConfig = prestartCheckConfigList.get(prestartCheckConfigList.size() - 1);
+        assertThat(testPrestartCheckConfig.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -140,7 +145,8 @@ public class PrestartCheckConfigResourceIntTest {
         restPrestartCheckConfigMockMvc.perform(get("/api/prestart-check-configs?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(prestartCheckConfig.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(prestartCheckConfig.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test
@@ -153,7 +159,47 @@ public class PrestartCheckConfigResourceIntTest {
         restPrestartCheckConfigMockMvc.perform(get("/api/prestart-check-configs/{id}", prestartCheckConfig.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(prestartCheckConfig.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(prestartCheckConfig.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrestartCheckConfigsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        prestartCheckConfigRepository.saveAndFlush(prestartCheckConfig);
+
+        // Get all the prestartCheckConfigList where name equals to DEFAULT_NAME
+        defaultPrestartCheckConfigShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the prestartCheckConfigList where name equals to UPDATED_NAME
+        defaultPrestartCheckConfigShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrestartCheckConfigsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        prestartCheckConfigRepository.saveAndFlush(prestartCheckConfig);
+
+        // Get all the prestartCheckConfigList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultPrestartCheckConfigShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the prestartCheckConfigList where name equals to UPDATED_NAME
+        defaultPrestartCheckConfigShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrestartCheckConfigsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        prestartCheckConfigRepository.saveAndFlush(prestartCheckConfig);
+
+        // Get all the prestartCheckConfigList where name is not null
+        defaultPrestartCheckConfigShouldBeFound("name.specified=true");
+
+        // Get all the prestartCheckConfigList where name is null
+        defaultPrestartCheckConfigShouldNotBeFound("name.specified=false");
     }
 
     @Test
@@ -181,7 +227,8 @@ public class PrestartCheckConfigResourceIntTest {
         restPrestartCheckConfigMockMvc.perform(get("/api/prestart-check-configs?sort=id,desc&" + filter))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(prestartCheckConfig.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(prestartCheckConfig.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     /**
@@ -216,6 +263,8 @@ public class PrestartCheckConfigResourceIntTest {
         PrestartCheckConfig updatedPrestartCheckConfig = prestartCheckConfigRepository.findOne(prestartCheckConfig.getId());
         // Disconnect from session so that the updates on updatedPrestartCheckConfig are not directly saved in db
         em.detach(updatedPrestartCheckConfig);
+        updatedPrestartCheckConfig
+            .name(UPDATED_NAME);
 
         restPrestartCheckConfigMockMvc.perform(put("/api/prestart-check-configs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -226,6 +275,7 @@ public class PrestartCheckConfigResourceIntTest {
         List<PrestartCheckConfig> prestartCheckConfigList = prestartCheckConfigRepository.findAll();
         assertThat(prestartCheckConfigList).hasSize(databaseSizeBeforeUpdate);
         PrestartCheckConfig testPrestartCheckConfig = prestartCheckConfigList.get(prestartCheckConfigList.size() - 1);
+        assertThat(testPrestartCheckConfig.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test

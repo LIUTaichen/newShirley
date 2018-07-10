@@ -72,14 +72,14 @@ public class PrestartCheckResponseQueryService extends QueryService<PrestartChec
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), PrestartCheckResponse_.id));
             }
+            if (criteria.getPrestartCheckId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getPrestartCheckId(), PrestartCheckResponse_.prestartCheck, PrestartCheck_.id));
+            }
             if (criteria.getQuestionId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getQuestionId(), PrestartCheckResponse_.question, PrestartQuestion_.id));
             }
             if (criteria.getResponseId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getResponseId(), PrestartCheckResponse_.response, PrestartQuestionOption_.id));
-            }
-            if (criteria.getPrestartCheckId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getPrestartCheckId(), PrestartCheckResponse_.prestartCheck, PrestartCheck_.id));
             }
         }
         return specification;

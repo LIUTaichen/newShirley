@@ -28,11 +28,11 @@ public class PrestartCheckResponseCriteria implements Serializable {
 
     private LongFilter id;
 
+    private LongFilter prestartCheckId;
+
     private LongFilter questionId;
 
     private LongFilter responseId;
-
-    private LongFilter prestartCheckId;
 
     public PrestartCheckResponseCriteria() {
     }
@@ -43,6 +43,14 @@ public class PrestartCheckResponseCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public LongFilter getPrestartCheckId() {
+        return prestartCheckId;
+    }
+
+    public void setPrestartCheckId(LongFilter prestartCheckId) {
+        this.prestartCheckId = prestartCheckId;
     }
 
     public LongFilter getQuestionId() {
@@ -61,21 +69,13 @@ public class PrestartCheckResponseCriteria implements Serializable {
         this.responseId = responseId;
     }
 
-    public LongFilter getPrestartCheckId() {
-        return prestartCheckId;
-    }
-
-    public void setPrestartCheckId(LongFilter prestartCheckId) {
-        this.prestartCheckId = prestartCheckId;
-    }
-
     @Override
     public String toString() {
         return "PrestartCheckResponseCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
+                (prestartCheckId != null ? "prestartCheckId=" + prestartCheckId + ", " : "") +
                 (questionId != null ? "questionId=" + questionId + ", " : "") +
                 (responseId != null ? "responseId=" + responseId + ", " : "") +
-                (prestartCheckId != null ? "prestartCheckId=" + prestartCheckId + ", " : "") +
             "}";
     }
 
