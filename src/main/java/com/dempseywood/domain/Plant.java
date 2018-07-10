@@ -61,6 +61,9 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
     @Column(name = "tank_size")
     private Integer tankSize;
 
+    @Column(name = "meter_reading")
+    private Integer meterReading;
+
     @Column(name = "maintenance_due_at")
     private Integer maintenanceDueAt;
 
@@ -96,6 +99,10 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private Location location;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private PlantLog lastLog;
 
     @ManyToOne
     private Category category;
@@ -274,6 +281,19 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
         this.tankSize = tankSize;
     }
 
+    public Integer getMeterReading() {
+        return meterReading;
+    }
+
+    public Plant meterReading(Integer meterReading) {
+        this.meterReading = meterReading;
+        return this;
+    }
+
+    public void setMeterReading(Integer meterReading) {
+        this.meterReading = meterReading;
+    }
+
     public Integer getMaintenanceDueAt() {
         return maintenanceDueAt;
     }
@@ -417,6 +437,19 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
         this.location = location;
     }
 
+    public PlantLog getLastLog() {
+        return lastLog;
+    }
+
+    public Plant lastLog(PlantLog plantLog) {
+        this.lastLog = plantLog;
+        return this;
+    }
+
+    public void setLastLog(PlantLog plantLog) {
+        this.lastLog = plantLog;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -506,6 +539,7 @@ public class Plant extends AbstractAuditingEntity implements Serializable {
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", tankSize=" + getTankSize() +
+            ", meterReading=" + getMeterReading() +
             ", maintenanceDueAt=" + getMaintenanceDueAt() +
             ", meterUnit='" + getMeterUnit() + "'" +
             ", certificateDueDate='" + getCertificateDueDate() + "'" +

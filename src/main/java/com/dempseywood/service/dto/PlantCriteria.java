@@ -62,6 +62,8 @@ public class PlantCriteria implements Serializable {
 
     private IntegerFilter tankSize;
 
+    private IntegerFilter meterReading;
+
     private IntegerFilter maintenanceDueAt;
 
     private MeterUnitFilter meterUnit;
@@ -83,6 +85,8 @@ public class PlantCriteria implements Serializable {
     private StringFilter gpsDeviceSerial;
 
     private LongFilter locationId;
+
+    private LongFilter lastLogId;
 
     private LongFilter categoryId;
 
@@ -183,6 +187,14 @@ public class PlantCriteria implements Serializable {
         this.tankSize = tankSize;
     }
 
+    public IntegerFilter getMeterReading() {
+        return meterReading;
+    }
+
+    public void setMeterReading(IntegerFilter meterReading) {
+        this.meterReading = meterReading;
+    }
+
     public IntegerFilter getMaintenanceDueAt() {
         return maintenanceDueAt;
     }
@@ -271,6 +283,14 @@ public class PlantCriteria implements Serializable {
         this.locationId = locationId;
     }
 
+    public LongFilter getLastLogId() {
+        return lastLogId;
+    }
+
+    public void setLastLogId(LongFilter lastLogId) {
+        this.lastLogId = lastLogId;
+    }
+
     public LongFilter getCategoryId() {
         return categoryId;
     }
@@ -317,6 +337,7 @@ public class PlantCriteria implements Serializable {
                 (rego != null ? "rego=" + rego + ", " : "") +
                 (dateOfManufacture != null ? "dateOfManufacture=" + dateOfManufacture + ", " : "") +
                 (tankSize != null ? "tankSize=" + tankSize + ", " : "") +
+                (meterReading != null ? "meterReading=" + meterReading + ", " : "") +
                 (maintenanceDueAt != null ? "maintenanceDueAt=" + maintenanceDueAt + ", " : "") +
                 (meterUnit != null ? "meterUnit=" + meterUnit + ", " : "") +
                 (certificateDueDate != null ? "certificateDueDate=" + certificateDueDate + ", " : "") +
@@ -328,6 +349,7 @@ public class PlantCriteria implements Serializable {
                 (hireStatus != null ? "hireStatus=" + hireStatus + ", " : "") +
                 (gpsDeviceSerial != null ? "gpsDeviceSerial=" + gpsDeviceSerial + ", " : "") +
                 (locationId != null ? "locationId=" + locationId + ", " : "") +
+                (lastLogId != null ? "lastLogId=" + lastLogId + ", " : "") +
                 (categoryId != null ? "categoryId=" + categoryId + ", " : "") +
                 (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
                 (assignedContractorId != null ? "assignedContractorId=" + assignedContractorId + ", " : "") +

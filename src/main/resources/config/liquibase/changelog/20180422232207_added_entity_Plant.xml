@@ -170,4 +170,16 @@
 		<dropColumn columnName="last_location_update_time"  tableName="plant">
         </dropColumn>
     </changeSet>
+	
+	
+	<changeSet id="add-column-meter-reading" author="jason">
+        <addColumn tableName="plant">
+            <column name="meter_reading" type="integer">
+                <constraints nullable="true" />
+            </column>
+		    <column name="last_log_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+			</column> 
+		</addColumn>
+    </changeSet>
 </databaseChangeLog>

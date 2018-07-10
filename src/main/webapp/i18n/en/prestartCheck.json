@@ -17,6 +17,7 @@
                 "title": "Prestart Check"
             },
             "signature": "Signature",
+            "plantLog": "Plant Log",
             "project": "Project",
             "plant": "Plant",
             "location": "Location",

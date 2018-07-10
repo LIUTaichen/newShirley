@@ -32,6 +32,13 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.plantLog" for="field_plantLog">Plant Log</label>
+            <select class="form-control" id="field_plantLog" name="plantLog" [(ngModel)]="prestartCheck.plantLog">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="plantLogOption.id === prestartCheck.plantLog?.id ? prestartCheck.plantLog : plantLogOption" *ngFor="let plantLogOption of plantlogs; trackBy: trackPlantLogById">{{plantLogOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheck.project" for="field_project">Project</label>
             <select class="form-control" id="field_project" name="project" [(ngModel)]="prestartCheck.project" >
                 <option [ngValue]="null"></option>

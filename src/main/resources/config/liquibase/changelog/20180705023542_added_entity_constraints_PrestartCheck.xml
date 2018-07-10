@@ -33,4 +33,12 @@
                                  referencedTableName="people"/>
 
     </changeSet>
+	
+	<changeSet id="add-constraint-plant-log-id" author="jhipster">
+		<addForeignKeyConstraint baseColumnNames="plant_log_id"
+                                 baseTableName="prestart_check"
+                                 constraintName="fk_prestart_check_plant_log_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plant_log"/>
+	</changeSet>
 </databaseChangeLog>

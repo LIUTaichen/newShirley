@@ -51,6 +51,10 @@
         <dd>
             <span>{{plant.tankSize}}</span>
         </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.meterReading">Meter Reading</span></dt>
+        <dd>
+            <span>{{plant.meterReading}}</span>
+        </dd>
         <dt><span jhiTranslate="fleetManagementApp.plant.maintenanceDueAt">Maintenance Due At</span></dt>
         <dd>
             <span>{{plant.maintenanceDueAt}}</span>
@@ -95,6 +99,12 @@
         <dd>
             <div *ngIf="plant.location">
                 <a [routerLink]="['/location', plant.location?.id]">{{plant.location?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="fleetManagementApp.plant.lastLog">Last Log</span></dt>
+        <dd>
+            <div *ngIf="plant.lastLog">
+                <a [routerLink]="['/plant-log', plant.lastLog?.id]">{{plant.lastLog?.id}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="fleetManagementApp.plant.category">Category</span></dt>

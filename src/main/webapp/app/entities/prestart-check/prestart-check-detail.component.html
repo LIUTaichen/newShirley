@@ -11,6 +11,12 @@
                 {{prestartCheck.signatureContentType}}, {{byteSize(prestartCheck.signature)}}
             </div>
         </dd>
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheck.plantLog">Plant Log</span></dt>
+        <dd>
+            <div *ngIf="prestartCheck.plantLog">
+                <a [routerLink]="['/plant-log', prestartCheck.plantLog?.id]">{{prestartCheck.plantLog?.id}}</a>
+            </div>
+        </dd>
         <dt><span jhiTranslate="fleetManagementApp.prestartCheck.project">Project</span></dt>
         <dd>
             <div *ngIf="prestartCheck.project">

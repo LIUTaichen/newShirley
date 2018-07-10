@@ -28,6 +28,7 @@
             <th><span jhiTranslate="fleetManagementApp.plant.dateOfManufacture">Date Of Manufacture</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.image">Image</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.tankSize">Tank Size</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plant.meterReading">Meter Reading</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.maintenanceDueAt">Maintenance Due At</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.meterUnit">Meter Unit</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.certificateDueDate">Certificate Due Date</span></th>
@@ -39,6 +40,7 @@
             <th><span jhiTranslate="fleetManagementApp.plant.hireStatus">Hire Status</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.gpsDeviceSerial">Gps Device Serial</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.location">Location</span></th>
+            <th><span jhiTranslate="fleetManagementApp.plant.lastLog">Last Log</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.category">Category</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.owner">Owner</span></th>
             <th><span jhiTranslate="fleetManagementApp.plant.assignedContractor">Assigned Contractor</span></th>
@@ -63,6 +65,7 @@
                     <span *ngIf="plant.image">{{plant.imageContentType}}, {{byteSize(plant.image)}}</span>
                 </td>
                 <td>{{plant.tankSize}}</td>
+                <td>{{plant.meterReading}}</td>
                 <td>{{plant.maintenanceDueAt}}</td>
                 <td jhiTranslate="{{'fleetManagementApp.MeterUnit.' + plant.meterUnit}}">{{plant.meterUnit}}</td>
                 <td>{{plant.certificateDueDate | date:'medium'}}</td>
@@ -76,6 +79,11 @@
                 <td>
                     <div *ngIf="plant.location">
                         <a [routerLink]="['../location', plant.location?.id ]" >{{plant.location?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="plant.lastLog">
+                        <a [routerLink]="['../plant-log', plant.lastLog?.id ]" >{{plant.lastLog?.id}}</a>
                     </div>
                 </td>
                 <td>

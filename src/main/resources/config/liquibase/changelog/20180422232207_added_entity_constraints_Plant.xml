@@ -42,4 +42,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="location"/>
     </changeSet>
+	
+	<changeSet id="add-constraint-last-log-id" author="jason">
+	      <addForeignKeyConstraint baseColumnNames="last_log_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_last_log_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plant_log"/>
+	</changeSet>
 </databaseChangeLog>

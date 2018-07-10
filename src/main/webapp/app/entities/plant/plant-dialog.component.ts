@@ -10,6 +10,7 @@ import { Plant } from './plant.model';
 import { PlantPopupService } from './plant-popup.service';
 import { PlantService } from './plant.service';
 import { Location, LocationService } from '../location';
+import { PlantLog, PlantLogService } from '../plant-log';
 import { Category, CategoryService } from '../category';
 import { Company, CompanyService } from '../company';
 import { MaintenanceContractor, MaintenanceContractorService } from '../maintenance-contractor';
@@ -26,6 +27,8 @@ export class PlantDialogComponent implements OnInit {
 
     locations: Location[];
 
+    lastlogs: PlantLog[];
+
     categories: Category[];
 
     companies: Company[];
@@ -40,6 +43,7 @@ export class PlantDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private plantService: PlantService,
         private locationService: LocationService,
+        private plantLogService: PlantLogService,
         private categoryService: CategoryService,
         private companyService: CompanyService,
         private maintenanceContractorService: MaintenanceContractorService,
@@ -60,6 +64,19 @@ export class PlantDialogComponent implements OnInit {
                         .find(this.plant.location.id)
                         .subscribe((subRes: HttpResponse<Location>) => {
                             this.locations = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.plantLogService
+            .query({filter: 'plant-is-null'})
+            .subscribe((res: HttpResponse<PlantLog[]>) => {
+                if (!this.plant.lastLog || !this.plant.lastLog.id) {
+                    this.lastlogs = res.body;
+                } else {
+                    this.plantLogService
+                        .find(this.plant.lastLog.id)
+                        .subscribe((subRes: HttpResponse<PlantLog>) => {
+                            this.lastlogs = [subRes.body].concat(res.body);
                         }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
                 }
             }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -120,6 +137,10 @@ export class PlantDialogComponent implements OnInit {
     }
 
     trackLocationById(index: number, item: Location) {
+        return item.id;
+    }
+
+    trackPlantLogById(index: number, item: PlantLog) {
         return item.id;
     }
 

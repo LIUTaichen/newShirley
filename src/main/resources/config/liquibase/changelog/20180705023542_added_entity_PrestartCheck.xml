@@ -64,4 +64,14 @@
         </addColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+	
+	
+	 <changeSet id="add-column-plant-log-id" author="jason">
+        <addColumn tableName="prestart_check">
+			<column name="plant_log_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
+		 </addColumn>
+    </changeSet>
+	
 </databaseChangeLog>

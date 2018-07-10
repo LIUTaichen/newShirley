@@ -10,6 +10,7 @@ import { PlantDialogComponent } from '../../../../../../main/webapp/app/entities
 import { PlantService } from '../../../../../../main/webapp/app/entities/plant/plant.service';
 import { Plant } from '../../../../../../main/webapp/app/entities/plant/plant.model';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location';
+import { PlantLogService } from '../../../../../../main/webapp/app/entities/plant-log';
 import { CategoryService } from '../../../../../../main/webapp/app/entities/category';
 import { CompanyService } from '../../../../../../main/webapp/app/entities/company';
 import { MaintenanceContractorService } from '../../../../../../main/webapp/app/entities/maintenance-contractor';
@@ -30,6 +31,7 @@ describe('Component Tests', () => {
                 declarations: [PlantDialogComponent],
                 providers: [
                     LocationService,
+                    PlantLogService,
                     CategoryService,
                     CompanyService,
                     MaintenanceContractorService,

@@ -10,6 +10,7 @@ entity Plant {
     dateOfManufacture Instant,
     image Blob,
     tankSize Integer,
+    meterReading Integer,
     maintenanceDueAt Integer,
     meterUnit MeterUnit,
     certificateDueDate Instant,
@@ -214,19 +215,20 @@ relationship ManyToOne {
     PrestartQuestionOption { question } to PrestartQuestion,
     PrestartCheckResponse { question } to PrestartQuestion,
     PrestartCheckResponse { response } to PrestartQuestionOption,
-    PrestartCheckResponse { prestartCheck } to PrestartCheck
-	PrestartCheckQuestionListItem { question } to PrestartQuestion
+    PrestartCheckResponse { prestartCheck } to PrestartCheck,
+	PrestartCheckQuestionListItem { question } to PrestartQuestion,
     PrestartCheck { project } to Project,
     PrestartCheck { plant } to Plant,
     PrestartCheck { location } to Location,
     PrestartCheck { operator } to People
+   
 }
-
-
 
 relationship OneToOne {
     Niggle{purchaseOrder} to PurchaseOrder,
-    Plant{location} to Location
+    Plant{location} to Location,
+    PrestartCheck { plantLog } to PlantLog,
+    Plant{ lastLog } to PlantLog
 }
 
 relationship OneToMany {
