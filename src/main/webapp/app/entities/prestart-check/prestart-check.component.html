@@ -18,6 +18,7 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheck.signature">Signature</span></th>
+            <th><span jhiTranslate="fleetManagementApp.prestartCheck.plantLog">Plant Log</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheck.project">Project</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheck.plant">Plant</span></th>
             <th><span jhiTranslate="fleetManagementApp.prestartCheck.location">Location</span></th>
@@ -31,6 +32,11 @@
                 <td>
                     <a *ngIf="prestartCheck.signature" (click)="openFile(prestartCheck.signatureContentType, prestartCheck.signature)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="prestartCheck.signature">{{prestartCheck.signatureContentType}}, {{byteSize(prestartCheck.signature)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="prestartCheck.plantLog">
+                        <a [routerLink]="['../plant-log', prestartCheck.plantLog?.id ]" >{{prestartCheck.plantLog?.id}}</a>
+                    </div>
                 </td>
                 <td>
                     <div *ngIf="prestartCheck.project">

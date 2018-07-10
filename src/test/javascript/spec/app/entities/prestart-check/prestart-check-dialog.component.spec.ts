@@ -9,6 +9,7 @@ import { FleetManagementTestModule } from '../../../test.module';
 import { PrestartCheckDialogComponent } from '../../../../../../main/webapp/app/entities/prestart-check/prestart-check-dialog.component';
 import { PrestartCheckService } from '../../../../../../main/webapp/app/entities/prestart-check/prestart-check.service';
 import { PrestartCheck } from '../../../../../../main/webapp/app/entities/prestart-check/prestart-check.model';
+import { PlantLogService } from '../../../../../../main/webapp/app/entities/plant-log';
 import { ProjectService } from '../../../../../../main/webapp/app/entities/project';
 import { PlantService } from '../../../../../../main/webapp/app/entities/plant';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location';
@@ -28,6 +29,7 @@ describe('Component Tests', () => {
                 imports: [FleetManagementTestModule],
                 declarations: [PrestartCheckDialogComponent],
                 providers: [
+                    PlantLogService,
                     ProjectService,
                     PlantService,
                     LocationService,

@@ -69,6 +69,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="meter_reading" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="maintenance_due_at" type="integer">
                 <constraints nullable="true" />
             </column>
@@ -109,6 +113,8 @@
                 <constraints nullable="true" />
             </column>
             <column name="location_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>            <column name="last_log_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <column name="category_id" type="bigint">

@@ -26,6 +26,10 @@ public class PrestartCheck extends AbstractAuditingEntity implements Serializabl
     @Column(name = "signature_content_type")
     private String signatureContentType;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private PlantLog plantLog;
+
     @ManyToOne
     private Project project;
 
@@ -71,6 +75,19 @@ public class PrestartCheck extends AbstractAuditingEntity implements Serializabl
 
     public void setSignatureContentType(String signatureContentType) {
         this.signatureContentType = signatureContentType;
+    }
+
+    public PlantLog getPlantLog() {
+        return plantLog;
+    }
+
+    public PrestartCheck plantLog(PlantLog plantLog) {
+        this.plantLog = plantLog;
+        return this;
+    }
+
+    public void setPlantLog(PlantLog plantLog) {
+        this.plantLog = plantLog;
     }
 
     public Project getProject() {

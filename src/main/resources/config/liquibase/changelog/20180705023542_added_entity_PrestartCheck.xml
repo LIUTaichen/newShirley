@@ -28,7 +28,9 @@
             <column name="signature_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            <column name="plant_log_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
             <column name="project_id" type="bigint">
                 <constraints nullable="true" />
             </column>

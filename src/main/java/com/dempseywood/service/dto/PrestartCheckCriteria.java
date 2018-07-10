@@ -28,6 +28,8 @@ public class PrestartCheckCriteria implements Serializable {
 
     private LongFilter id;
 
+    private LongFilter plantLogId;
+
     private LongFilter projectId;
 
     private LongFilter plantId;
@@ -45,6 +47,14 @@ public class PrestartCheckCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public LongFilter getPlantLogId() {
+        return plantLogId;
+    }
+
+    public void setPlantLogId(LongFilter plantLogId) {
+        this.plantLogId = plantLogId;
     }
 
     public LongFilter getProjectId() {
@@ -83,6 +93,7 @@ public class PrestartCheckCriteria implements Serializable {
     public String toString() {
         return "PrestartCheckCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
+                (plantLogId != null ? "plantLogId=" + plantLogId + ", " : "") +
                 (projectId != null ? "projectId=" + projectId + ", " : "") +
                 (plantId != null ? "plantId=" + plantId + ", " : "") +
                 (locationId != null ? "locationId=" + locationId + ", " : "") +

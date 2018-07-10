@@ -4,6 +4,7 @@ import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.Plant;
 import com.dempseywood.domain.Location;
+import com.dempseywood.domain.PlantLog;
 import com.dempseywood.domain.Category;
 import com.dempseywood.domain.Company;
 import com.dempseywood.domain.MaintenanceContractor;
@@ -85,6 +86,9 @@ public class PlantResourceIntTest {
 
     private static final Integer DEFAULT_TANK_SIZE = 1;
     private static final Integer UPDATED_TANK_SIZE = 2;
+
+    private static final Integer DEFAULT_METER_READING = 1;
+    private static final Integer UPDATED_METER_READING = 2;
 
     private static final Integer DEFAULT_MAINTENANCE_DUE_AT = 1;
     private static final Integer UPDATED_MAINTENANCE_DUE_AT = 2;
@@ -172,6 +176,7 @@ public class PlantResourceIntTest {
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
             .tankSize(DEFAULT_TANK_SIZE)
+            .meterReading(DEFAULT_METER_READING)
             .maintenanceDueAt(DEFAULT_MAINTENANCE_DUE_AT)
             .meterUnit(DEFAULT_METER_UNIT)
             .certificateDueDate(DEFAULT_CERTIFICATE_DUE_DATE)
@@ -217,6 +222,7 @@ public class PlantResourceIntTest {
         assertThat(testPlant.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testPlant.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testPlant.getTankSize()).isEqualTo(DEFAULT_TANK_SIZE);
+        assertThat(testPlant.getMeterReading()).isEqualTo(DEFAULT_METER_READING);
         assertThat(testPlant.getMaintenanceDueAt()).isEqualTo(DEFAULT_MAINTENANCE_DUE_AT);
         assertThat(testPlant.getMeterUnit()).isEqualTo(DEFAULT_METER_UNIT);
         assertThat(testPlant.getCertificateDueDate()).isEqualTo(DEFAULT_CERTIFICATE_DUE_DATE);
@@ -271,6 +277,7 @@ public class PlantResourceIntTest {
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
             .andExpect(jsonPath("$.[*].tankSize").value(hasItem(DEFAULT_TANK_SIZE)))
+            .andExpect(jsonPath("$.[*].meterReading").value(hasItem(DEFAULT_METER_READING)))
             .andExpect(jsonPath("$.[*].maintenanceDueAt").value(hasItem(DEFAULT_MAINTENANCE_DUE_AT)))
             .andExpect(jsonPath("$.[*].meterUnit").value(hasItem(DEFAULT_METER_UNIT.toString())))
             .andExpect(jsonPath("$.[*].certificateDueDate").value(hasItem(DEFAULT_CERTIFICATE_DUE_DATE.toString())))
@@ -306,6 +313,7 @@ public class PlantResourceIntTest {
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
             .andExpect(jsonPath("$.tankSize").value(DEFAULT_TANK_SIZE))
+            .andExpect(jsonPath("$.meterReading").value(DEFAULT_METER_READING))
             .andExpect(jsonPath("$.maintenanceDueAt").value(DEFAULT_MAINTENANCE_DUE_AT))
             .andExpect(jsonPath("$.meterUnit").value(DEFAULT_METER_UNIT.toString()))
             .andExpect(jsonPath("$.certificateDueDate").value(DEFAULT_CERTIFICATE_DUE_DATE.toString()))
@@ -732,6 +740,72 @@ public class PlantResourceIntTest {
 
         // Get all the plantList where tankSize less than or equals to UPDATED_TANK_SIZE
         defaultPlantShouldBeFound("tankSize.lessThan=" + UPDATED_TANK_SIZE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterReadingIsEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterReading equals to DEFAULT_METER_READING
+        defaultPlantShouldBeFound("meterReading.equals=" + DEFAULT_METER_READING);
+
+        // Get all the plantList where meterReading equals to UPDATED_METER_READING
+        defaultPlantShouldNotBeFound("meterReading.equals=" + UPDATED_METER_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterReadingIsInShouldWork() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterReading in DEFAULT_METER_READING or UPDATED_METER_READING
+        defaultPlantShouldBeFound("meterReading.in=" + DEFAULT_METER_READING + "," + UPDATED_METER_READING);
+
+        // Get all the plantList where meterReading equals to UPDATED_METER_READING
+        defaultPlantShouldNotBeFound("meterReading.in=" + UPDATED_METER_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterReadingIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterReading is not null
+        defaultPlantShouldBeFound("meterReading.specified=true");
+
+        // Get all the plantList where meterReading is null
+        defaultPlantShouldNotBeFound("meterReading.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterReadingIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterReading greater than or equals to DEFAULT_METER_READING
+        defaultPlantShouldBeFound("meterReading.greaterOrEqualThan=" + DEFAULT_METER_READING);
+
+        // Get all the plantList where meterReading greater than or equals to UPDATED_METER_READING
+        defaultPlantShouldNotBeFound("meterReading.greaterOrEqualThan=" + UPDATED_METER_READING);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPlantsByMeterReadingIsLessThanSomething() throws Exception {
+        // Initialize the database
+        plantRepository.saveAndFlush(plant);
+
+        // Get all the plantList where meterReading less than or equals to DEFAULT_METER_READING
+        defaultPlantShouldNotBeFound("meterReading.lessThan=" + DEFAULT_METER_READING);
+
+        // Get all the plantList where meterReading less than or equals to UPDATED_METER_READING
+        defaultPlantShouldBeFound("meterReading.lessThan=" + UPDATED_METER_READING);
     }
 
 
@@ -1254,6 +1328,25 @@ public class PlantResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllPlantsByLastLogIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PlantLog lastLog = PlantLogResourceIntTest.createEntity(em);
+        em.persist(lastLog);
+        em.flush();
+        plant.setLastLog(lastLog);
+        plantRepository.saveAndFlush(plant);
+        Long lastLogId = lastLog.getId();
+
+        // Get all the plantList where lastLog equals to lastLogId
+        defaultPlantShouldBeFound("lastLogId.equals=" + lastLogId);
+
+        // Get all the plantList where lastLog equals to lastLogId + 1
+        defaultPlantShouldNotBeFound("lastLogId.equals=" + (lastLogId + 1));
+    }
+
+
+    @Test
+    @Transactional
     public void getAllPlantsByCategoryIsEqualToSomething() throws Exception {
         // Initialize the database
         Category category = CategoryResourceIntTest.createEntity(em);
@@ -1347,6 +1440,7 @@ public class PlantResourceIntTest {
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
             .andExpect(jsonPath("$.[*].tankSize").value(hasItem(DEFAULT_TANK_SIZE)))
+            .andExpect(jsonPath("$.[*].meterReading").value(hasItem(DEFAULT_METER_READING)))
             .andExpect(jsonPath("$.[*].maintenanceDueAt").value(hasItem(DEFAULT_MAINTENANCE_DUE_AT)))
             .andExpect(jsonPath("$.[*].meterUnit").value(hasItem(DEFAULT_METER_UNIT.toString())))
             .andExpect(jsonPath("$.[*].certificateDueDate").value(hasItem(DEFAULT_CERTIFICATE_DUE_DATE.toString())))
@@ -1404,6 +1498,7 @@ public class PlantResourceIntTest {
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
             .tankSize(UPDATED_TANK_SIZE)
+            .meterReading(UPDATED_METER_READING)
             .maintenanceDueAt(UPDATED_MAINTENANCE_DUE_AT)
             .meterUnit(UPDATED_METER_UNIT)
             .certificateDueDate(UPDATED_CERTIFICATE_DUE_DATE)
@@ -1436,6 +1531,7 @@ public class PlantResourceIntTest {
         assertThat(testPlant.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testPlant.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testPlant.getTankSize()).isEqualTo(UPDATED_TANK_SIZE);
+        assertThat(testPlant.getMeterReading()).isEqualTo(UPDATED_METER_READING);
         assertThat(testPlant.getMaintenanceDueAt()).isEqualTo(UPDATED_MAINTENANCE_DUE_AT);
         assertThat(testPlant.getMeterUnit()).isEqualTo(UPDATED_METER_UNIT);
         assertThat(testPlant.getCertificateDueDate()).isEqualTo(UPDATED_CERTIFICATE_DUE_DATE);

@@ -10,6 +10,14 @@
             "otherEntityRelationshipName": "plant"
         },
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "lastLog",
+            "otherEntityName": "plantLog",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "plant"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "category",
             "otherEntityName": "category",
@@ -78,6 +86,10 @@
         },
         {
             "fieldName": "tankSize",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "meterReading",
             "fieldType": "Integer"
         },
         {

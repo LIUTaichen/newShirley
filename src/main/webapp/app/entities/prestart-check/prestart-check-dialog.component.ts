@@ -9,6 +9,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { PrestartCheck } from './prestart-check.model';
 import { PrestartCheckPopupService } from './prestart-check-popup.service';
 import { PrestartCheckService } from './prestart-check.service';
+import { PlantLog, PlantLogService } from '../plant-log';
 import { Project, ProjectService } from '../project';
 import { Plant, PlantService } from '../plant';
 import { Location, LocationService } from '../location';
@@ -23,6 +24,8 @@ export class PrestartCheckDialogComponent implements OnInit {
     prestartCheck: PrestartCheck;
     isSaving: boolean;
 
+    plantlogs: PlantLog[];
+
     projects: Project[];
 
     plants: Plant[];
@@ -36,6 +39,7 @@ export class PrestartCheckDialogComponent implements OnInit {
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private prestartCheckService: PrestartCheckService,
+        private plantLogService: PlantLogService,
         private projectService: ProjectService,
         private plantService: PlantService,
         private locationService: LocationService,
@@ -46,6 +50,19 @@ export class PrestartCheckDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.plantLogService
+            .query({filter: 'prestartcheck-is-null'})
+            .subscribe((res: HttpResponse<PlantLog[]>) => {
+                if (!this.prestartCheck.plantLog || !this.prestartCheck.plantLog.id) {
+                    this.plantlogs = res.body;
+                } else {
+                    this.plantLogService
+                        .find(this.prestartCheck.plantLog.id)
+                        .subscribe((subRes: HttpResponse<PlantLog>) => {
+                            this.plantlogs = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
         this.projectService.query()
             .subscribe((res: HttpResponse<Project[]>) => { this.projects = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.plantService.query()
@@ -100,6 +117,10 @@ export class PrestartCheckDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackPlantLogById(index: number, item: PlantLog) {
+        return item.id;
     }
 
     trackProjectById(index: number, item: Project) {

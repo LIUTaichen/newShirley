@@ -104,6 +104,9 @@ public class PlantQueryService extends QueryService<Plant> {
             if (criteria.getTankSize() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTankSize(), Plant_.tankSize));
             }
+            if (criteria.getMeterReading() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getMeterReading(), Plant_.meterReading));
+            }
             if (criteria.getMaintenanceDueAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getMaintenanceDueAt(), Plant_.maintenanceDueAt));
             }
@@ -136,6 +139,9 @@ public class PlantQueryService extends QueryService<Plant> {
             }
             if (criteria.getLocationId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getLocationId(), Plant_.location, Location_.id));
+            }
+            if (criteria.getLastLogId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getLastLogId(), Plant_.lastLog, PlantLog_.id));
             }
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getCategoryId(), Plant_.category, Category_.id));

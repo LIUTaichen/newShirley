@@ -3,6 +3,7 @@ package com.dempseywood.web.rest;
 import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.PrestartCheck;
+import com.dempseywood.domain.PlantLog;
 import com.dempseywood.domain.Project;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.domain.Location;
@@ -172,6 +173,25 @@ public class PrestartCheckResourceIntTest {
             .andExpect(jsonPath("$.signatureContentType").value(DEFAULT_SIGNATURE_CONTENT_TYPE))
             .andExpect(jsonPath("$.signature").value(Base64Utils.encodeToString(DEFAULT_SIGNATURE)));
     }
+
+    @Test
+    @Transactional
+    public void getAllPrestartChecksByPlantLogIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PlantLog plantLog = PlantLogResourceIntTest.createEntity(em);
+        em.persist(plantLog);
+        em.flush();
+        prestartCheck.setPlantLog(plantLog);
+        prestartCheckRepository.saveAndFlush(prestartCheck);
+        Long plantLogId = plantLog.getId();
+
+        // Get all the prestartCheckList where plantLog equals to plantLogId
+        defaultPrestartCheckShouldBeFound("plantLogId.equals=" + plantLogId);
+
+        // Get all the prestartCheckList where plantLog equals to plantLogId + 1
+        defaultPrestartCheckShouldNotBeFound("plantLogId.equals=" + (plantLogId + 1));
+    }
+
 
     @Test
     @Transactional

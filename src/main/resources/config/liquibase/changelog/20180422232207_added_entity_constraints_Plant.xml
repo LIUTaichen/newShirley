@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="location"/>
 
+        <addForeignKeyConstraint baseColumnNames="last_log_id"
+                                 baseTableName="plant"
+                                 constraintName="fk_plant_last_log_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plant_log"/>
+
         <addForeignKeyConstraint baseColumnNames="category_id"
                                  baseTableName="plant"
                                  constraintName="fk_plant_category_id"

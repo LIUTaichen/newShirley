@@ -5,6 +5,7 @@ export class PrestartCheck implements BaseEntity {
         public id?: number,
         public signatureContentType?: string,
         public signature?: any,
+        public plantLog?: BaseEntity,
         public project?: BaseEntity,
         public plant?: BaseEntity,
         public location?: BaseEntity,
