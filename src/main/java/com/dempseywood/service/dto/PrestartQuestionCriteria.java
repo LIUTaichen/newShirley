@@ -30,6 +30,8 @@ public class PrestartQuestionCriteria implements Serializable {
 
     private StringFilter body;
 
+    private BooleanFilter isLockOutRequired;
+
     public PrestartQuestionCriteria() {
     }
 
@@ -49,11 +51,20 @@ public class PrestartQuestionCriteria implements Serializable {
         this.body = body;
     }
 
+    public BooleanFilter getIsLockOutRequired() {
+        return isLockOutRequired;
+    }
+
+    public void setIsLockOutRequired(BooleanFilter isLockOutRequired) {
+        this.isLockOutRequired = isLockOutRequired;
+    }
+
     @Override
     public String toString() {
         return "PrestartQuestionCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (body != null ? "body=" + body + ", " : "") +
+                (isLockOutRequired != null ? "isLockOutRequired=" + isLockOutRequired + ", " : "") +
             "}";
     }
 

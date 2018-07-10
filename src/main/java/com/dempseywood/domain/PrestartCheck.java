@@ -1,9 +1,12 @@
 package com.dempseywood.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,10 @@ public class PrestartCheck extends AbstractAuditingEntity implements Serializabl
     @OneToOne
     @JoinColumn(unique = true)
     private PlantLog plantLog;
+
+    @OneToMany(mappedBy = "prestartCheck")
+    @JsonIgnore
+    private Set<PrestartCheckResponse> responses = new HashSet<>();
 
     @ManyToOne
     private Project project;
@@ -88,6 +95,31 @@ public class PrestartCheck extends AbstractAuditingEntity implements Serializabl
 
     public void setPlantLog(PlantLog plantLog) {
         this.plantLog = plantLog;
+    }
+
+    public Set<PrestartCheckResponse> getResponses() {
+        return responses;
+    }
+
+    public PrestartCheck responses(Set<PrestartCheckResponse> prestartCheckResponses) {
+        this.responses = prestartCheckResponses;
+        return this;
+    }
+
+    public PrestartCheck addResponses(PrestartCheckResponse prestartCheckResponse) {
+        this.responses.add(prestartCheckResponse);
+        prestartCheckResponse.setPrestartCheck(this);
+        return this;
+    }
+
+    public PrestartCheck removeResponses(PrestartCheckResponse prestartCheckResponse) {
+        this.responses.remove(prestartCheckResponse);
+        prestartCheckResponse.setPrestartCheck(null);
+        return this;
+    }
+
+    public void setResponses(Set<PrestartCheckResponse> prestartCheckResponses) {
+        this.responses = prestartCheckResponses;
     }
 
     public Project getProject() {

@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Prestart Question"
             },
-            "body": "Body"
+            "body": "Body",
+            "isLockOutRequired": "Is Lock Out Required"
         }
     }
 }

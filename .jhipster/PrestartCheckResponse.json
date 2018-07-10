@@ -2,6 +2,12 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipName": "prestartCheck",
+            "otherEntityName": "prestartCheck",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "question",
             "otherEntityName": "prestartQuestion",
@@ -11,12 +17,6 @@
             "relationshipType": "many-to-one",
             "relationshipName": "response",
             "otherEntityName": "prestartQuestionOption",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "prestartCheck",
-            "otherEntityName": "prestartCheck",
             "otherEntityField": "id"
         }
     ],

@@ -9,9 +9,9 @@ import { FleetManagementTestModule } from '../../../test.module';
 import { PrestartCheckResponseDialogComponent } from '../../../../../../main/webapp/app/entities/prestart-check-response/prestart-check-response-dialog.component';
 import { PrestartCheckResponseService } from '../../../../../../main/webapp/app/entities/prestart-check-response/prestart-check-response.service';
 import { PrestartCheckResponse } from '../../../../../../main/webapp/app/entities/prestart-check-response/prestart-check-response.model';
+import { PrestartCheckService } from '../../../../../../main/webapp/app/entities/prestart-check';
 import { PrestartQuestionService } from '../../../../../../main/webapp/app/entities/prestart-question';
 import { PrestartQuestionOptionService } from '../../../../../../main/webapp/app/entities/prestart-question-option';
-import { PrestartCheckService } from '../../../../../../main/webapp/app/entities/prestart-check';
 
 describe('Component Tests', () => {
 
@@ -27,9 +27,9 @@ describe('Component Tests', () => {
                 imports: [FleetManagementTestModule],
                 declarations: [PrestartCheckResponseDialogComponent],
                 providers: [
+                    PrestartCheckService,
                     PrestartQuestionService,
                     PrestartQuestionOptionService,
-                    PrestartCheckService,
                     PrestartCheckResponseService
                 ]
             })

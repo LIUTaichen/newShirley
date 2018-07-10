@@ -4,6 +4,12 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck">Prestart Check</span></dt>
+        <dd>
+            <div *ngIf="prestartCheckResponse.prestartCheck">
+                <a [routerLink]="['/prestart-check', prestartCheckResponse.prestartCheck?.id]">{{prestartCheckResponse.prestartCheck?.id}}</a>
+            </div>
+        </dd>
         <dt><span jhiTranslate="fleetManagementApp.prestartCheckResponse.question">Question</span></dt>
         <dd>
             <div *ngIf="prestartCheckResponse.question">
@@ -14,12 +20,6 @@
         <dd>
             <div *ngIf="prestartCheckResponse.response">
                 <a [routerLink]="['/prestart-question-option', prestartCheckResponse.response?.id]">{{prestartCheckResponse.response?.id}}</a>
-            </div>
-        </dd>
-        <dt><span jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck">Prestart Check</span></dt>
-        <dd>
-            <div *ngIf="prestartCheckResponse.prestartCheck">
-                <a [routerLink]="['/prestart-check', prestartCheckResponse.prestartCheck?.id]">{{prestartCheckResponse.prestartCheck?.id}}</a>
             </div>
         </dd>
     </dl>

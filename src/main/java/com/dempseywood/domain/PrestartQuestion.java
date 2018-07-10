@@ -22,6 +22,9 @@ public class PrestartQuestion extends AbstractAuditingEntity implements Serializ
     @Column(name = "jhi_body")
     private String body;
 
+    @Column(name = "is_lock_out_required")
+    private Boolean isLockOutRequired;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -42,6 +45,19 @@ public class PrestartQuestion extends AbstractAuditingEntity implements Serializ
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Boolean isIsLockOutRequired() {
+        return isLockOutRequired;
+    }
+
+    public PrestartQuestion isLockOutRequired(Boolean isLockOutRequired) {
+        this.isLockOutRequired = isLockOutRequired;
+        return this;
+    }
+
+    public void setIsLockOutRequired(Boolean isLockOutRequired) {
+        this.isLockOutRequired = isLockOutRequired;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -70,6 +86,7 @@ public class PrestartQuestion extends AbstractAuditingEntity implements Serializ
         return "PrestartQuestion{" +
             "id=" + getId() +
             ", body='" + getBody() + "'" +
+            ", isLockOutRequired='" + isIsLockOutRequired() + "'" +
             "}";
     }
 }

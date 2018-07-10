@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Prestart Check Config"
             },
+            "name": "Name",
             "questionlist": "Questionlist"
         }
     }

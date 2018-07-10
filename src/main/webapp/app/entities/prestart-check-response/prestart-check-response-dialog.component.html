@@ -14,6 +14,13 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck" for="field_prestartCheck">Prestart Check</label>
+            <select class="form-control" id="field_prestartCheck" name="prestartCheck" [(ngModel)]="prestartCheckResponse.prestartCheck" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="prestartCheckOption.id === prestartCheckResponse.prestartCheck?.id ? prestartCheckResponse.prestartCheck : prestartCheckOption" *ngFor="let prestartCheckOption of prestartchecks; trackBy: trackPrestartCheckById">{{prestartCheckOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckResponse.question" for="field_question">Question</label>
             <select class="form-control" id="field_question" name="question" [(ngModel)]="prestartCheckResponse.question" >
                 <option [ngValue]="null"></option>
@@ -25,13 +32,6 @@
             <select class="form-control" id="field_response" name="response" [(ngModel)]="prestartCheckResponse.response" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="prestartQuestionOptionOption.id === prestartCheckResponse.response?.id ? prestartCheckResponse.response : prestartQuestionOptionOption" *ngFor="let prestartQuestionOptionOption of prestartquestionoptions; trackBy: trackPrestartQuestionOptionById">{{prestartQuestionOptionOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="fleetManagementApp.prestartCheckResponse.prestartCheck" for="field_prestartCheck">Prestart Check</label>
-            <select class="form-control" id="field_prestartCheck" name="prestartCheck" [(ngModel)]="prestartCheckResponse.prestartCheck" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="prestartCheckOption.id === prestartCheckResponse.prestartCheck?.id ? prestartCheckResponse.prestartCheck : prestartCheckOption" *ngFor="let prestartCheckOption of prestartchecks; trackBy: trackPrestartCheckById">{{prestartCheckOption.id}}</option>
             </select>
         </div>
     </div>

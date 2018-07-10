@@ -8,7 +8,12 @@
             "otherEntityRelationshipName": "prestartCheckConfig"
         }
     ],
-    "fields": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
     "changelogDate": "20180705023544",
     "entityTableName": "prestart_check_config",
     "dto": "no",
