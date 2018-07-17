@@ -4,12 +4,14 @@ import com.dempseywood.domain.Location;
 import com.dempseywood.domain.Plant;
 import com.dempseywood.repository.LocationRepository;
 import com.dempseywood.repository.PlantRepository;
+import com.dempseywood.service.util.DistanceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Plant.
@@ -82,6 +84,19 @@ public class PlantService {
         if(needToSaveLocationId){
             plantRepository.save(plant);
         }
+    }
+
+
+
+    public List<Plant> findByLocation(Double latitude, Double longitude, Double maxDistance) {
+        List<Long> nearbyLocationIds = locationRepository.findAll().stream().filter(location -> {
+            if(DistanceUtil.getDistance(latitude,longitude,location.getLatitude(), location.getLongitude()) <= maxDistance ){
+                return true;
+            }else{
+                return false;
+            }
+        }).map(location -> location.getId()).collect(Collectors.toList());
+        return plantRepository.findByLocationIdIn(nearbyLocationIds);
     }
 
 }

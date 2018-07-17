@@ -122,4 +122,20 @@ public class PlantResource {
         plantService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * GET  /plants : get all the plants.
+     *
+     * @param latitude the latitude of the user
+     * @param longitude the longitude of the user
+     * @param maxDistance the max distance in meters between the user and the plant
+     * @return the ResponseEntity with status 200 (OK) and the list of plants in body
+     */
+    @GetMapping(value="/plants", params="byLocation=true")
+    @Timed
+    public ResponseEntity<List<Plant>> getAllPlantsByLocation(@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude,  @RequestParam("maxDistance") Double maxDistance) {
+        log.debug("REST request to get Plants by location: {}", latitude, longitude, maxDistance);
+        List<Plant> entityList = plantService.findByLocation(latitude, longitude, maxDistance);
+        return ResponseEntity.ok().body(entityList);
+    }
 }

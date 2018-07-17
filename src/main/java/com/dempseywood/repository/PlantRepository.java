@@ -17,4 +17,5 @@ public interface PlantRepository extends JpaRepository<Plant, Long>, JpaSpecific
 
     List<Plant> findByGpsDeviceSerialIsNotNull();
 
+    List<Plant> findByLocationIdIn(List<Long> nearbyLocationIds);
 }

@@ -2,7 +2,10 @@ package com.dempseywood.service;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.dempseywood.repository.LocationRepository;
+import com.dempseywood.service.util.DistanceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -36,8 +39,11 @@ public class PlantQueryService extends QueryService<Plant> {
 
     private final PlantRepository plantRepository;
 
-    public PlantQueryService(PlantRepository plantRepository) {
+    private final LocationRepository locationRepository;
+
+    public PlantQueryService(PlantRepository plantRepository,LocationRepository locationRepository ) {
         this.plantRepository = plantRepository;
+        this.locationRepository = locationRepository;
     }
 
     /**
