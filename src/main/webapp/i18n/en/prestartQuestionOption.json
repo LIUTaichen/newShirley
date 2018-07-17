@@ -19,7 +19,7 @@
             "body": "Body",
             "isNormal": "Is Normal",
             "isActive": "Is Active",
-            "question": "Question"
+            "prestartQuestion": "Prestart Question"
         }
     }
 }

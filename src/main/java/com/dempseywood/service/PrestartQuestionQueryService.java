@@ -78,6 +78,9 @@ public class PrestartQuestionQueryService extends QueryService<PrestartQuestion>
             if (criteria.getIsLockOutRequired() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsLockOutRequired(), PrestartQuestion_.isLockOutRequired));
             }
+            if (criteria.getOptionsId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getOptionsId(), PrestartQuestion_.options, PrestartQuestionOption_.id));
+            }
         }
         return specification;
     }

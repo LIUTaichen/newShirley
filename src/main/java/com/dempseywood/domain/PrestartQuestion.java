@@ -1,9 +1,12 @@
 package com.dempseywood.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -24,6 +27,10 @@ public class PrestartQuestion extends AbstractAuditingEntity implements Serializ
 
     @Column(name = "is_lock_out_required")
     private Boolean isLockOutRequired;
+
+    @OneToMany(mappedBy = "prestartQuestion")
+    @JsonIgnore
+    private Set<PrestartQuestionOption> options = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -58,6 +65,31 @@ public class PrestartQuestion extends AbstractAuditingEntity implements Serializ
 
     public void setIsLockOutRequired(Boolean isLockOutRequired) {
         this.isLockOutRequired = isLockOutRequired;
+    }
+
+    public Set<PrestartQuestionOption> getOptions() {
+        return options;
+    }
+
+    public PrestartQuestion options(Set<PrestartQuestionOption> prestartQuestionOptions) {
+        this.options = prestartQuestionOptions;
+        return this;
+    }
+
+    public PrestartQuestion addOptions(PrestartQuestionOption prestartQuestionOption) {
+        this.options.add(prestartQuestionOption);
+        prestartQuestionOption.setPrestartQuestion(this);
+        return this;
+    }
+
+    public PrestartQuestion removeOptions(PrestartQuestionOption prestartQuestionOption) {
+        this.options.remove(prestartQuestionOption);
+        prestartQuestionOption.setPrestartQuestion(null);
+        return this;
+    }
+
+    public void setOptions(Set<PrestartQuestionOption> prestartQuestionOptions) {
+        this.options = prestartQuestionOptions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

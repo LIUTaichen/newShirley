@@ -6,7 +6,7 @@ export class PrestartQuestionOption implements BaseEntity {
         public body?: string,
         public isNormal?: boolean,
         public isActive?: boolean,
-        public question?: BaseEntity,
+        public prestartQuestion?: BaseEntity,
     ) {
         this.isNormal = false;
         this.isActive = false;

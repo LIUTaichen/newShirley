@@ -57,4 +57,12 @@
         </addColumn>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+	
+	<changeSet author="jason" id="renameColumn-question-id-to-prestart-question-id">
+        <renameColumn 
+            newColumnName="prestart_question_id"
+            oldColumnName="question_id"
+            tableName="prestart_question_option"/>
+    </changeSet>
+	
 </databaseChangeLog>

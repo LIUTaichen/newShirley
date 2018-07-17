@@ -1,6 +1,13 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "options",
+            "otherEntityName": "prestartQuestionOption",
+            "otherEntityRelationshipName": "prestartQuestion"
+        }
+    ],
     "fields": [
         {
             "fieldName": "body",

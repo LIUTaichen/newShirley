@@ -81,8 +81,8 @@ public class PrestartQuestionOptionQueryService extends QueryService<PrestartQue
             if (criteria.getIsActive() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsActive(), PrestartQuestionOption_.isActive));
             }
-            if (criteria.getQuestionId() != null) {
-                specification = specification.and(buildReferringEntitySpecification(criteria.getQuestionId(), PrestartQuestionOption_.question, PrestartQuestion_.id));
+            if (criteria.getPrestartQuestionId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getPrestartQuestionId(), PrestartQuestionOption_.prestartQuestion, PrestartQuestion_.id));
             }
         }
         return specification;
