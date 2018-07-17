@@ -2,9 +2,9 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "question",
+            "relationshipName": "prestartQuestion",
             "otherEntityName": "prestartQuestion",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],

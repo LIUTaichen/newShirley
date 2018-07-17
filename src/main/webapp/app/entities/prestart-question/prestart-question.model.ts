@@ -5,6 +5,7 @@ export class PrestartQuestion implements BaseEntity {
         public id?: number,
         public body?: string,
         public isLockOutRequired?: boolean,
+        public options?: BaseEntity[],
     ) {
         this.isLockOutRequired = false;
     }

@@ -3,6 +3,7 @@ package com.dempseywood.web.rest;
 import com.dempseywood.FleetManagementApp;
 
 import com.dempseywood.domain.PrestartQuestion;
+import com.dempseywood.domain.PrestartQuestionOption;
 import com.dempseywood.repository.PrestartQuestionRepository;
 import com.dempseywood.service.PrestartQuestionService;
 import com.dempseywood.web.rest.errors.ExceptionTranslator;
@@ -246,6 +247,25 @@ public class PrestartQuestionResourceIntTest {
         // Get all the prestartQuestionList where isLockOutRequired is null
         defaultPrestartQuestionShouldNotBeFound("isLockOutRequired.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllPrestartQuestionsByOptionsIsEqualToSomething() throws Exception {
+        // Initialize the database
+        PrestartQuestionOption options = PrestartQuestionOptionResourceIntTest.createEntity(em);
+        em.persist(options);
+        em.flush();
+        prestartQuestion.addOptions(options);
+        prestartQuestionRepository.saveAndFlush(prestartQuestion);
+        Long optionsId = options.getId();
+
+        // Get all the prestartQuestionList where options equals to optionsId
+        defaultPrestartQuestionShouldBeFound("optionsId.equals=" + optionsId);
+
+        // Get all the prestartQuestionList where options equals to optionsId + 1
+        defaultPrestartQuestionShouldNotBeFound("optionsId.equals=" + (optionsId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned
      */

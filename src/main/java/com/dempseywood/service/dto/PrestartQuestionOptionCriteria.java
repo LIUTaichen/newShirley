@@ -34,7 +34,7 @@ public class PrestartQuestionOptionCriteria implements Serializable {
 
     private BooleanFilter isActive;
 
-    private LongFilter questionId;
+    private LongFilter prestartQuestionId;
 
     public PrestartQuestionOptionCriteria() {
     }
@@ -71,12 +71,12 @@ public class PrestartQuestionOptionCriteria implements Serializable {
         this.isActive = isActive;
     }
 
-    public LongFilter getQuestionId() {
-        return questionId;
+    public LongFilter getPrestartQuestionId() {
+        return prestartQuestionId;
     }
 
-    public void setQuestionId(LongFilter questionId) {
-        this.questionId = questionId;
+    public void setPrestartQuestionId(LongFilter prestartQuestionId) {
+        this.prestartQuestionId = prestartQuestionId;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PrestartQuestionOptionCriteria implements Serializable {
                 (body != null ? "body=" + body + ", " : "") +
                 (isNormal != null ? "isNormal=" + isNormal + ", " : "") +
                 (isActive != null ? "isActive=" + isActive + ", " : "") +
-                (questionId != null ? "questionId=" + questionId + ", " : "") +
+                (prestartQuestionId != null ? "prestartQuestionId=" + prestartQuestionId + ", " : "") +
             "}";
     }
 

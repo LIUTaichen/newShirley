@@ -29,7 +29,7 @@ public class PrestartQuestionOption extends AbstractAuditingEntity implements Se
     private Boolean isActive;
 
     @ManyToOne
-    private PrestartQuestion question;
+    private PrestartQuestion prestartQuestion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -79,17 +79,17 @@ public class PrestartQuestionOption extends AbstractAuditingEntity implements Se
         this.isActive = isActive;
     }
 
-    public PrestartQuestion getQuestion() {
-        return question;
+    public PrestartQuestion getPrestartQuestion() {
+        return prestartQuestion;
     }
 
-    public PrestartQuestionOption question(PrestartQuestion prestartQuestion) {
-        this.question = prestartQuestion;
+    public PrestartQuestionOption prestartQuestion(PrestartQuestion prestartQuestion) {
+        this.prestartQuestion = prestartQuestion;
         return this;
     }
 
-    public void setQuestion(PrestartQuestion prestartQuestion) {
-        this.question = prestartQuestion;
+    public void setPrestartQuestion(PrestartQuestion prestartQuestion) {
+        this.prestartQuestion = prestartQuestion;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

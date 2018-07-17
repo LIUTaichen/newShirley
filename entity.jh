@@ -213,7 +213,6 @@ relationship ManyToOne {
     PlantLog{site} to Project,
     Location {project} to Project,
     Category {prestartCheckConfig } to PrestartCheckConfig,
-    PrestartQuestionOption { question } to PrestartQuestion,
     PrestartCheckResponse { question } to PrestartQuestion,
     PrestartCheckResponse { response } to PrestartQuestionOption,
 	PrestartCheckQuestionListItem { question } to PrestartQuestion,

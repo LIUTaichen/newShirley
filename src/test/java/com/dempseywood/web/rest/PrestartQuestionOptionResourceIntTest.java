@@ -296,20 +296,20 @@ public class PrestartQuestionOptionResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllPrestartQuestionOptionsByQuestionIsEqualToSomething() throws Exception {
+    public void getAllPrestartQuestionOptionsByPrestartQuestionIsEqualToSomething() throws Exception {
         // Initialize the database
-        PrestartQuestion question = PrestartQuestionResourceIntTest.createEntity(em);
-        em.persist(question);
+        PrestartQuestion prestartQuestion = PrestartQuestionResourceIntTest.createEntity(em);
+        em.persist(prestartQuestion);
         em.flush();
-        prestartQuestionOption.setQuestion(question);
+        prestartQuestionOption.setPrestartQuestion(prestartQuestion);
         prestartQuestionOptionRepository.saveAndFlush(prestartQuestionOption);
-        Long questionId = question.getId();
+        Long prestartQuestionId = prestartQuestion.getId();
 
-        // Get all the prestartQuestionOptionList where question equals to questionId
-        defaultPrestartQuestionOptionShouldBeFound("questionId.equals=" + questionId);
+        // Get all the prestartQuestionOptionList where prestartQuestion equals to prestartQuestionId
+        defaultPrestartQuestionOptionShouldBeFound("prestartQuestionId.equals=" + prestartQuestionId);
 
-        // Get all the prestartQuestionOptionList where question equals to questionId + 1
-        defaultPrestartQuestionOptionShouldNotBeFound("questionId.equals=" + (questionId + 1));
+        // Get all the prestartQuestionOptionList where prestartQuestion equals to prestartQuestionId + 1
+        defaultPrestartQuestionOptionShouldNotBeFound("prestartQuestionId.equals=" + (prestartQuestionId + 1));
     }
 
     /**

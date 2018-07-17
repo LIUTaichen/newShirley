@@ -17,7 +17,8 @@
                 "title": "Prestart Question"
             },
             "body": "Body",
-            "isLockOutRequired": "Is Lock Out Required"
+            "isLockOutRequired": "Is Lock Out Required",
+            "options": "Options"
         }
     }
 }
