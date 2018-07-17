@@ -233,7 +233,8 @@ relationship OneToOne {
 
 relationship OneToMany {
 	PrestartCheckConfig { questionlist } to PrestartCheckQuestionListItem,
-    PrestartCheck { responses } to PrestartCheckResponse
+    PrestartCheck { responses } to PrestartCheckResponse,
+    PrestartQuestion { options } to PrestartQuestionOption
 }
 
 enum MaintenanceGroup {
